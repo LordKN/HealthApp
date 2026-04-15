@@ -21,6 +21,22 @@ public class CertificateService {
         return repo.findById(id)
                 .orElseThrow(() -> new RuntimeException("Certificate not found"));
     }
+
+    public void saveCertificate(Certificate certificate) {
+        repo.save(certificate);
+    }
+
+    public void deleteCertificate(Long id) {
+        repo.deleteById(id);
+    }
+
+    public long countCertificate() {
+        return repo.count();
+    }
+
+    public void deleteAllCertificate() {
+        repo.deleteAll();
+    }
 }
 
 //findById(id) will return an Optional object to represent a value that may or not may present,
