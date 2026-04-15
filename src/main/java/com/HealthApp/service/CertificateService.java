@@ -38,6 +38,3 @@ public class CertificateService {
         repo.deleteAll();
     }
 }
-
-//findById(id) will return an Optional object to represent a value that may or not may present,
-//  forcing developers to explicitly handle the absence of a value.
