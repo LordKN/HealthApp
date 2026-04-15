@@ -2,14 +2,19 @@ package com.HealthApp.model;
 
 import java.util.List;
 
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import jakarta.persistence.*;
 
 import java.util.ArrayList;
 
+@Entity
+@Table(name = "client")
 public class Client extends Person {
-	private List<MedicalHistory> med = new ArrayList<>();
-	
+
+
+    //One client has many medical history
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<MedicalHistory> med = new ArrayList<>();
+
 	@Enumerated(EnumType.STRING)
 	private Level activityLevel;
 	
@@ -142,5 +147,4 @@ public class Client extends Person {
 }
 
 enum Level { LOW, MEDIUM, HIGH }
-enum Goal { LONG_TERM, SHORT_TERM }
 enum Pattern {POOR, AVERAGE, GOOD }

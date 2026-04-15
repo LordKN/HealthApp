@@ -61,9 +61,5 @@ public class Exercise {
 	public String toString() {
 		return "Exercise [id=" + id + ", name=" + name + ", description=" + description + ", muscleGroup=" + muscleGroup
 				+ "]";
-	}
-	
-	
+	}	
 }
-
-enum Group { CHEST, SHOULDER, BACK, TRICEP, BICEP, LEG, CALF }

@@ -1,7 +1,19 @@
 package com.HealthApp.model;
 
+import jakarta.persistence.*;
+
+@Entity
 public class Certificate {
-	private String cerName, issOrg, desc;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+	private String cerName, issOrg, description;
+
+    @ManyToOne
+    @JoinColumn(name = "coach_id")
+    private Coach coach;
 	
 	public Certificate() {
 		System.out.println("Certificate created");
@@ -24,15 +36,21 @@ public class Certificate {
 	}
 
 	public String getDesc() {
-		return desc;
+		return description;
 	}
 
 	public void setDesc(String desc) {
-		this.desc = desc;
+		this.description = description;
 	}
+
+    public Coach getCoach() { return coach; }
+
+    public void setCoach(Coach coach) {
+        this.coach = coach;
+    }
 
 	@Override
 	public String toString() {
-		return "Certificate [cerName=" + cerName + ", issOrg=" + issOrg + ", desc=" + desc + "]";
+		return "Certificate [cerName=" + cerName + ", issOrg=" + issOrg + ", desc=" + description + "]";
 	}
 }

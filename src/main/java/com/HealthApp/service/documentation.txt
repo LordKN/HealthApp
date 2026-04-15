@@ -1,0 +1,12 @@
+Service will do:
+
+- Validation logic like if the request data can be grabbed?
+For example, you cannot add a client with a negative weight
+
+- Business rules, like cannot add more if coach has enough clients
+
+- Calculations: Calculate BMI before adding into database
+
+- Combining multiple repos
+
+- Filtering logic

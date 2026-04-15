@@ -20,8 +20,7 @@ public class Coach extends Person {
 	private Specialty specialty;
 	
 	private int yearsOfExperience;
-	
-	@ElementCollection(fetch = FetchType.LAZY)
+
 	@OneToMany(mappedBy = "coach", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Certificate> certifications = new ArrayList<>();
 	//mappedBy: Certificate entity owns the foreign key, not COACH
@@ -32,7 +31,9 @@ public class Coach extends Person {
 	private boolean openForNewClient;
 	private int clientCount;
 	public String workPlace;
-	public String desc;
+
+    //AVOID PUTTING DESC BECAUSE IT IS SQL KEYWORD
+	public String description;
 	
 	public Coach() {
 		System.out.println("Coach created");
@@ -87,18 +88,28 @@ public class Coach extends Person {
 	}
 
 	public String getDesc() {
-		return desc;
+		return description;
 	}
 
 	public void setDesc(String desc) {
-		this.desc = desc;
+		this.description = desc;
 	}
+
+    public void addCertificate(Certificate certificate) {
+        certifications.add(certificate);
+        certificate.setCoach(this);
+    }
+
+    public void removeCertificate (Certificate certificate) {
+        certifications.remove(certificate);
+        certificate.setCoach(null);
+    }
 
 	@Override
 	public String toString() {
 		return "Coach [specialty=" + specialty + ", yearsOfExperience=" + yearsOfExperience + ", certifications="
 				+ certifications + ", openForNewClient=" + openForNewClient + ", clientCount=" + clientCount
-				+ ", workPlace=" + workPlace + ", desc=" + desc + "]";
+				+ ", workPlace=" + workPlace + ", desc=" + description + "]";
 	}
 	
 	

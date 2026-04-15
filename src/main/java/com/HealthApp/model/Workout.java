@@ -24,7 +24,7 @@ public class Workout {
 	private String name;
 	
 	@Column(length = 2000)
-	private String desc;
+	private String description; //AVOID PUTTING desc BECAUSE IT IS SQL KEYWORD
 	
 	@ManyToMany
 	@JoinTable(
@@ -46,12 +46,12 @@ public class Workout {
 		this.name = name;
 	}
 
-	public String getDesc() {
-		return desc;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setDesc(String desc) {
-		this.desc = desc;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public Long getId() {
@@ -60,7 +60,7 @@ public class Workout {
 
 	@Override
 	public String toString() {
-		return "Workout [id=" + id + ", name=" + name + ", desc=" + desc + ", exercises=" + exercises + "]";
+		return "Workout [id=" + id + ", name=" + name + ", desc=" + description + ", exercises=" + exercises + "]";
 	}
 
 	public List<Exercise> getExercises() {
