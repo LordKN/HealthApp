@@ -1,0 +1,16 @@
+Built in methods for every repository
+
+1. Get all data
+List<Certificate> findAll();
+
+2. Get by ID
+Optional<Certificate> findById(Long id);
+
+3. Save (insert or update)
+repo.save(certificate)
+
+4.Delete
+repo.deleteById(id);
+
+5.Count
+long count();
