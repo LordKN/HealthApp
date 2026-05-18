@@ -2,6 +2,7 @@ package com.HealthApp.controller;
 
 import com.HealthApp.model.Certificate;
 import com.HealthApp.service.CertificateService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -9,6 +10,7 @@ import java.util.List;
 @RestController
 public class CertificateController {
 
+    @Autowired
     private CertificateService service;
 
     @GetMapping("/api/certificates")
