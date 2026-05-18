@@ -3,8 +3,7 @@ package com.HealthApp.controller;
 import com.HealthApp.model.Exercise;
 import com.HealthApp.service.ExerciseService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -17,5 +16,32 @@ public class ExerciseController {
     @GetMapping("/api/exercises")
     public List<Exercise> getAllExercise() {
         return service.getAllExercises();
+    }
+
+    @GetMapping("/api/exercise/{exerID}")
+    public Exercise getExercise(@PathVariable("exerID") Long id) {
+        return service.getExerciseById(id);
+    }
+
+    @GetMapping("/api/exercises/count")
+    public Long countExercise() {
+        return service.countExercises();
+    }
+
+    @PostMapping("/api/exercise")
+    public void saveExercise(@RequestBody Exercise exercise) {
+        service.saveExercise(exercise);
+    }
+
+    @DeleteMapping("/api/exercise/{exerID}")
+    public String deleteExercise(@PathVariable("exerID") Long id) {
+        service.deleteExercise(id);
+        return "Exercise Deleted";
+    }
+
+    @DeleteMapping("/api/exercises")
+    public String deleteAllExercises() {
+        service.deleteAllExercises();
+        return "All exercises deleted";
     }
 }

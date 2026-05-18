@@ -30,11 +30,11 @@ public class ExerciseService {
         repo.deleteById(id);
     }
 
-    public long countCertificate() {
+    public long countExercises() {
         return repo.count();
     }
 
-    public void deleteAllCertificate() {
+    public void deleteAllExercises() {
         repo.deleteAll();
     }
 }
