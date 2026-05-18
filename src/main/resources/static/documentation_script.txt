@@ -1,0 +1,24 @@
+1) What fetch() does?
+    fetch("/api/message")
+    - Sends an HTTP request to backend
+    - Returns a Promise
+    - Does not immediately return data
+
+2) Full fetch flow
+    fetch("/api/message")
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById("message").textContent = data;
+        });
+
+    Step by step:
+        1. Request data from backend using fetch()
+        2. Backend responds
+        3. First .then(): receives responds OBJECT
+        4. retrieves the data via .text()
+        5. Second .then(): Use data
+        6. Page updates
+
+3) What is a PROMISE?
+    - Use for ASYNC operations
+    - Represents a future result since data won't come immediately everytime
