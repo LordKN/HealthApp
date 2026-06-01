@@ -25,10 +25,27 @@ public class ClientService {
     }
 
     public void saveClient(Client client) {
+        if (client.getName() == null || client.getName().isBlank()) {
+            throw new RuntimeException("Name is required");
+        }
+
+        if (client.getWeight() == null || client.getWeight() <= 0) {
+            throw new RuntimeException("Weight must be greater than 0");
+        }
+
+        if (client.getHeight() == null || client.getHeight() <= 0) {
+            throw new RuntimeException("Height must be greater than 0");
+        }
+
         repo.save(client);
     }
 
     public void deleteClient(Long id) {
+
+        if (!repo.existsById(id)) {
+            throw new RuntimeException("Client not found");
+        }
+
         repo.deleteById(id);
     }
 
@@ -37,6 +54,11 @@ public class ClientService {
     }
 
     public void deleteAllClients() {
+
+        if (repo.count() == 0) {
+            throw new RuntimeException("No client to delete");
+        }
+
         repo.deleteAll();
     }
 }
