@@ -27,6 +27,10 @@ public class MedicalHistoryService {
     }
 
     public void deleteMedicalHistory(Long id) {
+
+        if (!repo.existsById(id)) {
+            throw new RuntimeException("No medical history found to be deleted");
+        }
         repo.deleteById(id);
     }
 
@@ -35,6 +39,24 @@ public class MedicalHistoryService {
     }
 
     public void deleteAllMedicalHistory() {
+
+        if (countMedicalHistory() == 0) {
+            throw new RuntimeException("No medical history to be deleted");
+        }
         repo.deleteAll();
+    }
+
+    private void validateMedicalHistory (MedicalHistory history) {
+        if (history.getName() == null || history.getName().isBlank()) {
+            throw new RuntimeException("Medical history's name needed");
+        }
+
+        if (history.getDesc() == null || history.getDesc().isBlank()) {
+            throw new RuntimeException("Medical history's description needed");
+        }
+
+        if (history.getDesc().length() > 3000) {
+            throw new RuntimeException("Description too long, must be under 3000 characters");
+        }
     }
 }
