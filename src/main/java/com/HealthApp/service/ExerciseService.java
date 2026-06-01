@@ -23,10 +23,16 @@ public class ExerciseService {
     }
 
     public void saveExercise (Exercise exercise) {
+
+        validateExercise(exercise);
         repo.save(exercise);
     }
 
     public void deleteExercise (Long id) {
+
+        if (!repo.existsById(id)) {
+            throw new RuntimeException("Exercise not found to be deleted");
+        }
         repo.deleteById(id);
     }
 
@@ -35,6 +41,31 @@ public class ExerciseService {
     }
 
     public void deleteAllExercises() {
+        if (repo.count() == 0) {
+            throw new RuntimeException("No exercise to be deleted");
+        }
         repo.deleteAll();
+    }
+
+    private void validateExercise(Exercise exercise) {
+        if (exercise == null) {
+            throw new RuntimeException("Exercise cannot be null");
+        }
+
+        if (exercise.getName() == null || exercise.getName().isBlank()) {
+            throw new RuntimeException("Exercise name is required");
+        }
+
+        if (exercise.getName().length() > 100) {
+            throw new RuntimeException("Exercise name must be under 100 characters");
+        }
+
+        if (exercise.getDescription() != null && exercise.getDescription().length() > 2000) {
+            throw new RuntimeException("Exercise description must be under 2000 characters");
+        }
+
+        if (exercise.getMuscleGroup() == null) {
+            throw new RuntimeException("Muscle group is required");
+        }
     }
 }
