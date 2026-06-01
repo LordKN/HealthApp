@@ -25,10 +25,22 @@ public class CoachService {
     }
 
     public void saveCoach (Coach coach) {
+
+        validateCoach(coach);
+
+        //Important: keep both sides of Coach-Certificate relationship synced
+        if (coach.getCertifications() != null) {
+            coach.getCertifications().forEach(certificate -> certificate.setCoach(coach));
+        }
         repo.save(coach);
     }
 
     public void deleteCoach(Long id) {
+
+        if (!repo.existsById(id)) {
+            throw new RuntimeException("Coach doesn't exist for deletion");
+        }
+
         repo.deleteById(id);
     }
 
@@ -37,6 +49,49 @@ public class CoachService {
     }
 
     public void deleteAllCoaches() {
+
+        if (repo.count() == 0) {
+            throw new RuntimeException("No coach to delete");
+        }
+
         repo.deleteAll();
+    }
+
+    private void validateCoach(Coach coach) {
+        if (coach == null) {
+            throw new RuntimeException("Coach cannot be null");
+        }
+
+        if (coach.getName() == null || coach.getName().isBlank()) {
+            throw new RuntimeException("Coach name is required");
+        }
+
+        if (coach.getEmail() == null || coach.getEmail().isBlank()) {
+            throw new RuntimeException("Coach email is required");
+        }
+
+        if (!coach.getEmail().contains("@")) {
+            throw new RuntimeException("Coach email must be valid");
+        }
+
+        if (coach.getSpecialty() == null) {
+            throw new RuntimeException("Coach specialty is required");
+        }
+
+        if (coach.getYearsOfExperience() < 0) {
+            throw new RuntimeException("Years of experience cannot be negative");
+        }
+
+        if (coach.getClientCount() > 20) {
+            throw new RuntimeException("Client count cannot be greater than 20");
+        }
+
+        if (coach.getWorkPlace() == null || coach.getWorkPlace().isBlank()) {
+            throw new RuntimeException("Workplace is required");
+        }
+
+        if (coach.getDesc() != null && coach.getDesc().length() > 1000) {
+            throw new RuntimeException("Description must be under 1000 characters");
+        }
     }
 }
