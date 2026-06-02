@@ -1,0 +1,3 @@
+How to name @GetMapping correctly?
+    - Use "/" when asking for a page
+    - Use "/api/..." when asking for data
