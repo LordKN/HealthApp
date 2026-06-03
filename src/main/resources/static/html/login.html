@@ -2,9 +2,78 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | GRIND HUB</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/login.css">
+    <link rel="stylesheet" href="../css/navbar.css">
+    <link rel="stylesheet" href="../css/footer.css">
 </head>
 <body>
+
+<div id="navbar-container"></div>
+
+<main class="login-page">
+
+    <div class="login-card">
+
+        <h1>Welcome Back</h1>
+
+        <p class="subtitle">
+            Login to continue your fitness journey.
+        </p>
+
+        <form>
+
+            <div class="form-group">
+                <label for="username">Username</label>
+
+                <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        placeholder="Enter username"
+                        required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+
+                <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Enter password"
+                        required>
+            </div>
+
+            <button type="submit" class="login-btn">
+                Login
+            </button>
+
+        </form>
+
+        <div class="account-links">
+
+            <a href="#">
+                Forgot Password?
+            </a>
+
+            <a href="#">
+                Create Account
+            </a>
+
+        </div>
+
+    </div>
+
+</main>
+
+<div id="footer-container"></div>
+
+<script src="../js/components.js"></script>
+<script src="../js/script.js"></script>
 
 </body>
 </html>

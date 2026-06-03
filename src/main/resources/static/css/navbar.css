@@ -19,6 +19,7 @@
     flex-wrap: wrap;
     justify-content: flex-end;
     gap: clamp(0.75rem, 1.5vw, 2rem);
+    margin-left: auto;
 }
 
 .nav-pages a {
