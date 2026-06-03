@@ -1,0 +1,52 @@
+.about-page {
+    background-color: #f7f7f7;
+    min-height: 100vh;
+}
+
+.about-hero {
+    text-align: center;
+    padding: 90px 20px 50px;
+    background-color: #ffffff;
+}
+
+.about-hero h1 {
+    font-size: 48px;
+    margin-bottom: 16px;
+}
+
+.about-hero p {
+    font-size: 18px;
+    color: #555;
+}
+
+.about-content {
+    max-width: 1000px;
+    margin: 60px auto;
+    padding: 0 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+
+.about-card {
+    background-color: #ffffff;
+    padding: 36px;
+    border-radius: 18px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.about-card h2 {
+    font-size: 28px;
+    margin-bottom: 18px;
+}
+
+.about-card p {
+    font-size: 17px;
+    line-height: 1.7;
+    color: #444;
+    margin-bottom: 16px;
+}
+
+.about-card p:last-child {
+    margin-bottom: 0;
+}
