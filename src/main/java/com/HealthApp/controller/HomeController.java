@@ -24,4 +24,10 @@ public class HomeController {
     public String login() {
         return "redirect:/html/login.html";
     }
+
+    @GetMapping("/coach")
+    public String coach() { return "redirect:/html/coach.html"; }
+
+    @GetMapping("/client")
+    public String client() { return "redirect:/html/client.html"; }
 }
