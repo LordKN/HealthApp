@@ -37,6 +37,10 @@ public class ClientService {
             throw new RuntimeException("Height must be greater than 0");
         }
 
+        if (client.getRole() == null) {
+            throw new RuntimeException("Role must be assigned");
+        }
+
         repo.save(client);
     }
 

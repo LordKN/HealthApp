@@ -93,5 +93,9 @@ public class CoachService {
         if (coach.getDesc() != null && coach.getDesc().length() > 1000) {
             throw new RuntimeException("Description must be under 1000 characters");
         }
+
+        if (coach.getRole() != null) {
+            throw new RuntimeException("Role must be assigned");
+        }
     }
 }
