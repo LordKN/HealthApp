@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel = "stylesheet" href = "../css/navbar.css">
+    <link rel = "stylesheet" href = "../css/footer.css">
+</head>
+<body>
+    <div id = "navbar-container"></div>
+    <div class = "sign-up-container">
+        <p>
+            <strong>Name: </strong> <label for="name"></label><input type = "text" id = "name" required />
+        </p>
+        <p>
+            <strong>Birthdate: </strong> <label for="date"></label><input type = "date" id = "date" required />
+        </p>
+        <p>
+            <strong>Sex: </strong>
+            <label>
+                <select class = "rating">
+                    <option value = "M">Male</option>
+                    <option value = "F">Female</option>
+                </select>
+            </label>
+        </p>
+        <p>
+            <strong>Address: </strong> <label for="address"></label><input type = "text" id = "address" required />
+        </p>
+        <p>
+            <strong>Phone Number: </strong> <label for="phoneNo"></label><input type="tel" id = "phoneNo" required />
+        </p>
+        <p>
+            <strong>Email: </strong> <label for="email"></label><input type="email" id = "email" required />
+        </p>
+        <p>
+            <strong>Your photo: </strong> <input type= "file" accept="image/*" id = "photo" required />
+        </p>
+        <p>
+            <strong>Emergency contact name: </strong> <label for="emergencyContactName"></label><input type = "text" id = "emergencyContactName" required />
+        </p>
+        <p>
+            <strong>Emergency contact phone number: </strong> <label for="emergencyContactPhone"></label><input type = "tel" id = "emergencyContactPhone" required />
+        </p>
+        <p>
+            <strong>Your relationship: </strong> <label for="emergencyContactRelationship"></label><input type = "text" id = "emergencyContactRelationship" required />
+        </p>
+    </div>
+    <div id="footer-container"></div>
+
+    <script src = "../js/components.js"></script>
+
+</body>
+</html>
