@@ -29,7 +29,7 @@ public class Client extends Person {
 	private Double weight;
 	private Double bodyFat;
 	private String availability;
-	private String sleepPattern;
+	private Pattern sleepPattern;
 	
 	@Enumerated(EnumType.STRING)
 	private Level stressLevel;
@@ -112,11 +112,11 @@ public class Client extends Person {
 		this.availability = availability;
 	}
 
-	public String getSleepPattern() {
+	public Pattern getSleepPattern() {
 		return sleepPattern;
 	}
 
-	public void setSleepPattern(String sleepPattern) {
+	public void setSleepPattern(Pattern sleepPattern) {
 		this.sleepPattern = sleepPattern;
 	}
 
