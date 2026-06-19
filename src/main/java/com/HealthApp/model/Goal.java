@@ -1,5 +1,5 @@
 package com.HealthApp.model;
 
 public enum Goal {
-	LONG_TERM, SHORT_TERM
+	WEIGHT_LOSS, MUSCLE_GAIN, MAINTENANCE, GENERAL_HEALTH
 }
