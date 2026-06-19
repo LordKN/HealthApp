@@ -23,6 +23,8 @@ public class MedicalHistoryService {
     }
 
     public void saveMedicalHistory(MedicalHistory history) {
+
+        validateMedicalHistory(history);
         repo.save(history);
     }
 
