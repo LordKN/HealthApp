@@ -21,8 +21,10 @@ public class ClientController {
     }
 
     @GetMapping("/api/clients/{cliID}")
-    public Client getClient(@PathVariable("cliID") Long id) {
-        return service.getClientById(id);
+    public ResponseEntity<Client> getClient(@PathVariable("cliID") Long id) {
+
+        Client client = service.getClientById(id);
+        return ResponseEntity.ok(client);
     }
 
     @GetMapping("/api/clients/count")
@@ -43,15 +45,16 @@ public class ClientController {
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping("api/clients")
+    @DeleteMapping("/api/clients")
     public String deleteAllClients() {
         service.deleteAllClients();
         return "All clients deleted";
     }
 
-    @PutMapping("api/clients/{id}")
-    public Client updateClient(@PathVariable Long id, @RequestBody Client client) {
-        return service.updateClient(id, client);
+    @PutMapping("/api/clients/{id}")
+    public ResponseEntity<Client> updateClient(@PathVariable Long id, @RequestBody Client client) {
+        Client updatedClient = service.updateClient(id, client);
+        return ResponseEntity.ok(updatedClient);
     }
 
     @GetMapping("/api/clients/goal/{goal}")

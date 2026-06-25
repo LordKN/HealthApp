@@ -24,8 +24,8 @@ public class ClientService {
 
     public Client saveClient(Client client) {
         validateClient(client);
-        repo.save(client);
-        return client;
+
+        return repo.save(client);
     }
 
     public void deleteClient(Long id) {
