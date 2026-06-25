@@ -2,10 +2,9 @@ package com.HealthApp.service;
 
 import java.util.List;
 
-import com.HealthApp.model.Goal;
+import com.HealthApp.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.HealthApp.model.Client;
 import com.HealthApp.repo.ClientRepository;
 
 @Service
@@ -89,6 +88,7 @@ public class ClientService {
         existingClient.setStressLevel(updatedClient.getStressLevel());
         existingClient.setWorkoutPreference(updatedClient.getWorkoutPreference());
         existingClient.setBarriers(updatedClient.getBarriers());
+        existingClient.setSleepPattern(updatedClient.getSleepPattern());
 
         validateClient(existingClient);
 
@@ -97,5 +97,21 @@ public class ClientService {
 
     public List<Client> getClientByGoal(Goal goal) {
         return repo.findByFitnessGoal(goal);
+    }
+
+    public List<Client> getClientByStressLevel(Level stressLevel) {
+        return repo.findByStressLevel(stressLevel);
+    }
+
+    public List<Client> getClientBySleepPattern(Pattern pattern) {
+        return repo.findBySleepPattern(pattern);
+    }
+
+    public List<Client> getClientByWorkoutPreference(WorkoutPreference preference) {
+        return repo.findByWorkoutPreference(preference);
+    }
+
+    public List<Client> getClientByBarrier(Barrier barrier) {
+        return repo.findByBarriers(barrier);
     }
 }

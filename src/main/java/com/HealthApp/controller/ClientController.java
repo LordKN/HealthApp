@@ -1,7 +1,6 @@
 package com.HealthApp.controller;
 
-import com.HealthApp.model.Client;
-import com.HealthApp.model.Goal;
+import com.HealthApp.model.*;
 import com.HealthApp.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -59,4 +58,25 @@ public class ClientController {
     public List<Client> getClientByGoal(@PathVariable Goal goal) {
         return service.getClientByGoal(goal);
     }
+
+    @GetMapping("/api/clients/level/{level}")
+    public List<Client> getClientByStressLevel(@PathVariable Level level) {
+        return service.getClientByStressLevel(level);
+    }
+
+    @GetMapping("/api/clients/pattern/{pattern}")
+    public List<Client> getClientBySleepPattern(@PathVariable Pattern pattern) {
+        return service.getClientBySleepPattern(pattern);
+    }
+
+    @GetMapping("/api/clients/preference/{preference}")
+    public List<Client> getClientByWorkoutPreference(@PathVariable WorkoutPreference preference) {
+        return service.getClientByWorkoutPreference(preference);
+    }
+
+    @GetMapping("/api/clients/barrier/{barrier}")
+    public List<Client> getClientByBarrier(@PathVariable Barrier barrier) {
+        return service.getClientByBarrier(barrier);
+    }
+
 }

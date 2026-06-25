@@ -3,6 +3,7 @@ package com.HealthApp.model;
 import java.util.List;
 
 import jakarta.persistence.*;
+import org.hibernate.jdbc.Work;
 
 import java.util.ArrayList;
 
@@ -18,8 +19,8 @@ public class Client extends Person {
 	@Enumerated(EnumType.STRING)
 	private Level activityLevel;
 	
-	private String workoutPreference;
-	private String barriers;
+	private WorkoutPreference workoutPreference;
+	private Barrier barriers;
 	
 	@Enumerated(EnumType.STRING)
 	private Goal fitnessGoal;
@@ -56,19 +57,19 @@ public class Client extends Person {
 		this.activityLevel = activityLevel;
 	}
 
-	public String getWorkoutPreference() {
+	public WorkoutPreference getWorkoutPreference() {
 		return workoutPreference;
 	}
 
-	public void setWorkoutPreference(String workoutPreference) {
+	public void setWorkoutPreference(WorkoutPreference workoutPreference) {
 		this.workoutPreference = workoutPreference;
 	}
 
-	public String getBarriers() {
+	public Barrier getBarriers() {
 		return barriers;
 	}
 
-	public void setBarriers(String barriers) {
+	public void setBarriers(Barrier barriers) {
 		this.barriers = barriers;
 	}
 
@@ -145,5 +146,3 @@ public class Client extends Person {
 	}
 	
 }
-
-enum Pattern {POOR, AVERAGE, GOOD }
