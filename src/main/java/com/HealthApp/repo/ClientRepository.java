@@ -1,8 +1,10 @@
 package com.HealthApp.repo;
 
 import java.util.List;
+
 import com.HealthApp.model.Client;
 import com.HealthApp.model.Goal;
+import com.HealthApp.model.Level;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ClientRepository extends JpaRepository<Client, Long> {

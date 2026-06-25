@@ -146,5 +146,4 @@ public class Client extends Person {
 	
 }
 
-enum Level { LOW, MEDIUM, HIGH }
 enum Pattern {POOR, AVERAGE, GOOD }
