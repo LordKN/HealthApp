@@ -119,9 +119,28 @@ public class ClientService {
         return repo.findByBarriers(barrier);
     }
 
-    public List<Client> getClientByWeight (Double minWeight, Double maxWeight) { return repo.findByWeightBetween(minWeight, maxWeight);}
+    public List<Client> getClientByWeight (Double minWeight, Double maxWeight) {
+        validateRange(minWeight, maxWeight, "Weight");
+        return repo.findByWeightBetween(minWeight, maxWeight);
+    }
 
-    public List<Client> getClientByHeight (Double minHeight, Double maxHeight) {return repo.findByHeightBetween(minHeight, maxHeight);}
+    public List<Client> getClientByHeight (Double minHeight, Double maxHeight) {
+        validateRange(minHeight, maxHeight, "Height");
+        return repo.findByHeightBetween(minHeight, maxHeight);
+    }
 
-    public List<Client> getClientByBodyfat (Double minBodyFat, Double maxBodyFat) {return repo.findByBodyFatBetween(minBodyFat, maxBodyFat);}
+    public List<Client> getClientByBodyfat (Double minBodyFat, Double maxBodyFat) {
+        validateRange(minBodyFat, maxBodyFat, "Body Fat");
+        return repo.findByBodyFatBetween(minBodyFat, maxBodyFat);
+    }
+
+    private void validateRange (Double min, Double max, String fieldName) {
+        if (min == null || max == null) {
+            throw new RuntimeException(fieldName + " min and max are required");
+        }
+
+        if (min > max) {
+            throw new RuntimeException((fieldName + " min cannot be greater than max"));
+        }
+    }
 }

@@ -46,9 +46,9 @@ public class ClientController {
     }
 
     @DeleteMapping("/api/clients")
-    public String deleteAllClients() {
+    public ResponseEntity<Void> deleteAllClients() {
         service.deleteAllClients();
-        return "All clients deleted";
+        return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/api/clients/{id}")
