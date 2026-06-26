@@ -55,11 +55,11 @@ public class ClientService {
             throw new RuntimeException("Name is required");
         }
 
-        if (client.getWeight() == null || client.getWeight() <= 0) {
+        if (client.getWeight() == null || client.getWeight() < 30 || client.getWeight() > 300) {
             throw new RuntimeException("Weight must be greater than 0");
         }
 
-        if (client.getHeight() == null || client.getHeight() <= 0) {
+        if (client.getHeight() == null || client.getHeight() < 100 || client.getHeight() > 250) {
             throw new RuntimeException("Height must be greater than 0");
         }
 
