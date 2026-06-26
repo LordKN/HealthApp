@@ -63,7 +63,7 @@ public class ClientService {
             throw new RuntimeException("Height must be between 100 and 250 cm");
         }
 
-        if (client.getBodyFat() < 0 || client.getBodyFat() > 70) {
+        if ((client.getBodyFat() != null) && (client.getBodyFat() < 0 || client.getBodyFat() > 70)) {
             throw new RuntimeException("Body fat must be between 0 and 70 percent");
         }
 
