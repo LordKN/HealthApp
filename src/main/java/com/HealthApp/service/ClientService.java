@@ -56,11 +56,15 @@ public class ClientService {
         }
 
         if (client.getWeight() == null || client.getWeight() < 30 || client.getWeight() > 300) {
-            throw new RuntimeException("Weight must be greater than 0");
+            throw new RuntimeException("Weight must be between 30 and 300 kg");
         }
 
         if (client.getHeight() == null || client.getHeight() < 100 || client.getHeight() > 250) {
-            throw new RuntimeException("Height must be greater than 0");
+            throw new RuntimeException("Height must be between 100 and 250 cm");
+        }
+
+        if (client.getBodyFat() < 0 || client.getBodyFat() > 70) {
+            throw new RuntimeException("Body fat must be between 0 and 70 percent");
         }
 
         if (client.getRole() == null) {
