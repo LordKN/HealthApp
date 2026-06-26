@@ -114,4 +114,10 @@ public class ClientService {
     public List<Client> getClientByBarrier(Barrier barrier) {
         return repo.findByBarriers(barrier);
     }
+
+    public List<Client> getClientByWeight (Double minWeight, Double maxWeight) { return repo.findByWeightBetween(minWeight, maxWeight);}
+
+    public List<Client> getClientByHeight (Double minHeight, Double maxHeight) {return repo.findByHeightBetween(minHeight, maxHeight);}
+
+    public List<Client> getClientByBodyfat (Double minBodyFat, Double maxBodyFat) {return repo.findByBodyFatBetween(minBodyFat, maxBodyFat);}
 }

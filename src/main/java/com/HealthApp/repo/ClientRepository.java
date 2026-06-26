@@ -11,4 +11,7 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
 	List<Client> findBySleepPattern(Pattern pattern);
 	List<Client> findByWorkoutPreference(WorkoutPreference preference);
 	List<Client> findByBarriers(Barrier barrier);
+	List<Client> findByWeightBetween (Double minWeight, Double maxWeight);
+	List<Client> findByHeightBetween (Double minHeight, Double maxHeight);
+	List<Client> findByBodyFatBetween(Double minBodyFat, Double maxBodyFat);
 }

@@ -82,4 +82,18 @@ public class ClientController {
         return service.getClientByBarrier(barrier);
     }
 
+    @GetMapping("/api/clients/weight")
+    public List<Client> getClientByWeightRange(@RequestParam Double min, @RequestParam Double max) {
+        return service.getClientByWeight(min, max);
+    }
+
+    @GetMapping("/api/clients/height")
+    public List<Client> getClientByHeightRange(@RequestParam Double min, @RequestParam Double max) {
+        return service.getClientByHeight(min, max);
+    }
+
+    @GetMapping("/api/clients/bodyfat")
+    public List<Client> getClientByBodyfatRange(@RequestParam Double min, @RequestParam Double max) {
+        return service.getClientByBodyfat(min, max);
+    }
 }
