@@ -18,7 +18,7 @@ public class CoachController {
         return service.findAllCoaches();
     }
 
-    @GetMapping("/api/coach/{coachId}")
+    @GetMapping("/api/coaches/{coachId}")
     public Coach getCoach(@PathVariable("coachId") Long id) {
         return service.findCoachById(id);
     }
@@ -28,12 +28,12 @@ public class CoachController {
         return service.countCoaches();
     }
 
-    @PostMapping("/api/coach")
+    @PostMapping("/api/coaches")
     public void saveCoach(@RequestBody Coach coach) {
         service.saveCoach(coach);
     }
 
-    @DeleteMapping("/api/coach/{coachID}")
+    @DeleteMapping("/api/coaches/{coachID}")
     public String deleteCoach(@PathVariable("coachID") Long id) {
         service.deleteCoach(id);
         return "Coach deleted";
