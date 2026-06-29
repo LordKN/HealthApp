@@ -1,12 +1,10 @@
 package com.HealthApp.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.HealthApp.model.Coach;
-import com.HealthApp.model.Specialty;
 import com.HealthApp.repo.CoachRepository;
 
 @Service
@@ -24,7 +22,7 @@ public class CoachService {
                 .orElseThrow(() -> new RuntimeException("Coach not found"));
     }
 
-    public void saveCoach (Coach coach) {
+    public Coach saveCoach (Coach coach) {
 
         validateCoach(coach);
 
@@ -33,6 +31,7 @@ public class CoachService {
             coach.getCertifications().forEach(certificate -> certificate.setCoach(coach));
         }
         repo.save(coach);
+        return coach;
     }
 
     public void deleteCoach(Long id) {

@@ -3,6 +3,8 @@ package com.HealthApp.controller;
 import com.HealthApp.model.Coach;
 import com.HealthApp.service.CoachService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,19 +31,21 @@ public class CoachController {
     }
 
     @PostMapping("/api/coaches")
-    public void saveCoach(@RequestBody Coach coach) {
-        service.saveCoach(coach);
+    public ResponseEntity<Coach> saveCoach(@RequestBody Coach coach) {
+
+        Coach savedCoach = service.saveCoach(coach);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedCoach);
     }
 
     @DeleteMapping("/api/coaches/{coachID}")
-    public String deleteCoach(@PathVariable("coachID") Long id) {
+    public ResponseEntity<Void> deleteCoach(@PathVariable("coachID") Long id) {
         service.deleteCoach(id);
-        return "Coach deleted";
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/api/coaches")
-    public String deleteAllCoaches() {
+    public ResponseEntity<Void> deleteAllCoaches() {
         service.deleteAllCoaches();
-        return "All coaches deleted";
+        return ResponseEntity.noContent().build();
     }
 }
