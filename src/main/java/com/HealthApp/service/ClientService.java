@@ -93,6 +93,7 @@ public class ClientService {
         existingClient.setWorkoutPreference(updatedClient.getWorkoutPreference());
         existingClient.setBarriers(updatedClient.getBarriers());
         existingClient.setSleepPattern(updatedClient.getSleepPattern());
+        existingClient.setWaiverAccepted(updatedClient.isWaiverAccepted());
 
         validateClient(existingClient);
 

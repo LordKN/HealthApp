@@ -18,8 +18,11 @@ public class Client extends Person {
 
 	@Enumerated(EnumType.STRING)
 	private Level activityLevel;
-	
+
+	@Enumerated(EnumType.STRING)
 	private WorkoutPreference workoutPreference;
+
+	@Enumerated(EnumType.STRING)
 	private Barrier barriers;
 	
 	@Enumerated(EnumType.STRING)
@@ -30,6 +33,8 @@ public class Client extends Person {
 	private Double weight;
 	private Double bodyFat;
 	private String availability;
+
+	@Enumerated(EnumType.STRING)
 	private Pattern sleepPattern;
 	
 	@Enumerated(EnumType.STRING)
@@ -144,5 +149,4 @@ public class Client extends Person {
 				+ weight + ", bodyFat=" + bodyFat + ", availability=" + availability + ", sleepPattern=" + sleepPattern
 				+ ", stressLevel=" + stressLevel + ", waiverAccepted=" + waiverAccepted + "]";
 	}
-	
 }
