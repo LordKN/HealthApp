@@ -111,6 +111,4 @@ public class Coach extends Person {
 				+ certifications + ", openForNewClient=" + openForNewClient + ", clientCount=" + clientCount
 				+ ", workPlace=" + workPlace + ", desc=" + description + "]";
 	}
-	
-	
 }

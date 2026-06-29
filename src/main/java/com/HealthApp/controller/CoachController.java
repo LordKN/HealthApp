@@ -37,6 +37,12 @@ public class CoachController {
         return ResponseEntity.status(HttpStatus.CREATED).body(savedCoach);
     }
 
+    @PutMapping("/api/coaches/{id}")
+    public ResponseEntity<Coach> updateCoach(@PathVariable Long id, @RequestBody Coach updatedCoach) {
+        Coach newCoach = service.updateCoach(id, updatedCoach);
+        return ResponseEntity.ok(newCoach);
+    }
+
     @DeleteMapping("/api/coaches/{coachID}")
     public ResponseEntity<Void> deleteCoach(@PathVariable("coachID") Long id) {
         service.deleteCoach(id);

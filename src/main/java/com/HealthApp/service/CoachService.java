@@ -97,4 +97,18 @@ public class CoachService {
             throw new RuntimeException("Role must be assigned");
         }
     }
+
+    public Coach updateCoach(Long id, Coach updatedCoach) {
+        Coach existingCoach = repo.findById(id).orElseThrow(() -> new RuntimeException("No Coach found"));
+
+        existingCoach.setSpecialty(updatedCoach.getSpecialty());
+        existingCoach.setYearsOfExperience(updatedCoach.getYearsOfExperience());
+        existingCoach.setOpenForNewClient(updatedCoach.isOpenForNewClient());
+        existingCoach.setClientCount(updatedCoach.getClientCount());
+        existingCoach.setWorkPlace(updatedCoach.getWorkPlace());
+        existingCoach.setDesc(updatedCoach.getDesc());
+
+        validateCoach(existingCoach);
+        return repo.save(existingCoach);
+    }
 }
