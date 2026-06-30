@@ -3,6 +3,8 @@ package com.HealthApp.service;
 import java.util.List;
 
 import com.HealthApp.model.Certificate;
+import com.HealthApp.model.Client;
+import com.HealthApp.model.Specialty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.HealthApp.model.Coach;
@@ -140,5 +142,45 @@ public class CoachService {
         existingCoach.removeCertificate(certToRemove);
 
         repo.save(existingCoach);
+    }
+
+    public List<Coach> getCoachBySpecialty(Specialty specialty) {
+        return  repo.findBySpecialty(specialty);
+    }
+
+    public List<Coach> getCoachByOpenForNewClient() {
+        return repo.findByOpenForNewClientTrue();
+    }
+
+    public List<Coach> getCoachByYearsOfExperienceBetween(int minYear, int maxYear) {
+        validateRange(minYear, maxYear, "Years of Experience ");
+        return repo.findByYearsOfExperienceBetween(minYear, maxYear);
+    }
+
+    public List<Coach> getByClientCountBetween (int minCount, int maxCount) {
+        validateRange(minCount, maxCount, "Client count ");
+        return repo.findByClientCountBetween(minCount, maxCount);
+    }
+
+    public List<Coach> getByWorkplace(String workplace) {
+        return repo.findByWorkPlaceIgnoreCase(workplace);
+    }
+
+    public List<Coach> getByDescription(String desc) {
+        return repo.findByDescriptionContainingIgnoreCase(desc);
+    }
+
+    public List<Coach> getByName(String name) {
+        return repo.findByNameContainingIgnoreCase(name);
+    }
+
+    private void validateRange (Integer min, Integer max, String fieldName) {
+        if (min == null || max == null) {
+            throw new RuntimeException(fieldName + " min and max are required");
+        }
+
+        if (min > max) {
+            throw new RuntimeException((fieldName + " min cannot be greater than max"));
+        }
     }
 }

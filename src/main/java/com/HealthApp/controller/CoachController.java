@@ -2,6 +2,7 @@ package com.HealthApp.controller;
 
 import com.HealthApp.model.Certificate;
 import com.HealthApp.model.Coach;
+import com.HealthApp.model.Specialty;
 import com.HealthApp.service.CertificateService;
 import com.HealthApp.service.CoachService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,8 +78,43 @@ public class CoachController {
     }
 
     @GetMapping("/api/coaches/{coachID}/certificates")
-    public List<Certificate> getAllCertificate(@PathVariable Long coachId) {
-        Coach existingCoach = service.findCoachById(coachId);
+    public List<Certificate> getAllCertificate(@PathVariable Long coachID) {
+        Coach existingCoach = service.findCoachById(coachID);
         return existingCoach.getCertifications();
+    }
+
+    @GetMapping("/api/coaches/specialties/{specialty}")
+    public List<Coach> getCoachBySpecialty(@PathVariable Specialty specialty) {
+        return service.getCoachBySpecialty(specialty);
+    }
+
+    @GetMapping("/api/coaches/availabilities")
+    public List<Coach> getCoachByAvailability() {
+        return service.getCoachByOpenForNewClient();
+    }
+
+    @GetMapping("/api/coaches/yearsOfExperience")
+    public List<Coach> getCoachByYearsOfExperience(@RequestParam int minYear, @RequestParam int maxYear) {
+        return service.getCoachByYearsOfExperienceBetween(minYear, maxYear);
+    }
+
+    @GetMapping("/api/coaches/clientCounts")
+    public List<Coach> getCoachByCountBetween(@RequestParam int minCount, @RequestParam int maxCount) {
+        return service.getByClientCountBetween(minCount, maxCount);
+    }
+
+    @GetMapping("/api/coaches/workplaces")
+    public List<Coach> getCoachByWorkplace (String workplace) {
+        return service.getByWorkplace(workplace);
+    }
+
+    @GetMapping("/api/coaches/descriptions")
+    public List<Coach> getCoachByDescription(String desc) {
+        return service.getByDescription(desc);
+    }
+
+    @GetMapping("/api/coaches/names")
+    public List<Coach> getCoachByName(String name) {
+        return service.getByName(name);
     }
 }
