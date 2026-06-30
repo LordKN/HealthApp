@@ -53,4 +53,8 @@ public class Certificate {
 	public String toString() {
 		return "Certificate [cerName=" + cerName + ", issOrg=" + issOrg + ", desc=" + description + "]";
 	}
+
+    public Long getId() {
+        return id;
+    }
 }

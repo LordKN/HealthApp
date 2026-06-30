@@ -2,6 +2,7 @@ package com.HealthApp.service;
 
 import java.util.List;
 
+import com.HealthApp.model.Certificate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.HealthApp.model.Coach;
@@ -107,8 +108,37 @@ public class CoachService {
         existingCoach.setClientCount(updatedCoach.getClientCount());
         existingCoach.setWorkPlace(updatedCoach.getWorkPlace());
         existingCoach.setDesc(updatedCoach.getDesc());
-
         validateCoach(existingCoach);
         return repo.save(existingCoach);
+    }
+
+    public Coach addCertificate(Long coachID, Certificate certificate) {
+        Coach existingCoach = repo.findById(coachID).orElseThrow(() -> new RuntimeException("Coach not found"));
+
+        existingCoach.addCertificate(certificate);
+        return existingCoach;
+    }
+
+    public void removeCertificate (Long coachID, Long certificateId) {
+        Coach existingCoach = repo.findById(coachID).orElseThrow(() -> new RuntimeException("Coach not found"));
+
+        /*
+         * Search through the coach's certificate list to find the certificate
+         * whose ID matches the one passed into the API.
+         *
+         * stream()            -> Creates a stream to process each certificate. This works like a for loop looping through the certificate list
+         * filter(...)         -> Keeps only certificates whose ID matches.
+         * findFirst()         -> Returns the first matching certificate.
+         * orElseThrow(...)    -> If no certificate is found, throw an exception.
+         */
+        Certificate certToRemove = existingCoach.getCertifications()
+                .stream()
+                .filter(cert -> cert.getId().equals(certificateId))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("No Certification found"));
+
+        existingCoach.removeCertificate(certToRemove);
+
+        repo.save(existingCoach);
     }
 }

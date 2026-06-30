@@ -59,10 +59,6 @@ public class Coach extends Person {
 		return certifications;
 	}
 
-	public void setCertifications(List<Certificate> certifications) {
-		this.certifications = certifications;
-	}
-
 	public boolean isOpenForNewClient() {
 		return openForNewClient;
 	}

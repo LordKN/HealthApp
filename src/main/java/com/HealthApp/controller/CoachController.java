@@ -1,6 +1,8 @@
 package com.HealthApp.controller;
 
+import com.HealthApp.model.Certificate;
 import com.HealthApp.model.Coach;
+import com.HealthApp.service.CertificateService;
 import com.HealthApp.service.CoachService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +16,9 @@ public class CoachController {
 
     @Autowired
     private CoachService service;
+
+    @Autowired
+    private CertificateService certificateService;
 
     @GetMapping("/api/coaches")
     public List<Coach> getAllCoaches() {
@@ -53,5 +58,27 @@ public class CoachController {
     public ResponseEntity<Void> deleteAllCoaches() {
         service.deleteAllCoaches();
         return ResponseEntity.noContent().build();
+    }
+
+    /*
+    *Certificate belongs to a coach, so it should be nested under coach
+     */
+
+    @PostMapping("/api/coaches/{coachID}/certificates")
+    public ResponseEntity<Coach> addCertificate(@PathVariable Long coachID, @RequestBody Certificate certificate) {
+        Coach updatedCoach = service.addCertificate(coachID, certificate);
+        return ResponseEntity.status(HttpStatus.CREATED).body(updatedCoach);
+    }
+
+    @DeleteMapping("/api/coaches/{coachID}/certificates/{certificateId}")
+    public ResponseEntity<Void> removeCertificate(@PathVariable Long coachID, @PathVariable Long certificateId) {
+        service.removeCertificate(coachID, certificateId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/api/coaches/{coachID}/certificates")
+    public List<Certificate> getAllCertificate(@PathVariable Long coachId) {
+        Coach existingCoach = service.findCoachById(coachId);
+        return existingCoach.getCertifications();
     }
 }
