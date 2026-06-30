@@ -22,10 +22,11 @@ public class CertificateService {
                 .orElseThrow(() -> new RuntimeException("Certificate not found"));
     }
 
-    public void saveCertificate(Certificate certificate) {
+    public Certificate saveCertificate(Certificate certificate) {
 
         validateCertificate(certificate);
         repo.save(certificate);
+        return certificate;
     }
 
     public void deleteCertificate(Long id) {
@@ -49,6 +50,17 @@ public class CertificateService {
         repo.deleteAll();
     }
 
+    public List<Certificate> getCertificateByIssOrg(String org) {
+        return repo.findByIssOrg(org);
+    }
+
+    public List<Certificate> getCertificateByDescription(String desc) {
+        return repo.findByDescriptionContainingIgnoreCase(desc);
+    }
+
+    public List<Certificate> getCertificateByName (String name) {
+        return repo.findByCerNameContainingIgnoreCase(name);
+    }
     private void validateCertificate(Certificate certificate) {
         if (certificate == null) {
             throw new RuntimeException("Certificate cannot be null");
