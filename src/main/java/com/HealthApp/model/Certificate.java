@@ -1,5 +1,6 @@
 package com.HealthApp.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity
@@ -11,6 +12,7 @@ public class Certificate {
 
 	private String cerName, issOrg, description;
 
+	@JsonBackReference
     @ManyToOne
     @JoinColumn(name = "coach_id")
     private Coach coach;
@@ -35,11 +37,11 @@ public class Certificate {
 		this.issOrg = issOrg;
 	}
 
-	public String getDesc() {
+	public String getDescription() {
 		return description;
 	}
 
-	public void setDesc(String desc) {
+	public void setDescription(String description) {
 		this.description = description;
 	}
 
