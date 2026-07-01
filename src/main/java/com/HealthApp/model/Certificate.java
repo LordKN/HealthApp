@@ -6,12 +6,39 @@ import jakarta.persistence.*;
 @Entity
 public class Certificate {
 
+	/*
+	*Jackson maps JSON properties using JavaBean getter/setter names.
+	*
+	* Example:
+	* getDescription()/setDescription() <-> "description"
+	*
+	* If the methods are named getDesc()/setDesc(),
+	* the JSON property must be "desc"
+	*
+	* Keep field names, getters, setters, and JSON property
+	* names consistent to avoid null values during deserialization.
+	 */
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
 	private String cerName, issOrg, description;
 
+
+	/*
+	* This is the back side of the Coach-Certificate relationship.
+	*
+	* @JsonBackReference tells Jackson:
+	* "Do not serialize this field when returning JSON."
+	*
+	* This breaks the infinite loop:
+	*
+	* Certificate -> coach -> certificates -> Certificate ->
+	*
+	* This relationship still exists in Java/JPA,
+	* but the coach field is hidden from the JSON response.
+	 */
 	@JsonBackReference
     @ManyToOne
     @JoinColumn(name = "coach_id")

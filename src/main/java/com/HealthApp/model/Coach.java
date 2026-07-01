@@ -22,6 +22,17 @@ public class Coach extends Person {
 	
 	private int yearsOfExperience;
 
+	/*
+	* Prevent infinite JSON recursion during serialization
+	*
+	* Coach has a list of Certificates, and each Certificate also points
+	* back to its Coach. Without this, Jackson keeps converting objects forever:
+	*
+	* Coach -> certificates -> Certificate -> coach -> certificates -> ...
+	*
+	* @JsonManagedReference tells Jackson:
+	* "Serialize this side normally"
+	 */
 	@JsonManagedReference
 	@OneToMany(mappedBy = "coach", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Certificate> certifications = new ArrayList<>();

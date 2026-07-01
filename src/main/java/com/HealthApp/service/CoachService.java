@@ -113,6 +113,16 @@ public class CoachService {
         return repo.save(existingCoach);
     }
 
+
+    /*
+    *When a new Certificate is received from the front end,
+    * its id is initially null because it has not been saved yet
+    *
+    * Hibernate generates the primary key automatically when
+    * repo.save(coach) is executed (via CascadeType.ALL),
+    * then updates the Certificate object with a generated id.
+     */
+
     public Coach addCertificate(Long coachID, Certificate certificate) {
         Coach existingCoach = repo.findById(coachID).orElseThrow(() -> new RuntimeException("Coach not found"));
 
