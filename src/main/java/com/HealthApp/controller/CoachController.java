@@ -104,17 +104,17 @@ public class CoachController {
     }
 
     @GetMapping("/api/coaches/workplaces")
-    public List<Coach> getCoachByWorkplace (String workplace) {
+    public List<Coach> getCoachByWorkplace (@RequestParam String workplace) {
         return service.getByWorkplace(workplace);
     }
 
     @GetMapping("/api/coaches/descriptions")
-    public List<Coach> getCoachByDescription(String desc) {
+    public List<Coach> getCoachByDescription(@RequestParam String desc) {
         return service.getByDescription(desc);
     }
 
     @GetMapping("/api/coaches/names")
-    public List<Coach> getCoachByName(String name) {
+    public List<Coach> getCoachByName(@RequestParam String name) {
         return service.getByName(name);
     }
 }
