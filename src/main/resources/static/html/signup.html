@@ -8,9 +8,6 @@
     <link rel = "stylesheet" href = "../css/footer.css">
     <link rel = "stylesheet" href = "../css/signup.css">
     <style>
-        .question-set{
-            display: none
-        }
     </style>
 </head>
 <body>
@@ -150,23 +147,21 @@
     <script src = "../js/components.js"></script>
     <script>
         const userType = document.getElementById("userType");
+        const coachQuestions = document.getElementById("coachQuestions");
+        const clientQuestions = document.getElementById("clientQuestions");
 
         userType.addEventListener("change", () => {
             if (userType.value === "coach") {
-                document.getElementById("coachQuestions").style.display = "block";
-
+                coachQuestions.style.display = "block";
+                clientQuestions.style.display = "none";
+            } else if (userType.value === "client") {
+                clientQuestions.style.display = "block";
+                coachQuestions.style.display = "none";
+            } else {
+                clientQuestions.style.display = "none";
+                coachQuestions.style.display = "none";
             }
-
-            else if (userType.value === "client") {
-                document.getElementById("clientQuestions").style.display = "block";
-
-            }
-
-            else {
-                document.getElementById("clientQuestions").style.display = "none";
-                document.getElementById("coachQuestions").style.display = "none";
-            }
-        })
+        });
     </script>
 
 </body>
