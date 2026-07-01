@@ -109,6 +109,10 @@ public class Person {
 		return birthDate;
 	}
 
+	public void setBirthDate(LocalDate birthDate) {
+		this.birthDate = birthDate;
+	}
+
 	public Role getRole() {
 		return role;
 	}
