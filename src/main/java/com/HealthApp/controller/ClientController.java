@@ -58,42 +58,42 @@ public class ClientController {
     }
 
     @GetMapping("/api/clients/goal/{goal}")
-    public List<Client> getClientByGoal(@PathVariable Goal goal) {
-        return service.getClientByGoal(goal);
+    public ResponseEntity<List<Client>> getClientByGoal(@PathVariable Goal goal) {
+        return ResponseEntity.ok(service.getClientByGoal(goal));
     }
 
     @GetMapping("/api/clients/level/{level}")
-    public List<Client> getClientByStressLevel(@PathVariable Level level) {
-        return service.getClientByStressLevel(level);
+    public ResponseEntity<List<Client>> getClientByStressLevel(@PathVariable Level level) {
+        return ResponseEntity.ok(service.getClientByStressLevel(level));
     }
 
     @GetMapping("/api/clients/pattern/{pattern}")
-    public List<Client> getClientBySleepPattern(@PathVariable Pattern pattern) {
-        return service.getClientBySleepPattern(pattern);
+    public ResponseEntity<List<Client>> getClientBySleepPattern(@PathVariable Pattern pattern) {
+        return ResponseEntity.ok(service.getClientBySleepPattern(pattern));
     }
 
     @GetMapping("/api/clients/preference/{preference}")
-    public List<Client> getClientByWorkoutPreference(@PathVariable WorkoutPreference preference) {
-        return service.getClientByWorkoutPreference(preference);
+    public ResponseEntity<List<Client>> getClientByWorkoutPreference(@PathVariable WorkoutPreference preference) {
+        return ResponseEntity.ok(service.getClientByWorkoutPreference(preference));
     }
 
     @GetMapping("/api/clients/barrier/{barrier}")
-    public List<Client> getClientByBarrier(@PathVariable Barrier barrier) {
-        return service.getClientByBarrier(barrier);
+    public ResponseEntity<List<Client>> getClientByBarrier(@PathVariable Barrier barrier) {
+        return ResponseEntity.ok(service.getClientByBarrier(barrier));
     }
 
     @GetMapping("/api/clients/weight")
-    public List<Client> getClientByWeightRange(@RequestParam Double min, @RequestParam Double max) {
-        return service.getClientByWeight(min, max);
+    public ResponseEntity<List<Client>> getClientByWeightRange(@RequestParam Double min, @RequestParam Double max) {
+        return ResponseEntity.ok(service.getClientByWeight(min, max));
     }
 
     @GetMapping("/api/clients/height")
-    public List<Client> getClientByHeightRange(@RequestParam Double min, @RequestParam Double max) {
-        return service.getClientByHeight(min, max);
+    public ResponseEntity<List<Client>> getClientByHeightRange(@RequestParam Double min, @RequestParam Double max) {
+        return ResponseEntity.ok(service.getClientByHeight(min, max));
     }
 
     @GetMapping("/api/clients/bodyfat")
-    public List<Client> getClientByBodyfatRange(@RequestParam Double min, @RequestParam Double max) {
-        return service.getClientByBodyfat(min, max);
+    public ResponseEntity<List<Client>> getClientByBodyfatRange(@RequestParam Double min, @RequestParam Double max) {
+        return ResponseEntity.ok(service.getClientByBodyfat(min, max));
     }
 }
