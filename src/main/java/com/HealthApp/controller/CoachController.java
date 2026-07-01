@@ -84,37 +84,37 @@ public class CoachController {
     }
 
     @GetMapping("/api/coaches/specialties/{specialty}")
-    public List<Coach> getCoachBySpecialty(@PathVariable Specialty specialty) {
-        return service.getCoachBySpecialty(specialty);
+    public ResponseEntity<List<Coach>> getCoachBySpecialty(@PathVariable Specialty specialty) {
+        return ResponseEntity.ok(service.getCoachBySpecialty(specialty));
     }
 
     @GetMapping("/api/coaches/availabilities")
-    public List<Coach> getCoachByAvailability() {
-        return service.getCoachByOpenForNewClient();
+    public ResponseEntity<List<Coach>> getCoachByAvailability() {
+        return ResponseEntity.ok(service.getCoachByOpenForNewClient());
     }
 
     @GetMapping("/api/coaches/yearsOfExperience")
-    public List<Coach> getCoachByYearsOfExperience(@RequestParam int minYear, @RequestParam int maxYear) {
-        return service.getCoachByYearsOfExperienceBetween(minYear, maxYear);
+    public ResponseEntity<List<Coach>> getCoachByYearsOfExperience(@RequestParam int minYear, @RequestParam int maxYear) {
+        return ResponseEntity.ok(service.getCoachByYearsOfExperienceBetween(minYear, maxYear));
     }
 
     @GetMapping("/api/coaches/clientCounts")
-    public List<Coach> getCoachByCountBetween(@RequestParam int minCount, @RequestParam int maxCount) {
-        return service.getByClientCountBetween(minCount, maxCount);
+    public ResponseEntity<List<Coach>> getCoachByCountBetween(@RequestParam int minCount, @RequestParam int maxCount) {
+        return ResponseEntity.ok(service.getByClientCountBetween(minCount, maxCount));
     }
 
     @GetMapping("/api/coaches/workplaces")
-    public List<Coach> getCoachByWorkplace (@RequestParam String workplace) {
-        return service.getByWorkplace(workplace);
+    public ResponseEntity<List<Coach>> getCoachByWorkplace (@RequestParam String workplace) {
+        return ResponseEntity.ok(service.getByWorkplace(workplace));
     }
 
     @GetMapping("/api/coaches/descriptions")
-    public List<Coach> getCoachByDescription(@RequestParam String desc) {
-        return service.getByDescription(desc);
+    public ResponseEntity<List<Coach>> getCoachByDescription(@RequestParam String desc) {
+        return ResponseEntity.ok(service.getByDescription(desc));
     }
 
     @GetMapping("/api/coaches/names")
-    public List<Coach> getCoachByName(@RequestParam String name) {
-        return service.getByName(name);
+    public ResponseEntity<List<Coach>> getCoachByName(@RequestParam String name) {
+        return ResponseEntity.ok(service.getByName(name));
     }
 }

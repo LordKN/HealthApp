@@ -3,7 +3,6 @@ package com.HealthApp.service;
 import java.util.List;
 
 import com.HealthApp.model.Certificate;
-import com.HealthApp.model.Client;
 import com.HealthApp.model.Specialty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -118,6 +117,7 @@ public class CoachService {
         Coach existingCoach = repo.findById(coachID).orElseThrow(() -> new RuntimeException("Coach not found"));
 
         existingCoach.addCertificate(certificate);
+        repo.save(existingCoach);
         return existingCoach;
     }
 
