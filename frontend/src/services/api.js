@@ -1,6 +1,6 @@
 const API_BASE_URL = "http://localhost:8000/api";
 
-//CLIENT end points
+//CLIENT
 export async function getClients() {
   const response = await fetch(`${API_BASE_URL}/clients`);
   return response.json();
@@ -23,5 +23,22 @@ export async function createClients(client) {
     const message = await response.text();
     throw new Error(message);
   }
+  return response.json();
+}
+
+//COACH
+export async function getCoaches() {
+  const response = await fetch(`${API_BASE_URL}/coaches`);
+  return response.json();
+}
+
+export async function createCoaches(coach) {
+  const response = await fetch(`${API_BASE_URL}/coaches`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(coach),
+  });
   return response.json();
 }
