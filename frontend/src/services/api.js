@@ -1,4 +1,4 @@
-const API_BASE_URL = "http://localhost:8000/api";
+const API_BASE_URL = "http://localhost:8080/api";
 
 //CLIENT
 export async function getClients() {
@@ -6,7 +6,7 @@ export async function getClients() {
   return response.json();
 }
 
-export async function createClients(client) {
+export async function createClient(client) {
   //Send a HTTP POST request to /api/clients
   const response = await fetch(`${API_BASE_URL}/clients`, {
     method: "POST",
@@ -32,7 +32,7 @@ export async function getCoaches() {
   return response.json();
 }
 
-export async function createCoaches(coach) {
+export async function createCoach(coach) {
   const response = await fetch(`${API_BASE_URL}/coaches`, {
     method: "POST",
     headers: {
