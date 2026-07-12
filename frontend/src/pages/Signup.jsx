@@ -65,16 +65,16 @@ export default function Signup() {
       <form className="sign-up-container" onSubmit={handleSubmit}>
         <p>
           <strong>Name: </strong> <label htmlFor="name"></label>
-          <input type="text" id="name" required onChange={handleInputChange} />
+          <input type="text" id="name" value={formData.name || ""} required onChange={handleInputChange} />
         </p>
         <p>
           <strong>Birthdate: </strong> <label htmlFor="date"></label>
-          <input type="date" id="birthDate" required onChange={handleInputChange} />
+          <input type="date" id="birthDate" value={formData.birthDate || ""} required onChange={handleInputChange} />
         </p>
         <p>
           <strong>Sex: </strong>
           <label>
-            <select className="rating" id="sex" onChange={handleInputChange}>
+            <select className="rating" id="sex" value={formData.sex || ""} onChange={handleInputChange}>
               <option value="">Select...</option>
               <option value="M">Male</option>
               <option value="F">Female</option>
@@ -86,6 +86,7 @@ export default function Signup() {
           <input
             type="text"
             id="address"
+            value={formData.address || ""}
             required
             onChange={handleInputChange}
           />
@@ -95,6 +96,7 @@ export default function Signup() {
           <input
             type="tel"
             id="phoneNo"
+            value={formData.phoneNo || ""}
             required
             onChange={handleInputChange}
           />
@@ -104,6 +106,7 @@ export default function Signup() {
           <input
             type="email"
             id="email"
+            value={formData.email}
             required
             onChange={handleInputChange}
           />
@@ -127,6 +130,7 @@ export default function Signup() {
           <input
             type="text"
             id="emergencyContactName"
+            value={formData.emergencyContactName || ""}
             required
             onChange={handleInputChange}
           />
@@ -137,6 +141,7 @@ export default function Signup() {
           <input
             type="tel"
             id="emergencyContactPhone"
+            value={formData.emergencyContactPhone}
             required
             onChange={handleInputChange}
           />
@@ -147,6 +152,7 @@ export default function Signup() {
           <input
             type="text"
             id="emergencyContactRelationship"
+            value={formData.emergencyContactRelationship}
             required
             onChange={handleInputChange}
           />
@@ -173,7 +179,7 @@ export default function Signup() {
             <label htmlFor="specialty">
               <strong>What's your specialty?</strong>
             </label>
-            <select id="specialty" onChange={handleInputChange}>
+            <select id="specialty" value={formData.specialty || ""} onChange={handleInputChange} required>
               <option value="">SELECT...</option>
               <option value="STRENGTH_TRAINING">Strength Training</option>
               <option value="WEIGHT_LOSS">Weight Loss</option>
@@ -187,6 +193,7 @@ export default function Signup() {
             <input
                 type="text"
                 id="workPlace"
+                value={formData.workPlace || ""}
                 required
                 onChange={handleInputChange}
             />
@@ -197,6 +204,7 @@ export default function Signup() {
             <input
                 type="text"
                 id="description"
+                value={formData.description}
                 required
                 onChange={handleInputChange}
             />
@@ -209,7 +217,19 @@ export default function Signup() {
               <label htmlFor="activityLevel">
                 <strong>What's your activity level?</strong>
               </label>
-              <select id="activityLevel" onChange={handleInputChange}>
+              <select id="activityLevel" value={formData.activityLevel} onChange={handleInputChange} required>
+                <option value="">SELECT...</option>
+                <option value="LOW">Low</option>
+                <option value="MEDIUM">Medium</option>
+                <option value="HIGH">High</option>
+              </select>
+            </p>
+
+            <p>
+              <label htmlFor="stressLevel">
+                <strong>What's your stress level?</strong>
+              </label>
+              <select id="stressLevel" value={formData.stressLevel || ""} onChange={handleInputChange} required>
                 <option value="">SELECT...</option>
                 <option value="LOW">Low</option>
                 <option value="MEDIUM">Medium</option>
@@ -221,7 +241,7 @@ export default function Signup() {
               <label htmlFor="fitnessGoal">
                 <strong>What's your fitness goal?</strong>
               </label>
-              <select id="fitnessGoal" onChange={handleInputChange}>
+              <select id="fitnessGoal" value={formData.fitnessGoal || ""} onChange={handleInputChange}>
                 <option value="">SELECT...</option>
                 <option value="WEIGHT_LOSS">Weight Loss</option>
                 <option value="MUSCLE_GAIN">Muscle Gain</option>
@@ -236,6 +256,7 @@ export default function Signup() {
               </label>
               <select
                 id="sleepPattern"
+                value={formData.sleepPattern || ""}
                 name="sleepPattern"
                 onChange={handleInputChange}
               >
@@ -256,7 +277,9 @@ export default function Signup() {
                 min="50"
                 max="300"
                 step="0.1"
+                value={formData.height || ""}
                 onChange={handleInputChange}
+                required
               ></input>
             </p>
 
@@ -267,10 +290,12 @@ export default function Signup() {
               <input
                 type="number"
                 id="weight"
+                value={formData.weight || ""}
                 onChange={handleInputChange}
                 min="20"
                 max="500"
                 step="0.1"
+                required
               ></input>
             </p>
 
@@ -281,10 +306,12 @@ export default function Signup() {
               <input
                 type="number"
                 id="bodyFat"
+                value={formData.bodyFat || ""}
                 min="0"
                 max="100"
                 step="0.1"
                 onChange={handleInputChange}
+                required
               ></input>
             </p>
 
@@ -295,9 +322,56 @@ export default function Signup() {
               <input
                 type="text"
                 id="availability"
+                value={formData.availability || ""}
                 onChange={handleInputChange}
                 placeholder="Mon/Wed/Fri evenings"
+                required
               ></input>
+            </p>
+
+            <p>
+              <label htmlFor="barriers">
+                <strong>Do you have any barrier that affects your workout progress?</strong>
+              </label>
+              <select id="barriers" value={formData.barriers || ""} onChange={handleInputChange}>
+                <option value="">SELECT...</option>
+                <option value="MOTIVATION">I haven't found a reason why yet. (Motivation)</option>
+                <option value="ENERGY">Life drains me at the end of the day</option>
+                <option value="STRESS">Things keep pushing me to my limit</option>
+                <option value="INJURY">I got injury</option>
+                <option value="SCHEDULE">I am trying to manage my time but it takes a little too long</option>
+                <option value="EQUIPMENT">I don't have enough equipment and I'm shy at the gym</option>
+                <option value="KNOWLEDGE">I don't know how to organize/perform the exercises yet</option>
+                <option value="COST">Good gyms are too expensive</option>
+                <option value="CONSISTENCY">My daily life always give me detours</option>
+                <option value="OTHER">I have another reason</option>
+              </select>
+            </p>
+
+            <p>
+              <label htmlFor="workoutPreference">
+                <strong>What's your workout preference?</strong>
+              </label>
+              <select
+                  id="workoutPreference"
+                  value={formData.workoutPreference || ""}
+                  onChange={handleInputChange}
+                  required
+              >
+                <option value="">SELECT...</option>
+                <option value="HOME_WORKOUT">At home</option>
+                <option value="GYM_WORKOUT">At a gym</option>
+                <option value="OUTDOOR_WORKOUT">Outdoor</option>
+                <option value="BODYWEIGHT">No equipment needed</option>
+                <option value="WEIGHT_TRAINING">Weights would be great</option>
+                <option value="CARDIO">I prefer a lot of movements</option>
+                <option value="HIIT">HIIT</option>
+                <option value="YOGA">I love stretching</option>
+                <option value="PILATES">Pilates</option>
+                <option value="SPORTS_TRAINING">Sport training</option>
+                <option value="FLEXIBILITY_MOBILITY">Mobility exercises</option>
+                <option value="MIXED">Mixed workout types</option>
+              </select>
             </p>
           </div>
         )}
