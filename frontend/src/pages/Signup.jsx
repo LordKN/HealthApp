@@ -4,7 +4,26 @@ import { createClient, createCoach } from "../services/api.js";
 
 export default function Signup() {
   const [userType, setUserType] = useState("");
+
+  /*
+   * formData is a JavaScript object that stores the current state of the form.
+   * When sending data to Spring Boot, fetch() uses:
+   *      JSON.stringify(formData)
+   * to convert this object into JSON.
+   *
+   * Spring Boot then converts the JSON back to a Java Client/Coach object.
+   */
   const [formData, setFormData] = useState({});
+
+  /*
+   * Remember:
+   * onChange updates React state.
+   * value displays React state.
+   *
+   * Together they create a controlled component.
+   * Without value, the browser controls the field
+   * Without onChange, React never knows the user's input
+   */
 
   function handleInputChange(e) {
     setFormData({
