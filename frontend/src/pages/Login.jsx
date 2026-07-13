@@ -1,4 +1,4 @@
-import "../assets/css/login.css"
+import "../assets/css/login.css";
 
 export default function Login() {
   return (
@@ -39,9 +39,9 @@ export default function Login() {
         </form>
 
         <div className="account-links">
-          <a href="#">Forgot Password?</a>
+          <a href="/forgot-password">Forgot Password?</a>
 
-          <a href="signup.html">Create Account</a>
+          <a href="/signup">Create Account</a>
         </div>
       </div>
     </main>
