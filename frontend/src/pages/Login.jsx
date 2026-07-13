@@ -10,7 +10,7 @@ export default function Login() {
 
         <form>
           <div className="form-group">
-            <label for="username">Username</label>
+            <label htmlFor="username">Username</label>
 
             <input
               type="text"
@@ -22,7 +22,7 @@ export default function Login() {
           </div>
 
           <div className="form-group">
-            <label for="password">Password</label>
+            <label htmlFor="password">Password</label>
 
             <input
               type="password"
