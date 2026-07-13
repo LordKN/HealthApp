@@ -1,0 +1,19 @@
+/* ========================================
+   GLOBAL RESET
+======================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ========================================
+   GLOBAL PAGE STYLES
+======================================== */
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f8f6;
+    color: #1f2933;
+}

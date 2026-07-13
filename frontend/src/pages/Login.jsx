@@ -1,3 +1,5 @@
+import "../assets/css/login.css"
+
 export default function Login() {
   return (
     <main className="login-page">
