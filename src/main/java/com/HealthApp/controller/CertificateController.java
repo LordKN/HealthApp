@@ -16,8 +16,9 @@ public class CertificateController {
     private CertificateService service;
 
     @GetMapping("/api/certificates")
-    public List<Certificate> getAllCertificate() {
-        return service.getAllCertificates();
+    public ResponseEntity<List<Certificate>> getAllCertificate() {
+
+        return ResponseEntity.ok(service.getAllCertificates());
     }
 
     @GetMapping("/api/certificates/{cerID}")

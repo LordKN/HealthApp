@@ -3,6 +3,7 @@ package com.HealthApp.controller;
 import com.HealthApp.model.Workout;
 import com.HealthApp.service.WorkoutService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,8 +15,9 @@ public class WorkoutController {
     private WorkoutService service;
 
     @GetMapping("/api/workouts")
-    public List<Workout> getAllWorkouts() {
-        return service.getAllWorkout();
+    public ResponseEntity<List<Workout>> getAllWorkouts() {
+
+        return ResponseEntity.ok(service.getAllWorkout());
     }
 
     @GetMapping("/api/workout/{workoutID}")

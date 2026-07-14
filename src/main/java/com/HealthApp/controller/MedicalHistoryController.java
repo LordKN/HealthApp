@@ -3,6 +3,7 @@ package com.HealthApp.controller;
 import com.HealthApp.model.MedicalHistory;
 import com.HealthApp.service.MedicalHistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,8 +15,9 @@ public class MedicalHistoryController {
     private MedicalHistoryService service;
 
     @GetMapping("/api/histories")
-    public List<MedicalHistory> getAllMedicalHistory() {
-        return service.getAllMedicalHistory();
+    public ResponseEntity<List<MedicalHistory>> getAllMedicalHistory() {
+
+        return ResponseEntity.ok(service.getAllMedicalHistory());
     }
 
     @GetMapping("/api/history/{histID}")

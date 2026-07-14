@@ -16,8 +16,8 @@ public class ClientController {
     private ClientService service;
 
     @GetMapping("/api/clients")
-    public List<Client> getAllClient() {
-        return service.getAllClients();
+    public ResponseEntity<List<Client>> getAllClient() {
+        return ResponseEntity.ok(service.getAllClients());
     }
 
     @GetMapping("/api/clients/{cliID}")

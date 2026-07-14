@@ -18,12 +18,10 @@ public class CoachController {
     @Autowired
     private CoachService service;
 
-    @Autowired
-    private CertificateService certificateService;
-
     @GetMapping("/api/coaches")
-    public List<Coach> getAllCoaches() {
-        return service.findAllCoaches();
+    public ResponseEntity<List<Coach>> getAllCoaches() {
+
+        return ResponseEntity.ok(service.findAllCoaches());
     }
 
     @GetMapping("/api/coaches/{coachId}")
