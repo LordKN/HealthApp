@@ -47,3 +47,16 @@ export default App;
  *
  * The imported name MUST match the exported name exactly.
  */
+
+/*
+ * React Router uses client-side routing
+ *
+ * Instead of requesting a new HTML page from Spring Boot,
+ * React changes the displayed component inside the browser.
+ *
+ * This creates a faster user experience because the page
+ * does not fully reload during the navigation
+ *
+ * Spring Boot only handles API requests, while
+ * React handles page navigations
+ */
