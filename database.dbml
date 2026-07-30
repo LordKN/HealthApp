@@ -1,0 +1,142 @@
+Enum "client_activity_level_enum" {
+  "HIGH"
+  "LOW"
+  "MEDIUM"
+}
+
+Enum "client_fitness_goal_enum" {
+  "LONG_TERM"
+  "SHORT_TERM"
+}
+
+Enum "client_stress_level_enum" {
+  "HIGH"
+  "LOW"
+  "MEDIUM"
+}
+
+Enum "client_role_enum" {
+  "ADMIN"
+  "CLIENT"
+  "COACH"
+}
+
+Enum "coach_specialty_enum" {
+  "CADIO"
+  "REHAB"
+  "STRENGTH_TRAINING"
+  "WEIGHT_LOSS"
+}
+
+Enum "coach_role_enum" {
+  "ADMIN"
+  "CLIENT"
+  "COACH"
+}
+
+Enum "exercise_muscle_group_enum" {
+  "BACK"
+  "BICEP"
+  "CALF"
+  "CHEST"
+  "LEG"
+  "SHOULDER"
+  "TRICEP"
+}
+
+Table "certificate" {
+  "id" bigint [pk, not null, increment]
+  "cer_name" varchar(255)
+  "description" varchar(255)
+  "iss_org" varchar(255)
+  "coach_id" bigint
+}
+
+Table "client" {
+  "id" bigint [pk, not null, increment]
+  "address" varchar(255)
+  "birth_date" date
+  "email" varchar(255)
+  "emergency_contact_name" varchar(255)
+  "emergency_contact_phone" varchar(255)
+  "emergency_contact_relationship" varchar(255)
+  "name" varchar(255)
+  "phone_no" varchar(255)
+  "photo_path" varchar(255)
+  "sex" varchar(255)
+  "activity_level" client_activity_level_enum
+  "availability" varchar(255)
+  "barriers" varchar(255)
+  "body_fat" double
+  "fitness_goal" client_fitness_goal_enum
+  "height" double
+  "sleep_pattern" varchar(255)
+  "stress_level" client_stress_level_enum
+  "waiver_accepted" bit(1) [not null]
+  "weight" double
+  "workout_preference" varchar(255)
+  "role" client_role_enum
+}
+
+Table "client_med" {
+  "client_id" bigint [not null]
+  "med_id" bigint [unique, not null]
+}
+
+Table "coach" {
+  "id" bigint [pk, not null, increment]
+  "address" varchar(255)
+  "birth_date" date
+  "email" varchar(255)
+  "emergency_contact_name" varchar(255)
+  "emergency_contact_phone" varchar(255)
+  "emergency_contact_relationship" varchar(255)
+  "name" varchar(255)
+  "phone_no" varchar(255)
+  "photo_path" varchar(255)
+  "sex" varchar(255)
+  "client_count" int [not null]
+  "description" varchar(255)
+  "open_for_new_client" bit(1) [not null]
+  "specialty" coach_specialty_enum
+  "work_place" varchar(255)
+  "years_of_experience" int [not null]
+  "role" coach_role_enum
+}
+
+Table "exercise" {
+  "id" bigint [pk, not null, increment]
+  "description" varchar(2000)
+  "muscle_group" exercise_muscle_group_enum
+  "name" varchar(255)
+}
+
+Table "medical_history" {
+  "id" bigint [pk, not null, increment]
+  "description" varchar(255)
+  "name" varchar(255)
+  "client_id" bigint
+}
+
+Table "workout" {
+  "id" bigint [pk, not null, increment]
+  "description" varchar(2000)
+  "name" varchar(255)
+}
+
+Table "workout_exercise" {
+  "workout_id" bigint [not null]
+  "exercise_id" bigint [not null]
+}
+
+Ref "FKh4xgtb0rm232o7d5hgka2dnlr":"coach"."id" < "certificate"."coach_id"
+
+Ref "FK8x4cqvekf045tt79uh5trxyaw":"client"."id" < "client_med"."client_id"
+
+Ref "FKko544avtjxoyk6b3npegfhqgf":"medical_history"."id" < "client_med"."med_id"
+
+Ref "FKidb8kdbjbpyee7hfjxouo6a1a":"client"."id" < "medical_history"."client_id"
+
+Ref "FKalytxvdcpsg2e2oo8ihk55dm2":"exercise"."id" < "workout_exercise"."exercise_id"
+
+Ref "FKqultuq4g6w47iqdaf0vb8ff3j":"workout"."id" < "workout_exercise"."workout_id"
