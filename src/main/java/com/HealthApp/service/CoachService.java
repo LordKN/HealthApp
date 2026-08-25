@@ -5,6 +5,7 @@ import java.util.List;
 import com.HealthApp.model.Certificate;
 import com.HealthApp.model.Specialty;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.HealthApp.model.Coach;
 import com.HealthApp.repo.CoachRepository;
@@ -14,6 +15,7 @@ public class CoachService {
 
     @Autowired
     private CoachRepository repo;
+    private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
     public List<Coach> findAllCoaches() {
         return repo.findAll();
@@ -35,7 +37,7 @@ public class CoachService {
     public Coach saveCoach (Coach coach) {
 
         validateCoach(coach);
-
+        coach.setPassword(encoder.encode(coach.getPassword()));
         //Important: keep both sides of Coach-Certificate relationship synced
         if (coach.getCertifications() != null) {
             coach.getCertifications().forEach(certificate -> certificate.setCoach(coach));
