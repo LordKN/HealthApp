@@ -13,4 +13,5 @@ public interface CoachRepository  extends JpaRepository <Coach, Long> {
 	List<Coach> findByWorkPlaceIgnoreCase (String workplace);
 	List<Coach> findByDescriptionContainingIgnoreCase (String desc);
 	List<Coach> findByNameContainingIgnoreCase (String name);
+    Coach findByEmail(String email);
 }

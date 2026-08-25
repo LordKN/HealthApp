@@ -14,4 +14,5 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
 	List<Client> findByWeightBetween (Double minWeight, Double maxWeight);
 	List<Client> findByHeightBetween (Double minHeight, Double maxHeight);
 	List<Client> findByBodyFatBetween(Double minBodyFat, Double maxBodyFat);
+    Client findByEmail(String email);
 }

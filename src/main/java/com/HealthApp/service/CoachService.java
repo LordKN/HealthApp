@@ -24,6 +24,14 @@ public class CoachService {
                 .orElseThrow(() -> new RuntimeException("Coach not found"));
     }
 
+    public Coach findCoachByEmail (String email) {
+        Coach coach = repo.findByEmail(email);
+        if (coach == null) {
+            throw new RuntimeException("Coach not found");
+        }
+        return coach;
+    }
+
     public Coach saveCoach (Coach coach) {
 
         validateCoach(coach);
@@ -109,6 +117,8 @@ public class CoachService {
         existingCoach.setClientCount(updatedCoach.getClientCount());
         existingCoach.setWorkPlace(updatedCoach.getWorkPlace());
         existingCoach.setDesc(updatedCoach.getDesc());
+        existingCoach.setPassword(updatedCoach.getPassword());
+
         validateCoach(existingCoach);
         return repo.save(existingCoach);
     }

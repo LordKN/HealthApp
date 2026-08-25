@@ -23,6 +23,7 @@ public class Person {
 	private String emergencyContactName;
 	private String emergencyContactPhone;
 	private String emergencyContactRelationship;
+    private String password;
 	
 	public Person() {
 		System.out.println("Person created");
@@ -112,6 +113,14 @@ public class Person {
 	public void setBirthDate(LocalDate birthDate) {
 		this.birthDate = birthDate;
 	}
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPassword() {
+        return password;
+    }
 
 	public Role getRole() {
 		return role;

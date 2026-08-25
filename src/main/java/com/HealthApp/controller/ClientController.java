@@ -21,9 +21,15 @@ public class ClientController {
     }
 
     @GetMapping("/api/clients/{cliID}")
-    public ResponseEntity<Client> getClient(@PathVariable("cliID") Long id) {
+    public ResponseEntity<Client> getClientByid(@PathVariable("cliID") Long id) {
 
         Client client = service.getClientById(id);
+        return ResponseEntity.ok(client);
+    }
+
+    @GetMapping("/api/clients/{cliEmail}")
+    public ResponseEntity<Client> getClientByEmail(@PathVariable("cliEmail") String email) {
+        Client client = service.getClientByEmail(email);
         return ResponseEntity.ok(client);
     }
 

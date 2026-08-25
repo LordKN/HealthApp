@@ -29,6 +29,11 @@ public class CoachController {
         return service.findCoachById(id);
     }
 
+    @GetMapping("/api/coaches/{coachEmail}")
+    public ResponseEntity<Coach> getCoachByEmail(@PathVariable("coachEmail") String email) {
+        return ResponseEntity.ok(service.findCoachByEmail(email));
+    }
+
     @GetMapping("/api/coaches/count")
     public Long countCoaches() {
         return service.countCoaches();

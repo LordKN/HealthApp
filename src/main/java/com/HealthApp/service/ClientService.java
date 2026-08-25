@@ -22,6 +22,14 @@ public class ClientService {
                 .orElseThrow(() -> new RuntimeException("Client not found"));
     }
 
+    public Client getClientByEmail (String email) {
+        Client client = repo.findByEmail(email);
+        if (client == null) {
+            throw new RuntimeException("Client not found");
+        }
+        return client;
+    }
+
     public Client saveClient(Client client) {
         validateClient(client);
 
@@ -94,6 +102,7 @@ public class ClientService {
         existingClient.setBarriers(updatedClient.getBarriers());
         existingClient.setSleepPattern(updatedClient.getSleepPattern());
         existingClient.setWaiverAccepted(updatedClient.isWaiverAccepted());
+        existingClient.setPassword(updatedClient.getPassword());
 
         validateClient(existingClient);
 
