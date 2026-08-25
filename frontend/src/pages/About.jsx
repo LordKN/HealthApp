@@ -1,8 +1,12 @@
 import "../assets/css/about.css"
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 export default function About() {
   return (
-    <main className="about-page">
+    <>
+      <Navbar/>
+      <main className="about-page">
       <section className="about-hero">
         <h1>About Grind Hub</h1>
         <p>Everything you need for your fitness journey, all in one place.</p>
@@ -62,5 +66,7 @@ export default function About() {
         </div>
       </section>
     </main>
+      <Footer/>
+    </>
   );
 }

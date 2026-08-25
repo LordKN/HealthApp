@@ -1,8 +1,12 @@
 import "../assets/css/login.css";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 export default function Login() {
   return (
-    <main className="login-page">
+    <>
+      <Navbar/>
+      <main className="login-page">
       <div className="login-card">
         <h1>Welcome Back</h1>
 
@@ -45,5 +49,7 @@ export default function Login() {
         </div>
       </div>
     </main>
+      <Footer/>
+    </>
   );
 }

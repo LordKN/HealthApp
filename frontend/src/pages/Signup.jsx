@@ -1,6 +1,8 @@
 import "../assets/css/signup.css";
 import { useState } from "react";
 import { createClient, createCoach } from "../services/api.js";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 export default function Signup() {
   const [userType, setUserType] = useState("");
@@ -80,7 +82,9 @@ export default function Signup() {
   }
 
   return (
-    <div>
+    <>
+      <Navbar />
+      <div>
       <form className="sign-up-container" onSubmit={handleSubmit}>
         <p>
           <strong>Name: </strong> <label htmlFor="name"></label>
@@ -400,5 +404,7 @@ export default function Signup() {
         </button>
       </form>
     </div>
+    <Footer/>
+    </>
   );
 }
