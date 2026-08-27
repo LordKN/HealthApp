@@ -8,7 +8,7 @@ export async function getClients() {
 
 export async function createClient(client) {
   //Send a HTTP POST request to /api/clients
-  const response = await fetch(`${API_BASE_URL}/clients`, {
+  const response = await fetch(`${API_BASE_URL}/auth/clients`, {
     method: "POST",
     headers: {
       //Set the content type to JSON so Spring can know how to parse the request body
@@ -33,7 +33,7 @@ export async function getCoaches() {
 }
 
 export async function createCoach(coach) {
-  const response = await fetch(`${API_BASE_URL}/coaches`, {
+  const response = await fetch(`${API_BASE_URL}/auth/coaches`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

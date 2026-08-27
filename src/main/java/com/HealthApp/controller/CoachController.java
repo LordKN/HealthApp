@@ -39,7 +39,7 @@ public class CoachController {
         return service.countCoaches();
     }
 
-    @PostMapping("/api/coaches")
+    @PostMapping("/api/auth/coaches")
     public ResponseEntity<Coach> saveCoach(@RequestBody Coach coach) {
 
         Coach savedCoach = service.saveCoach(coach);

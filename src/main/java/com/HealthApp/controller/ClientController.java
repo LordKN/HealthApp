@@ -38,7 +38,7 @@ public class ClientController {
         return service.countClient();
     }
 
-    @PostMapping("/api/clients")
+    @PostMapping("/api/auth/clients")
     public ResponseEntity<Client> saveClient(@RequestBody Client client) {
 
         Client savedClient = service.saveClient(client);
