@@ -124,16 +124,6 @@ export default function Signup() {
             onChange={handleInputChange}
           />
         </p>
-        <p>
-          <strong>Email: </strong> <label htmlFor="email"></label>
-          <input
-            type="email"
-            id="email"
-            value={formData.email}
-            required
-            onChange={handleInputChange}
-          />
-        </p>
         {/*
           <p>
           <strong>Your photo: </strong>{" "}
@@ -176,6 +166,28 @@ export default function Signup() {
             type="text"
             id="emergencyContactRelationship"
             value={formData.emergencyContactRelationship}
+            required
+            onChange={handleInputChange}
+          />
+        </p>
+
+        <p>
+          <strong>Email: </strong> <label htmlFor="email"></label>
+          <input
+            type="email"
+            id="email"
+            value={formData.email || ""}
+            required
+            onChange={handleInputChange}
+          />
+        </p>
+
+        <p>
+          <strong>Password: </strong><label htmlFor="password"></label>
+          <input
+            type="password"
+            id="password"
+            value={formData.password || ""}
             required
             onChange={handleInputChange}
           />

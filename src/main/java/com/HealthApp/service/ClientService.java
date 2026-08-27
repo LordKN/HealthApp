@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.HealthApp.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.HealthApp.repo.ClientRepository;
 
@@ -13,7 +13,7 @@ public class ClientService {
 
     @Autowired
     private ClientRepository repo;
-    private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
+    //private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
     public List<Client> getAllClients() {
         return repo.findAll();
@@ -34,7 +34,7 @@ public class ClientService {
 
     public Client saveClient(Client client) {
         validateClient(client);
-        client.setPassword(encoder.encode(client.getPassword()));
+        //client.setPassword(encoder.encode(client.getPassword()));
         return repo.save(client);
     }
 

@@ -1,3 +1,4 @@
+/*
 package com.HealthApp.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,3 +43,5 @@ public class SecurityConfig {
         return http.build();
     }
 }
+
+ */
