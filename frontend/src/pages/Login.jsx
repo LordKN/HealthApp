@@ -1,8 +1,33 @@
+import { useState } from "react";
 import "../assets/css/login.css";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { loginUser } from "../services/api.js";
 
 export default function Login() {
+  const [formData, setFormData] = useState({
+    username: "",
+    password: ""
+  })
+
+  function handleInputChange(e) {
+    setFormData({
+    ...formData,
+    [e.target.id]: e.target.value
+    })
+  }
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    console.log("Form submitted:", formData);
+    try {
+      await loginUser(formData);
+    }
+    catch (error) {
+      console.error("Error logging in:", error);
+    }
+  }
+
   return (
     <>
       <Navbar/>
@@ -12,7 +37,7 @@ export default function Login() {
 
         <p className="subtitle">Login to continue your fitness journey.</p>
 
-        <form>
+        <form className = "log-in-container" onSubmit ={handleSubmit} >
           <div className="form-group">
             <label htmlFor="username">Username</label>
 
@@ -20,7 +45,8 @@ export default function Login() {
               type="text"
               id="username"
               name="username"
-              placeholder="Enter username"
+              placeholder="Enter email"
+              onChange = {handleInputChange}
               required
             />
           </div>
@@ -33,6 +59,7 @@ export default function Login() {
               id="password"
               name="password"
               placeholder="Enter password"
+              onChange = {handleInputChange}
               required
             />
           </div>

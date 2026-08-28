@@ -42,3 +42,15 @@ export async function createCoach(coach) {
   });
   return response.json();
 }
+
+//Login
+export async function loginUser(credentials) {
+  const response = await fetch(`${API_BASE_URL}/auth/login`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(credentials), // Convert the credentials object to a JSON string and send it in the request body
+  });
+  return response.text();
+}

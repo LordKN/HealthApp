@@ -1,4 +1,4 @@
 package com.HealthApp.model;
 
-public record Credential() {
+public record Credential(String username, String password) {
 }
