@@ -49,7 +49,7 @@ public class Coach extends Person {
 	public String description;
 	
 	public Coach() {
-		System.out.println("Coach created");
+
 	}
 
 	public Specialty getSpecialty() {

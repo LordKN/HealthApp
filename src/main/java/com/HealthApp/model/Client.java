@@ -43,7 +43,7 @@ public class Client extends Person {
 	private boolean waiverAccepted;
 	
 	public Client () {
-		System.out.println("Client created");
+
 	}
 
 	public List<MedicalHistory> getMed() {

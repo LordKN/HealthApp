@@ -26,7 +26,7 @@ public class Person {
     private String password;
 	
 	public Person() {
-		System.out.println("Person created");
+
 	}
 
 	public String getName() {
