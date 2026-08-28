@@ -2,9 +2,11 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Login from "./pages/Login";
+import ClientDashboard from "./pages/client/ClientDashboard";
+import CoachDashboard from "./pages/coach/CoachDashboard";
 
 import Signup from "./pages/Signup";
-function App() {
+export default function App() {
   return (
     <Router>
       <Routes>
@@ -12,12 +14,14 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/client-dashboard" element={<ClientDashboard />} />
+        <Route path="/coach-dashboard" element={<CoachDashboard />} />
       </Routes>
     </Router>
   );
 }
 
-export default App;
+
 
 /*
  * DEFAULT EXPORT

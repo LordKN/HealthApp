@@ -1,4 +1,4 @@
-package com.HealthApp.model;
+package com.HealthApp.dto;
 
 public record Credential(String username, String password) {
 }

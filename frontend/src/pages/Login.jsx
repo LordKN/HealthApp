@@ -1,10 +1,12 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../assets/css/login.css";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { loginUser } from "../services/api.js";
 
 export default function Login() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: "",
     password: ""
@@ -21,7 +23,20 @@ export default function Login() {
     e.preventDefault();
     console.log("Form submitted:", formData);
     try {
-      await loginUser(formData);
+      const data = await loginUser(formData);
+      console.log("Login successful:", data);
+      // Redirect to the appropriate dashboard based on user role
+      // For example, if the user is a client, redirect to the client dashboard
+      // If the user is a coach, redirect to the coach dashboard
+      if (data.role === "CLIENT") {
+        navigate("/client-dashboard");
+      }
+      else if (data.role === "COACH") {
+        navigate("/coach-dashboard");
+      }
+      else if (data.role === "ADMIN") {
+        navigate("/admin-dashboard");
+      }
     }
     catch (error) {
       console.error("Error logging in:", error);

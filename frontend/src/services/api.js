@@ -52,5 +52,5 @@ export async function loginUser(credentials) {
     },
     body: JSON.stringify(credentials), // Convert the credentials object to a JSON string and send it in the request body
   });
-  return response.text();
+  return response.json();
 }
