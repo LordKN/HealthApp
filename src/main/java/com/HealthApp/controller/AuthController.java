@@ -4,7 +4,10 @@ import com.HealthApp.dto.Credential;
 import com.HealthApp.dto.LoginResponse;
 import com.HealthApp.service.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,25 +24,20 @@ public class AuthController {
     private JwtService jwtService;
 
     @PostMapping("/api/auth/login")
-    public LoginResponse login (@RequestBody Credential credential) {
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(credential.username(), credential.password()));
-        String token = "";
-        String role = "invalid";
-
-        if (authentication.isAuthenticated()) {
+    public ResponseEntity<LoginResponse> login (@RequestBody Credential credential) {
+        try {
+            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(credential.username(), credential.password()));
             System.out.println("Login success");
-            token = jwtService.generateToken(credential.username());
-            System.out.println("token generated: " + token);
-            role = authentication.getAuthorities()
+            String token = jwtService.generateToken(credential.username());
+
+            String role = authentication.getAuthorities()
                     .iterator()
                     .next()
                     .getAuthority();
-        }
-        else {
-            System.out.println("Login failed");
-            token = "Login failed";
-        }
 
-        return new LoginResponse(token, role);
+            return ResponseEntity.ok(new LoginResponse(token, role));
+        } catch (BadCredentialsException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new LoginResponse(null, null));
+        }
     }
 }
