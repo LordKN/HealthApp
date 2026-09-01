@@ -1,13 +1,8 @@
 package com.HealthApp.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
+import java.util.Set;
 
 @Entity
 @Table(name = "exercise")
@@ -16,50 +11,105 @@ public class Exercise {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+    @Column (unique = true, nullable = false)
+    private Integer wgerId;
+
+    @Column (nullable = false)
 	private String name;
-	
-	@Column(length = 2000)
+	@Lob
 	private String description;
-	
-	@Enumerated(EnumType.STRING)
-	private Group muscleGroup;
+    private String exerciseImageUrl;
+    private String videoUrl;
+
+    @ManyToMany
+    @JoinTable(
+            name = "exercise_muscle",
+            joinColumns = @JoinColumn(name = "exercise_id"),
+            inverseJoinColumns = @JoinColumn(name = "muscle_id")
+    )
+    private Set<Muscle> primaryMuscles;
+
+    @ManyToMany
+    @JoinTable(
+            name = "exercise_equipment",
+            joinColumns = @JoinColumn(name = "exercise_id"),
+            inverseJoinColumns = @JoinColumn(name = "equipment_id")
+    )
+    private Set<Equipment> equipment;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
 	
 	public Exercise() {
-		System.out.println("Exercise created");
+
 	}
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public Group getMuscleGroup() {
-		return muscleGroup;
-	}
+    public String getExerciseImageUrl() {
+        return exerciseImageUrl;
+    }
 
-	public void setMuscleGroup(Group muscleGroup) {
-		this.muscleGroup = muscleGroup;
-	}
+    public void setExerciseImageUrl(String exerciseImageUrl) {
+        this.exerciseImageUrl = exerciseImageUrl;
+    }
 
-	public Long getId() {
-		return id;
-	}
+    public String getVideoUrl() {
+        return videoUrl;
+    }
 
-	@Override
-	public String toString() {
-		return "Exercise [id=" + id + ", name=" + name + ", description=" + description + ", muscleGroup=" + muscleGroup
-				+ "]";
-	}	
+    public void setVideoUrl(String videoUrl) {
+        this.videoUrl = videoUrl;
+    }
+
+    public Set<Muscle> getPrimaryMuscles() {
+        return primaryMuscles;
+    }
+
+    public void setPrimaryMuscles(Set<Muscle> primaryMuscles) {
+        this.primaryMuscles = primaryMuscles;
+    }
+
+    public Set<Equipment> getEquipment() {
+        return equipment;
+    }
+
+    public void setEquipment(Set<Equipment> equipment) {
+        this.equipment = equipment;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public Integer getWgerId() {
+        return wgerId;
+    }
+
+    public void setWgerId(Integer wgerId) {
+        this.wgerId = wgerId;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
 }
