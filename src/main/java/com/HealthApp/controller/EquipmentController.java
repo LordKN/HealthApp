@@ -23,14 +23,14 @@ public class EquipmentController {
         return ResponseEntity.ok(equipment);
     }
 
-    @GetMapping("/api/equipment/{wgerId}")
+    @GetMapping("/api/equipment/wger/{wgerId}")
     public ResponseEntity<Equipment> getEquipmentByWgerId(@PathVariable("wgerId") int id) {
         Equipment equipment = service.getEquipmentByWgerId(id);
 
         return ResponseEntity.ok(equipment);
     }
 
-    @GetMapping("/api/equipment/{equiName}")
+    @GetMapping("/api/equipment/search/{equiName}")
     public ResponseEntity<List<Equipment>> getEquipmentByName(@PathVariable("equiName") String name) {
         List<Equipment> equipmentList = service.getEquipmentByName(name);
 

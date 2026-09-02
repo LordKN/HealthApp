@@ -23,13 +23,13 @@ public class CategoryController {
         return ResponseEntity.ok(category);
     }
 
-    @GetMapping("/api/categories/{wgerId}")
+    @GetMapping("/api/categories/wger/{wgerId}")
     public ResponseEntity<Category> getCategoryByWgerId(@PathVariable("wgerId") int wgerId) {
         Category category = service.findByWgerId(wgerId);
         return ResponseEntity.ok(category);
     }
 
-    @GetMapping("/api/categories/{catName}")
+    @GetMapping("/api/categories/search/{catName}")
     public ResponseEntity<List<Category>> getCategoryByName(@PathVariable("catName") String name) {
         List<Category> categories = service.findCategoryByName(name);
         return ResponseEntity.ok(categories);

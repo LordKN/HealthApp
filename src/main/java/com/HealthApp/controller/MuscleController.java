@@ -23,14 +23,14 @@ public class MuscleController {
         return ResponseEntity.ok(muscle);
     }
 
-    @GetMapping("/api/muscles/{wgerId}")
+    @GetMapping("/api/muscles/wger/{wgerId}")
     public ResponseEntity<Muscle> getMuscleByWgerId(@PathVariable("wgerId") int wgerId) {
         Muscle muscle = service.getMuscleByWgerId(wgerId);
 
         return ResponseEntity.ok(muscle);
     }
 
-    @GetMapping("/api/muscles/{musName}")
+    @GetMapping("/api/muscles/search/{musName}")
     public ResponseEntity<List<Muscle>> getMuscleByName(@PathVariable("musName") String name) {
         List<Muscle> muscles = service.getMuscleByName(name);
 
