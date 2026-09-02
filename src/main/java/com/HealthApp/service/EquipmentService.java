@@ -23,7 +23,7 @@ public class EquipmentService {
                 .orElseThrow(() -> new RuntimeException("Equipment not found"));
     }
 
-    List<Equipment> getEquipmentByName (String name) {
+    public List<Equipment> getEquipmentByName (String name) {
         return repo.findByNameContainingIgnoreCase(name);
     }
 
