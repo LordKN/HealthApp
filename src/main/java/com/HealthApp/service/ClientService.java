@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.HealthApp.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.HealthApp.repo.ClientRepository;
@@ -25,10 +26,8 @@ public class ClientService {
     }
 
     public Client getClientByEmail (String email) {
-        Client client = repo.findByEmail(email);
-        if (client == null) {
-            throw new RuntimeException("Client not found");
-        }
+        Client client = repo.findByEmail(email).orElseThrow(
+                () -> new UsernameNotFoundException("Client not found"));
         return client;
     }
 

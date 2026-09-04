@@ -5,6 +5,7 @@ import java.util.List;
 import com.HealthApp.model.Certificate;
 import com.HealthApp.model.Specialty;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.HealthApp.model.Coach;
@@ -27,10 +28,8 @@ public class CoachService {
     }
 
     public Coach findCoachByEmail (String email) {
-        Coach coach = repo.findByEmail(email);
-        if (coach == null) {
-            throw new RuntimeException("Coach not found");
-        }
+        Coach coach = repo.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("Coach not found"));
         return coach;
     }
 

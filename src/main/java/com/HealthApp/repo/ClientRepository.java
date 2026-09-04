@@ -1,9 +1,12 @@
 package com.HealthApp.repo;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.HealthApp.model.*;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import javax.swing.text.html.Option;
 
 public interface ClientRepository extends JpaRepository<Client, Long> {
 	List<Client> findByFitnessGoal (Goal goal); //This will find the field fitnessGoal so name must match
@@ -14,5 +17,5 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
 	List<Client> findByWeightBetween (Double minWeight, Double maxWeight);
 	List<Client> findByHeightBetween (Double minHeight, Double maxHeight);
 	List<Client> findByBodyFatBetween(Double minBodyFat, Double maxBodyFat);
-    Client findByEmail(String email);
+    Optional<Client> findByEmail(String email);
 }
