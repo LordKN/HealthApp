@@ -63,9 +63,5 @@ public class ExerciseService {
         if (exercise.getDescription() != null && exercise.getDescription().length() > 2000) {
             throw new RuntimeException("Exercise description must be under 2000 characters");
         }
-
-        if (exercise.getMuscleGroup() == null) {
-            throw new RuntimeException("Muscle group is required");
-        }
     }
 }
