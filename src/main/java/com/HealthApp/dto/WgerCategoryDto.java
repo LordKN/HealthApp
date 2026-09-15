@@ -1,4 +1,4 @@
 package com.HealthApp.dto;
 
-public record WgerCategoryDto() {
+public record WgerCategoryDto(int id, String name) {
 }

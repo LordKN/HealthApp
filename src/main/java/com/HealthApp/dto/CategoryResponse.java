@@ -1,4 +1,9 @@
 package com.HealthApp.dto;
 
-public record CategoryResponse() {
+import java.util.List;
+
+public record CategoryResponse(int count,
+                               String next,
+                               String previous,
+                               List<WgerCategoryDto> results) {
 }
