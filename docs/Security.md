@@ -679,3 +679,58 @@ credentials: "include"
 The backend should explicitly allow the React origin and credentials
 
 ---
+
+# 14. Frontend Authentication & Token Handling
+
+## a) Flow
+Frontend Authentication & Token Handling
+│  
+├── AuthContext / AuthProvider  
+│&emsp;&emsp;   ├── accessToken stored in React memory  
+│&emsp;&emsp;   ├── role stored in React memory  
+│&emsp;&emsp;   └── loading state during session restoration  
+│  
+├── Login  
+│&emsp;&emsp;   ├── POST /api/auth/login  
+│&emsp;&emsp;   ├── access token → React AuthContext  
+│&emsp;&emsp;   └── refresh token → HttpOnly cookie  
+│  
+├── Protected Requests  
+│&emsp;&emsp;   └── Authorization: Bearer <accessToken>  
+│  
+├── Access Token Expiration  
+│&emsp;&emsp;   ├── protected request → 401  
+│&emsp;&emsp;   ├── POST /api/auth/refresh  
+│&emsp;&emsp;   ├── receive new access token  
+│&emsp;&emsp;   ├── update AuthContext  
+│&emsp;&emsp;   └── retry original request once  
+│  
+├── Page Reload / F5  
+│&emsp;&emsp;   ├── React memory disappears  
+│&emsp;&emsp;   ├── HttpOnly refresh cookie survives  
+│&emsp;&emsp;   ├── AuthProvider calls /auth/refresh  
+│&emsp;&emsp;   └── authentication state restored  
+│  
+├── Failed Refresh  
+│&emsp;&emsp;   └── clear authentication state / require login  
+│  
+└── Current Edge Cases  
+&emsp;&emsp;├── simultaneous refresh requests  
+&emsp;&emsp;└── refresh-token rotation race  
+
+## b) Definition
+
+### AuthContext
+- A React Context that creates a shared location through which authentication information can be accessed
+by components throughout the application.
+- Prevents authentication data from having to be manually passed through multiple components as props
+- Allows components to access authentication information provided by AuthProvider
+- **Does not own the authentication state**
+
+### AuthProvider
+- A React component that owns, manages, and provides the application's authentication state through AuthContext.
+- Wraps the application so the child components can access the authentication information/
+- Responsible for:
+  - Storing authentication state: role, accessToken
+  - Providing authentication information to child components
+  - Restoring authentication after a page reload
