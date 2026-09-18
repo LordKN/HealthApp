@@ -1,9 +1,18 @@
 const API_BASE_URL = "http://localhost:8080/api";
 
+
 //CLIENT
-export async function getClients() {
-  const response = await fetch(`${API_BASE_URL}/clients`);
-  return response.json();
+export async function getClients(accessToken) {
+  const response = await fetch(`${API_BASE_URL}/clients`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`, // Include the access token in the Authorization bearer header
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch clients");
+  }
+  return response;
 }
 
 export async function createClient(client) {
@@ -18,18 +27,17 @@ export async function createClient(client) {
     //Convert the client object to a JSON string and send it in the request body
     body: JSON.stringify(client),
   });
-
-  if (!response.ok) {
-    const message = await response.text();
-    throw new Error(message);
-  }
   return response.json();
 }
 
 //COACH
-export async function getCoaches() {
-  const response = await fetch(`${API_BASE_URL}/coaches`);
-  return response.json();
+export async function getCoaches(accessToken) {
+  const response = await fetch(`${API_BASE_URL}/coaches`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`, // Include the access token in the Authorization bearer header
+    }
+  });
+  return response;
 }
 
 export async function createCoach(coach) {
@@ -47,10 +55,29 @@ export async function createCoach(coach) {
 export async function loginUser(credentials) {
   const response = await fetch(`${API_BASE_URL}/auth/login`, {
     method: "POST",
+    credentials: "include", // Include cookies in the request
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(credentials), // Convert the credentials object to a JSON string and send it in the request body
   });
+
+  if (!response.ok) {
+    throw new Error("Failed to login");
+  }
+  return response.json();
+}
+
+//Refresh
+export async function refreshAccessToken() {
+  const response = await fetch(`${API_BASE_URL}/auth/refresh`, {
+    method: "POST",
+    credentials: "include", // Include cookies in the request
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to refresh access token");
+  }
+
   return response.json();
 }

@@ -4,6 +4,7 @@ import "../assets/css/login.css";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { loginUser } from "../services/api.js";
+import { useAuth } from "../context/AuthContext.jsx";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -11,6 +12,7 @@ export default function Login() {
     username: "",
     password: ""
   })
+  const { setAccessToken, setRole } = useAuth();
 
   function handleInputChange(e) {
     setFormData({
@@ -24,6 +26,10 @@ export default function Login() {
     try {
       const data = await loginUser(formData);
       console.log("Login successful:", data);
+
+      setAccessToken(data.token);
+      setRole(data.role);
+      
       // Redirect to the appropriate dashboard based on user role
       // For example, if the user is a client, redirect to the client dashboard
       // If the user is a coach, redirect to the coach dashboard
