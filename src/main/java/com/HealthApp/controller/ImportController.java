@@ -17,4 +17,10 @@ public class ImportController {
         service.importCategories();
         return ResponseEntity.ok("Categories imported successfully");
     }
+
+    @PostMapping("/api/admin/import/muscles")
+    public ResponseEntity<String> importMuscles() {
+        service.importMuscles();
+        return ResponseEntity.ok("Muscles imported successfully");
+    }
 }

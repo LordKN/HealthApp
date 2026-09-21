@@ -17,10 +17,17 @@ public class Muscle {
     @Column (nullable = false)
     private String name;
 
+    @Column
+    private String name_en;
+
+    @Column
+    private boolean is_front;
+
     @ManyToMany(mappedBy = "primaryMuscles")
     private Set<Exercise> exercises;
 
     private String imageUrlMain;
+    private String imageUrlSecondary;
 
     public Long getId() {
         return id;
@@ -56,5 +63,29 @@ public class Muscle {
 
     public void setImageUrlMain(String imageUrlMain) {
         this.imageUrlMain = imageUrlMain;
+    }
+
+    public String getImageUrlSecondary() {
+        return imageUrlSecondary;
+    }
+
+    public void setImageUrlSecondary(String imageUrlSecondary) {
+        this.imageUrlSecondary = imageUrlSecondary;
+    }
+
+    public String getName_en() {
+        return name_en;
+    }
+
+    public void setName_en(String name_en) {
+        this.name_en = name_en;
+    }
+
+    public boolean isIs_front() {
+        return is_front;
+    }
+
+    public void setIs_front(boolean is_front) {
+        this.is_front = is_front;
     }
 }
