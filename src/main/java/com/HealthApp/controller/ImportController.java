@@ -23,4 +23,10 @@ public class ImportController {
         service.importMuscles();
         return ResponseEntity.ok("Muscles imported successfully");
     }
+
+    @PostMapping("/api/admin/import/equipments")
+    public ResponseEntity<String> importEquipments() {
+        service.importEquipments();
+        return ResponseEntity.ok("Equipments imported successfully");
+    }
 }

@@ -1,12 +1,11 @@
 package com.HealthApp.service;
 
-import com.HealthApp.dto.CategoryResponse;
-import com.HealthApp.dto.MuscleResponse;
-import com.HealthApp.dto.WgerCategoryDto;
-import com.HealthApp.dto.WgerMuscleDto;
+import com.HealthApp.dto.*;
 import com.HealthApp.model.Category;
+import com.HealthApp.model.Equipment;
 import com.HealthApp.model.Muscle;
 import com.HealthApp.repo.CategoryRepository;
+import com.HealthApp.repo.EquipmentRepository;
 import com.HealthApp.repo.MuscleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +22,9 @@ public class ExerciseImportService {
 
     @Autowired
     private MuscleRepository muscleRepo;
+
+    @Autowired
+    private EquipmentRepository equipmentRepo;
 
     public void importCategories() {
         String next = "exercisecategory/";
@@ -62,6 +64,27 @@ public class ExerciseImportService {
                 muscle.setImageUrlSecondary(dto.image_url_secondary());
 
                 muscleRepo.save(muscle);
+            }
+
+            next = response.next();
+        }
+    }
+
+    public void importEquipments() {
+        String next = "equipment/";
+        while (next != null) {
+            EquipmentResponse response = client.get()
+                    .uri(next)
+                    .retrieve()
+                    .body(EquipmentResponse.class);
+
+            for (WgerEquipmentDto dto : response.results()) {
+                Equipment equipment = equipmentRepo.findByWgerId(dto.id())
+                        .orElseGet(Equipment::new);
+                equipment.setWgerId(dto.id());
+                equipment.setName(dto.name());
+
+                equipmentRepo.save(equipment);
             }
 
             next = response.next();
