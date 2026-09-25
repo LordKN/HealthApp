@@ -2,6 +2,7 @@ package com.HealthApp.model;
 
 import jakarta.persistence.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -27,7 +28,15 @@ public class Exercise {
             joinColumns = @JoinColumn(name = "exercise_id"),
             inverseJoinColumns = @JoinColumn(name = "muscle_id")
     )
-    private Set<Muscle> primaryMuscles;
+    private Set<Muscle> primaryMuscles = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "exercise_secondary_muscle",
+            joinColumns = @JoinColumn(name = "exercise_id"),
+            inverseJoinColumns = @JoinColumn(name = "muscle_id")
+    )
+    private Set<Muscle> secondaryMuscles = new HashSet<>();
 
     @ManyToMany
     @JoinTable(
@@ -35,7 +44,7 @@ public class Exercise {
             joinColumns = @JoinColumn(name = "exercise_id"),
             inverseJoinColumns = @JoinColumn(name = "equipment_id")
     )
-    private Set<Equipment> equipment;
+    private Set<Equipment> equipment = new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "category_id")
@@ -111,5 +120,13 @@ public class Exercise {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public Set<Muscle> getSecondaryMuscles() {
+        return secondaryMuscles;
+    }
+
+    public void setSecondaryMuscles(Set<Muscle> secondaryMuscles) {
+        this.secondaryMuscles = secondaryMuscles;
     }
 }

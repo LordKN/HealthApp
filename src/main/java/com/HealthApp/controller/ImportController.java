@@ -29,4 +29,10 @@ public class ImportController {
         service.importEquipments();
         return ResponseEntity.ok("Equipments imported successfully");
     }
+
+    @PostMapping("/api/admin/import/exercises")
+    public ResponseEntity<String> importExercises() {
+        service.importExercises();
+        return ResponseEntity.ok("Exercises imported successfully");
+    }
 }

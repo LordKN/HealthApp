@@ -3,13 +3,18 @@ package com.HealthApp.service;
 import com.HealthApp.dto.*;
 import com.HealthApp.model.Category;
 import com.HealthApp.model.Equipment;
+import com.HealthApp.model.Exercise;
 import com.HealthApp.model.Muscle;
 import com.HealthApp.repo.CategoryRepository;
 import com.HealthApp.repo.EquipmentRepository;
+import com.HealthApp.repo.ExerciseRepository;
 import com.HealthApp.repo.MuscleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Service
 public class ExerciseImportService {
@@ -25,6 +30,9 @@ public class ExerciseImportService {
 
     @Autowired
     private EquipmentRepository equipmentRepo;
+
+    @Autowired
+    private ExerciseRepository exerciseRepo;
 
     public void importCategories() {
         String next = "exercisecategory/";
@@ -87,6 +95,96 @@ public class ExerciseImportService {
                 equipmentRepo.save(equipment);
             }
 
+            next = response.next();
+        }
+    }
+
+    public void importExercises() {
+        String next = "exerciseinfo/";
+        while (next != null) {
+            ExerciseResponse response = client.get()
+                    .uri(next)
+                    .retrieve()
+                    .body(ExerciseResponse.class);
+
+            for (WgerExerciseInfoDto dto : response.results()) {
+
+                // Create an exercise and set its name
+                Exercise exercise = exerciseRepo.findByWgerId(dto.id())
+                        .orElseGet(Exercise::new);
+                exercise.setWgerId(dto.id());
+
+                WgerTranslationDto englishTranslation = null;
+                for (WgerTranslationDto translation : dto.translations()) {
+                    if (translation.language() == 2) {
+                        englishTranslation = translation;
+                        break;
+                    }
+                }
+                if (englishTranslation == null) {
+                    continue;
+                }
+
+                exercise.setName(englishTranslation.name());
+                exercise.setDescription(englishTranslation.description());
+
+                // Add category
+                Category category = categoryRepo.findByWgerId(dto.category().id())
+                        .orElseThrow(() -> new RuntimeException("Category not found"));
+
+                exercise.setCategory(category);
+
+                // Add primary muscles
+                Set<Muscle> primaryMuscles = new HashSet<>();
+                for (WgerMuscleDto muscleDto : dto.muscles()) {
+                    Muscle muscle = muscleRepo.findByWgerId(muscleDto.id())
+                            .orElseThrow(() -> new RuntimeException("Muscle not found"));
+                    primaryMuscles.add(muscle);
+                }
+                exercise.setPrimaryMuscles(primaryMuscles);
+
+                // Add secondary muscles
+                Set<Muscle> secondaryMuscles = new HashSet<>();
+                for (WgerMuscleDto muscleDto : dto.muscles_secondary()) {
+                    Muscle muscle = muscleRepo.findByWgerId(muscleDto.id())
+                            .orElseThrow(() -> new RuntimeException("Secondary muscle not found"));
+                    secondaryMuscles.add(muscle);
+                }
+                exercise.setSecondaryMuscles(secondaryMuscles);
+
+                // Add equipments
+                Set<Equipment> equipments = new HashSet<>();
+                for (WgerEquipmentDto equipmentDto : dto.equipment()) {
+                    Equipment equipment = equipmentRepo.findByWgerId(equipmentDto.id())
+                            .orElseThrow(() -> new RuntimeException("Equipment not found"));
+                    equipments.add(equipment);
+                }
+                exercise.setEquipment(equipments);
+
+                // Set image
+                exercise.setExerciseImageUrl(null);
+                for (WgerExerciseImageDto imageDto : dto.images()) {
+                    if (imageDto.is_main()) {
+                        exercise.setExerciseImageUrl(imageDto.image());
+                        break;
+                    }
+                }
+
+                // Set video
+                exercise.setVideoUrl(null);
+                for (WgerVideoDto videoDto : dto.videos()) {
+                    if (exercise.getVideoUrl() == null) {
+                        exercise.setVideoUrl(videoDto.video());
+                    }
+                    if (videoDto.is_main()) {
+                        exercise.setVideoUrl(videoDto.video());
+                        break;
+                    }
+                }
+
+                // Save
+                exerciseRepo.save(exercise);
+            }
             next = response.next();
         }
     }
