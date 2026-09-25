@@ -1,6 +1,5 @@
 const API_BASE_URL = "http://localhost:8080/api";
 
-
 //CLIENT
 export async function getClients(accessToken) {
   const response = await fetch(`${API_BASE_URL}/clients`, {
@@ -8,9 +7,18 @@ export async function getClients(accessToken) {
       Authorization: `Bearer ${accessToken}`, // Include the access token in the Authorization bearer header
     },
   });
+  return response;
+}
+
+export async function getCurrentClient(accessToken) {
+  const response = await fetch(`${API_BASE_URL}/clients/me`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`, // Include the access token in the Authorization bearer header
+    },
+  });
 
   if (!response.ok) {
-    throw new Error("Failed to fetch clients");
+    throw new Error("Failed to fetch current user");
   }
   return response;
 }
@@ -35,7 +43,7 @@ export async function getCoaches(accessToken) {
   const response = await fetch(`${API_BASE_URL}/coaches`, {
     headers: {
       Authorization: `Bearer ${accessToken}`, // Include the access token in the Authorization bearer header
-    }
+    },
   });
   return response;
 }
@@ -80,4 +88,16 @@ export async function refreshAccessToken() {
   }
 
   return response.json();
+}
+
+//Logout
+export async function logoutUser() {
+  const response = await fetch(`${API_BASE_URL}/auth/logout`, {
+    method: "POST",
+    credentials: "include", // Include cookies in the request so Spring boot can revoke refresh session and clear refresh cookie
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to logout");
+  }
 }

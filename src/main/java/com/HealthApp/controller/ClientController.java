@@ -5,6 +5,7 @@ import com.HealthApp.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,6 +30,14 @@ public class ClientController {
 
     @GetMapping("/api/clients/{cliEmail}")
     public ResponseEntity<Client> getClientByEmail(@PathVariable("cliEmail") String email) {
+        Client client = service.getClientByEmail(email);
+        return ResponseEntity.ok(client);
+    }
+
+    @GetMapping("/api/clients/me")
+    public ResponseEntity<Client> getCurrentClient(Authentication authentication) {
+        String email = authentication.getName();
+
         Client client = service.getClientByEmail(email);
         return ResponseEntity.ok(client);
     }
