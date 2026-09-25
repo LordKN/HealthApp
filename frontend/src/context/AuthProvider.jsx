@@ -25,12 +25,12 @@ export function AuthProvider({ children }) {
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>
+    return <div>Loading...</div>;
   }
 
   return (
     <AuthContext.Provider
-    value = {{ accessToken, setAccessToken, role, setRole }}
+      value={{ accessToken, setAccessToken, role, setRole }}
     >
       {children}
     </AuthContext.Provider>
