@@ -34,13 +34,13 @@ export default function Login() {
       // For example, if the user is a client, redirect to the client dashboard
       // If the user is a coach, redirect to the coach dashboard
       if (data.role === "CLIENT") {
-        navigate("/client-dashboard");
+        navigate("/client/dashboard");
       }
       else if (data.role === "COACH") {
-        navigate("/coach-dashboard");
+        navigate("/coach/dashboard");
       }
       else if (data.role === "ADMIN") {
-        navigate("/admin-dashboard");
+        navigate("/admin/dashboard");
       }
     }
     catch (error) {
