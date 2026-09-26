@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { getCurrentClient } from "../../services/api.js";
 import { useAuth } from "../../context/AuthContext.jsx";
 import StatCard from "./StatCard.jsx";
+import QuickActions from "./QuickActions.jsx";
 
 function formatEnum(value) {
   if (!value) return "Not set";
@@ -49,6 +50,7 @@ export default function ClientDashboard() {
       <main className="dashboard-content">
         <h1>Good morning, {client?.name}!</h1>
         <p>Keep going! Small steps lead to big results.</p>
+
         <div className="client-stats">
           <StatCard
             icon="🎯"
@@ -74,6 +76,33 @@ export default function ClientDashboard() {
             value={formatEnum(client?.activityLevel)}
           />
         </div>
+
+        <section className="quick-actions-section">
+          <h2>Quick Actions</h2>
+
+          <div className="quick-actions">
+            <QuickActions
+              icon="🏋️"
+              title="Browse Exercise"
+              description="Explore exercises and learn proper forms"
+              to="/client/exercises"
+            />
+
+            <QuickActions
+              icon="📋"
+              title="View Workout"
+              description="Check your current workout plan"
+              to="/client/workouts"
+            />
+
+            <QuickActions
+              icon="👤"
+              title="Edit Profile"
+              description="Update your information and goals"
+              to="/client/profile"
+            />
+          </div>
+        </section>
       </main>
     </div>
   );
