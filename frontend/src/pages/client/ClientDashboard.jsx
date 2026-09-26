@@ -6,6 +6,7 @@ import { getCurrentClient } from "../../services/api.js";
 import { useAuth } from "../../context/AuthContext.jsx";
 import StatCard from "./StatCard.jsx";
 import QuickActions from "./QuickActions.jsx";
+import DaytimeBanner from "../../components/DayTimeBanner.jsx";
 
 function formatEnum(value) {
   if (!value) return "Not set";
@@ -48,8 +49,7 @@ export default function ClientDashboard() {
       <Sidebar />
 
       <main className="dashboard-content">
-        <h1>Good morning, {client?.name}!</h1>
-        <p>Keep going! Small steps lead to big results.</p>
+        <DaytimeBanner client={client} />
 
         <div className="client-stats">
           <StatCard
