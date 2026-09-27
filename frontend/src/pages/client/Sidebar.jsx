@@ -2,7 +2,13 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { logoutUser } from "../../services/api.js";
 import { useAuth } from "../../context/AuthContext.jsx";
 import "../../assets/css/sidebar.css";
-import { House, Dumbbell } from "lucide-react";
+import {
+  House,
+  Dumbbell,
+  ClipboardList,
+  UserRound,
+  LogOut,
+} from "lucide-react";
 
 export default function Sidebar() {
   const navigate = useNavigate();
@@ -22,7 +28,7 @@ export default function Sidebar() {
   }
 
   return (
-    <aside className="sideboar">
+    <aside className="sidebar">
       <div>
         <h1 className="sidebar-logo">
           <Dumbbell size={20} />
@@ -35,15 +41,25 @@ export default function Sidebar() {
             Dashboard
           </NavLink>
 
-          <NavLink to="/client/exercises">Exercises</NavLink>
+          <NavLink to="/client/exercises">
+            <Dumbbell size={15} />
+            Exercises
+          </NavLink>
 
-          <NavLink to="/client/workouts">Workouts</NavLink>
+          <NavLink to="/client/workouts">
+            <ClipboardList size={15} />
+            Workouts
+          </NavLink>
 
-          <NavLink to="/client/profile">Profile</NavLink>
+          <NavLink to="/client/profile">
+            <UserRound size={15} />
+            Profile
+          </NavLink>
         </nav>
       </div>
 
       <button className="logout-button" onClick={handleLogout}>
+        <LogOut size={15} />
         Logout
       </button>
     </aside>
