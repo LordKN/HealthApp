@@ -1,0 +1,155 @@
+.exercise-content {
+  flex: 1;
+  padding: 40px 50px;
+  background-color: #f8fafc;
+}
+
+.exercise-content > h1 {
+  margin: 0 0 8px;
+
+  color: #0f172a;
+  font-size: 32px;
+}
+
+.exercise-content > p {
+  color: #64748b;
+}
+
+/* ---------- Exercise Grid ---------- */
+
+.exercise-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+
+  margin-top: 28px;
+}
+
+/* ---------- Exercise Card ---------- */
+
+.exercise-card {
+  overflow: hidden;
+
+  background-color: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.exercise-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+}
+
+/* ---------- Image ---------- */
+
+.exercise-image-container {
+  width: 100%;
+  height: 190px;
+
+  background-color: #f1f5f9;
+}
+
+.exercise-image {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+}
+
+.exercise-no-image {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  color: #94a3b8;
+  font-size: 14px;
+}
+
+/* ---------- Information ---------- */
+
+.exercise-card-info {
+  padding: 18px;
+}
+
+.exercise-card-info h3 {
+  margin: 0 0 8px;
+
+  color: #0f172a;
+  font-size: 18px;
+}
+
+.exercise-category {
+  margin: 0 0 14px;
+
+  color: #64748b;
+  font-size: 14px;
+}
+
+/* ---------- Muscle Tags ---------- */
+
+.exercise-muscles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.exercise-muscles span {
+  padding: 6px 12px;
+
+  background-color: #eff6ff;
+  color: #475569;
+
+  border-radius: 20px;
+
+  font-size: 13px;
+}
+
+/* ---------- Pagination ---------- */
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 18px;
+
+  margin: 40px 0 20px;
+}
+
+.pagination button {
+  padding: 10px 18px;
+
+  background-color: white;
+  color: #2563eb;
+
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.pagination button:hover:not(:disabled) {
+  background-color: #eff6ff;
+}
+
+.pagination button:disabled {
+  color: #94a3b8;
+  cursor: not-allowed;
+}
+
+.pagination span {
+  color: #475569;
+  font-size: 14px;
+  font-weight: 500;
+}

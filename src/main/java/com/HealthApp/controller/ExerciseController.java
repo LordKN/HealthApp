@@ -1,8 +1,12 @@
 package com.HealthApp.controller;
 
+import com.HealthApp.dto.ExerciseDto;
 import com.HealthApp.model.Exercise;
 import com.HealthApp.service.ExerciseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,14 +19,16 @@ public class ExerciseController {
     private ExerciseService service;
 
     @GetMapping("/api/exercises")
-    public ResponseEntity<List<Exercise>> getAllExercise() {
+    public ResponseEntity<Page<ExerciseDto>> getAllExercise(@PageableDefault(size = 20) Pageable pageable) {
 
-        return ResponseEntity.ok(service.getAllExercises());
+        return ResponseEntity.ok(service.getAllExercises(pageable));
     }
 
     @GetMapping("/api/exercise/{exerID}")
-    public Exercise getExercise(@PathVariable("exerID") Long id) {
-        return service.getExerciseById(id);
+    public ResponseEntity<ExerciseDto> getExercise(@PathVariable("exerID") Long id) {
+        ExerciseDto exercise = service.getExerciseById(id);
+
+        return ResponseEntity.ok(service.getExerciseById(id));
     }
 
     @GetMapping("/api/exercises/count")
