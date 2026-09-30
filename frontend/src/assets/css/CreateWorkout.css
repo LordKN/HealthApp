@@ -1,0 +1,602 @@
+/* =========================
+   PAGE
+   ========================= */
+
+.create-workout-page {
+  flex: 1;
+  min-width: 0;
+
+  min-height: 100vh;
+  padding: 40px 50px;
+
+  background-color: #f8fafc;
+  color: #0f172a;
+}
+
+/* =========================
+   HEADER
+   ========================= */
+
+.workout-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 24px;
+}
+
+.workout-header h1 {
+  margin: 0 0 6px;
+
+  font-size: 34px;
+  font-weight: 700;
+}
+
+.workout-header p {
+  margin: 0;
+
+  color: #64748b;
+  font-size: 16px;
+}
+
+.workout-header-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.cancel-button,
+.save-workout-button {
+  padding: 12px 22px;
+
+  border-radius: 8px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.cancel-button {
+  background-color: white;
+  color: #334155;
+
+  border: 1px solid #cbd5e1;
+}
+
+.cancel-button:hover {
+  background-color: #f1f5f9;
+}
+
+.save-workout-button {
+  background-color: #1677ff;
+  color: white;
+
+  border: none;
+}
+
+.save-workout-button:hover {
+  background-color: #0f67df;
+}
+
+/* =========================
+   WORKOUT DETAILS
+   ========================= */
+
+.workout-details {
+  padding: 22px;
+
+  background-color: white;
+
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+}
+
+.workout-details h3 {
+  margin: 0 0 18px;
+
+  font-size: 18px;
+}
+
+.workout-details-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+}
+
+.workout-field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.workout-field label {
+  color: #334155;
+
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.workout-field input,
+.workout-field textarea {
+  width: 100%;
+  box-sizing: border-box;
+
+  padding: 11px 12px;
+
+  background-color: white;
+
+  border: 1px solid #cbd5e1;
+  border-radius: 7px;
+
+  color: #0f172a;
+  font-family: inherit;
+  font-size: 14px;
+
+  outline: none;
+}
+
+.workout-field input:focus,
+.workout-field textarea:focus {
+  border-color: #3b82f6;
+
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.workout-field textarea {
+  min-height: 42px;
+
+  resize: vertical;
+}
+
+/* =========================
+   WORKOUT BUILDER LAYOUT
+   ========================= */
+
+.workout-builder {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(320px, 2fr);
+  gap: 16px;
+
+  margin-top: 18px;
+
+  align-items: start;
+}
+
+/* =========================
+   WORKOUT DAYS
+   ========================= */
+
+.workout-days {
+  padding: 20px;
+
+  background-color: white;
+
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+}
+
+.workout-days > h2 {
+  margin: 0 0 4px;
+
+  color: #0f172a;
+  font-size: 20px;
+}
+
+.workout-days > p {
+  margin: 0 0 18px;
+
+  color: #64748b;
+  font-size: 14px;
+}
+
+.workout-days-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* =========================
+   INDIVIDUAL DAY
+   ========================= */
+
+.workout-day {
+  background-color: white;
+
+  border: 1px solid #e2e8f0;
+  border-radius: 9px;
+
+  overflow: hidden;
+
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.workout-day:hover {
+  border-color: #bfdbfe;
+}
+
+.workout-day.selected {
+  border-color: #93c5fd;
+}
+
+/* =========================
+   DAY HEADER
+   ========================= */
+
+.workout-day-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  min-height: 48px;
+  padding: 6px 10px;
+
+  cursor: pointer;
+}
+
+/* Day 1, Day 2, etc. */
+
+.day-number {
+  flex-shrink: 0;
+
+  padding: 6px 12px;
+
+  background-color: #eff6ff;
+  color: #2563eb;
+
+  border-radius: 7px;
+
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* Push, Pull, Legs, etc. */
+
+.day-name-input {
+  flex: 1;
+  min-width: 0;
+
+  padding: 6px 4px;
+
+  background-color: transparent;
+
+  border: none;
+  outline: none;
+
+  color: #0f172a;
+
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.day-name-input::placeholder {
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+/* Exercise count */
+
+.exercise-count {
+  flex-shrink: 0;
+
+  padding: 5px 10px;
+
+  background-color: #f1f5f9;
+  color: #475569;
+
+  border-radius: 999px;
+
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* Arrow */
+
+.day-expand-button {
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 4px;
+
+  background: none;
+  color: #475569;
+
+  border: none;
+
+  font-size: 18px;
+
+  cursor: pointer;
+}
+
+/* =========================
+   EXERCISE PICKER
+   ========================= */
+
+.exercise-picker {
+  padding: 20px;
+
+  background-color: white;
+
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+}
+
+.exercise-picker h2 {
+  margin: 0 0 16px;
+
+  color: #0f172a;
+  font-size: 20px;
+}
+
+.exercise-search {
+  width: 100%;
+  box-sizing: border-box;
+
+  padding: 11px 13px;
+
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+
+  font-family: inherit;
+  font-size: 14px;
+
+  outline: none;
+}
+
+.exercise-search:focus {
+  border-color: #3b82f6;
+
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* =========================
+   EXERCISE PAGINATION
+   ========================= */
+
+.exercise-picker-pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin: 14px 0;
+
+  color: #64748b;
+  font-size: 13px;
+}
+
+.exercise-picker-pagination button {
+  padding: 7px 12px;
+
+  background-color: white;
+  color: #2563eb;
+
+  border: 1px solid #dbeafe;
+  border-radius: 7px;
+
+  font-weight: 500;
+
+  cursor: pointer;
+}
+
+.exercise-picker-pagination button:hover:not(:disabled) {
+  background-color: #eff6ff;
+}
+
+.exercise-picker-pagination button:disabled {
+  color: #94a3b8;
+
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* =========================
+   EXERCISE LIST
+   ========================= */
+
+.exercise-picker-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.exercise-picker-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 10px;
+
+  background-color: white;
+
+  border: 1px solid #e2e8f0;
+  border-radius: 9px;
+}
+
+.exercise-picker-item img {
+  width: 72px;
+  height: 52px;
+
+  flex-shrink: 0;
+
+  object-fit: cover;
+  border-radius: 7px;
+}
+
+.exercise-picker-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.exercise-picker-info h3 {
+  margin: 0 0 5px;
+
+  color: #0f172a;
+  font-size: 14px;
+}
+
+/* =========================
+   MUSCLE TAGS
+   ========================= */
+
+.exercise-picker-muscles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.exercise-picker-muscles span {
+  padding: 3px 7px;
+
+  background-color: #f1f5f9;
+  color: #64748b;
+
+  border-radius: 10px;
+
+  font-size: 11px;
+}
+
+/* =========================
+   ADD EXERCISE BUTTON
+   ========================= */
+
+.exercise-picker-item > button {
+  flex-shrink: 0;
+
+  padding: 8px 12px;
+
+  background-color: #eff6ff;
+  color: #2563eb;
+
+  border: none;
+  border-radius: 7px;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.exercise-picker-item > button:hover {
+  background-color: #dbeafe;
+}
+
+/* =========================
+   RESPONSIVE
+   ========================= */
+
+@media (max-width: 1000px) {
+  .workout-builder {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 900px) {
+  .create-workout-page {
+    padding: 25px;
+  }
+
+  .workout-header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .workout-details-fields {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .workout-day {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .workout-day h3 {
+    width: fit-content;
+  }
+}
+
+/* =========================
+   DAY EXERCISES
+   ========================= */
+
+.day-exercises {
+  padding: 0 12px 12px;
+
+  background-color: white;
+  border-top: 1px solid #e2e8f0;
+}
+
+.day-exercise {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 10px 4px;
+
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.day-exercise:last-child {
+  border-bottom: none;
+}
+
+/* Exercise image */
+
+.day-exercise img {
+  width: 70px;
+  height: 50px;
+
+  flex-shrink: 0;
+
+  object-fit: cover;
+  border-radius: 7px;
+}
+
+/* Name + muscles */
+
+.day-exercise-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.day-exercise-info h4 {
+  margin: 0 0 6px;
+
+  color: #0f172a;
+
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* Muscle tags */
+
+.day-exercise-muscles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.day-exercise-muscles span {
+  padding: 3px 8px;
+
+  background-color: #f1f5f9;
+  color: #64748b;
+
+  border-radius: 999px;
+
+  font-size: 11px;
+}

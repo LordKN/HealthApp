@@ -6,6 +6,7 @@ import ClientDashboard from "./pages/client/ClientDashboard";
 import CoachDashboard from "./pages/coach/CoachDashboard";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import ExerciseCatalog from "./pages/client/ExerciseCatalog";
+import CreateWorkoutPage from "./pages/client/CreateWorkoutPage";
 
 import Signup from "./pages/Signup";
 export default function App() {
@@ -20,6 +21,7 @@ export default function App() {
         <Route path="/coach/dashboard" element={<CoachDashboard />} />
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
         <Route path="/client/exercises" element={<ExerciseCatalog />} />
+        <Route path="/client/workouts" element={<CreateWorkoutPage />} />
       </Routes>
     </Router>
   );

@@ -16,3 +16,18 @@ export async function getAllExercises(accessToken, page, size) {
 
   return response.json();
 }
+
+export async function createWorkout(accessToken, workout) {
+  const response = await fetch(`${API_BASE_URL}/workouts`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(workout),
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to save workout");
+  }
+}

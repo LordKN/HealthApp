@@ -1,5 +1,6 @@
 package com.HealthApp.controller;
 
+import com.HealthApp.dto.CreateWorkoutRequestDto;
 import com.HealthApp.model.Workout;
 import com.HealthApp.service.WorkoutService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ public class WorkoutController {
         return ResponseEntity.ok(service.getAllWorkout());
     }
 
-    @GetMapping("/api/workout/{workoutID}")
+    @GetMapping("/api/workouts/{workoutID}")
     public Workout getWorkout(@PathVariable("workoutID") Long id) {
         return service.getWorkoutById(id);
     }
@@ -30,18 +31,18 @@ public class WorkoutController {
         return service.countWorkout();
     }
 
-    @PostMapping("/api/workout")
-    public void saveWorkout(@RequestBody Workout workout) {
+    @PostMapping("/api/workouts")
+    public void saveWorkout(@RequestBody CreateWorkoutRequestDto workout) {
         service.saveWorkout(workout);
     }
 
-    @DeleteMapping("/api/workout/{workoutID}")
+    @DeleteMapping("/api/workouts/{workoutID}")
     public String deleteWorkout(@PathVariable("workoutID") Long id) {
         service.deleteWorkout(id);
         return "Workout deleted";
     }
 
-    @DeleteMapping("/api/workout")
+    @DeleteMapping("/api/workouts")
     public String deleteAllWorkout() {
         service.deleteAllWorkout();
         return "All workouts deleted";

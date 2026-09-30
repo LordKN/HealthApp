@@ -1,6 +1,11 @@
 package com.HealthApp.service;
 
+import com.HealthApp.dto.CreateWorkoutRequestDto;
+import com.HealthApp.dto.WorkoutDayRequestDto;
+import com.HealthApp.model.Exercise;
 import com.HealthApp.model.Workout;
+import com.HealthApp.model.WorkoutDay;
+import com.HealthApp.repo.ExerciseRepository;
 import com.HealthApp.repo.WorkoutRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +18,9 @@ public class WorkoutService {
     @Autowired
     private WorkoutRepository repo;
 
+    @Autowired
+    private ExerciseRepository exerciseRepo;
+
     public List<Workout> getAllWorkout() {
         return repo.findAll();
     }
@@ -22,9 +30,36 @@ public class WorkoutService {
                 .orElseThrow(() -> new RuntimeException("Cannot find workout"));
     }
 
-    public void saveWorkout (Workout workout) {
+    public void saveWorkout (CreateWorkoutRequestDto workoutRequestDto) {
 
-        validateWorkout(workout);
+        //validateWorkout(workout);
+        Workout workout = new Workout();
+
+        workout.setName(workoutRequestDto.name());
+        workout.setDescription(workoutRequestDto.description());
+
+        List<WorkoutDayRequestDto> dayList = workoutRequestDto.days();
+        List<WorkoutDay> workoutDays = workout.getDays();
+
+        for (WorkoutDayRequestDto dayRequestDto : dayList) {
+            WorkoutDay workoutDay = new WorkoutDay();
+
+            workoutDay.setDayNumber(dayRequestDto.dayNumber());
+            workoutDay.setName(dayRequestDto.name());
+            workoutDay.setWorkout(workout);
+
+            List<Long> exerciseIds = dayRequestDto.exerciseIds();
+            List<Exercise> exercises = workoutDay.getExercises();
+
+            for (Long id : exerciseIds) {
+                Exercise exercise = exerciseRepo.findById(id)
+                                .orElseThrow(() -> new RuntimeException("Exercise not found"));
+                exercises.add(exercise);
+            }
+
+            workoutDays.add(workoutDay);
+
+        }
         repo.save(workout);
     }
 
@@ -48,6 +83,7 @@ public class WorkoutService {
         repo.deleteAll();
     }
 
+    /*
     private void validateWorkout(Workout workout) {
         if (workout == null) {
             throw new RuntimeException("Workout cannot be null");
@@ -64,9 +100,6 @@ public class WorkoutService {
         if (workout.getDescription() != null && workout.getDescription().length() > 2000) {
             throw new RuntimeException("Workout description must be under 2000 characters");
         }
-
-        if (workout.getExercises() == null) {
-            throw new RuntimeException("Exercises list cannot be null");
-        }
     }
+     */
 }
