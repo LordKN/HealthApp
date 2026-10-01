@@ -3,7 +3,7 @@ export default function WorkoutHeader({ onSave, onCancel, saving }) {
     <div className="workout-header">
       <div>
         <h1>Create Workout</h1>
-        <p>Give your workout a name and at exercises to each day</p>
+        <p>Give your workout a name and add exercises to each day</p>
       </div>
 
       <div>
