@@ -1,4 +1,4 @@
-export default function WorkoutHeader({ onSave, onCancel }) {
+export default function WorkoutHeader({ onSave, onCancel, saving }) {
   return (
     <div className="workout-header">
       <div>
@@ -10,8 +10,12 @@ export default function WorkoutHeader({ onSave, onCancel }) {
         <button className="cancel-button" onClick={onCancel}>
           Cancel
         </button>
-        <button className="save-workout-button" onClick={onSave}>
-          Save Workout
+        <button
+          disabled={saving}
+          className="save-workout-button"
+          onClick={onSave}
+        >
+          {saving ? "Saving..." : "Save Workout"}
         </button>
       </div>
     </div>

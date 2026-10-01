@@ -17,6 +17,7 @@ export default function CreateWorkoutPage() {
   const [totalExercisePages, setTotalExercisePages] = useState(0);
   const [selectedDay, setSelectedDay] = useState(1);
   const [expandedDay, setExpandedDay] = useState(null);
+  const [saving, setSaving] = useState(false);
   const [days, setDays] = useState([
     { dayNumber: 1, name: "", exercises: [] },
     { dayNumber: 2, name: "", exercises: [] },
@@ -46,20 +47,27 @@ export default function CreateWorkoutPage() {
   }
 
   async function handleSave() {
-    const workoutDays = days.map((day) => ({
-      dayNumber: day.dayNumber,
-      name: day.name,
-      exerciseIds: day.exercises.map((exercise) => exercise.id),
-    }));
+    setSaving(true);
+    try {
+      const workoutDays = days.map((day) => ({
+        dayNumber: day.dayNumber,
+        name: day.name,
+        exerciseIds: day.exercises.map((exercise) => exercise.id),
+      }));
 
-    const workout = {
-      name: name,
-      description: description,
-      days: workoutDays,
-    };
+      const workout = {
+        name: name,
+        description: description,
+        days: workoutDays,
+      };
 
-    await createWorkout(accessToken, workout);
-    console.log("Workout saved successfully");
+      await createWorkout(accessToken, workout);
+      console.log("Workout saved successfully");
+    } catch (error) {
+      console.error("Failed to save workout", error);
+    } finally {
+      setSaving(false);
+    }
   }
 
   function handleCancel() {}
@@ -102,7 +110,11 @@ export default function CreateWorkoutPage() {
     <div className="client-layout">
       <SideBar />
       <main className="create-workout-page">
-        <WorkoutHeader onSave={handleSave} onCancel={handleCancel} />
+        <WorkoutHeader
+          onSave={handleSave}
+          onCancel={handleCancel}
+          saving={saving}
+        />
         <WorkoutDetails
           name={name}
           description={description}
