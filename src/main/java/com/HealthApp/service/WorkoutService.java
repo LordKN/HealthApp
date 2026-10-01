@@ -40,14 +40,11 @@ public class WorkoutService {
     public Workout getWorkoutById(Long id, String email) {
         Client client = clientRepo.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("Username not found"));
-        Workout res = new Workout();
-        for (Workout workout : client.getWorkouts()) {
-            if (Objects.equals(workout.getId(), id)) {
-                res = workout;
-                break;
-            }
-        }
-        return res;
+        return client.getWorkouts()
+                .stream()
+                .filter(workout -> Objects.equals(workout.getId(), id))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("Workout not found"));
     }
 
     //If an exception is thrown, no workout is saved
