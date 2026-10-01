@@ -3,6 +3,8 @@ package com.HealthApp.model;
 import java.time.LocalDate;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 
 @MappedSuperclass
 public class Person {
@@ -12,14 +14,20 @@ public class Person {
 
 	@Enumerated(EnumType.STRING)
 	private Role role;
-	
+
+    @NotBlank
 	private String name;
+
 	private LocalDate birthDate;
+
+    @NotBlank
 	private String sex;
 	private String address;
 	private String phoneNo;
 
+    @NotBlank(message = "Email is required")
     @Column(unique = true, nullable = false)
+    @Email(message = "Email must be in correct format")
 	private String email;
 	private String photoPath;
 	private String emergencyContactName;

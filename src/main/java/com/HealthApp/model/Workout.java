@@ -24,6 +24,11 @@ public class Workout {
             orphanRemoval = true
     )
     private List<WorkoutDay> days = new ArrayList<>();
+
+    //Workout must be owned by a client
+    @ManyToOne
+    @JoinColumn(name = "client_id", nullable = false)
+    private Client client;
 	
 	public Workout() {
 		System.out.println("Workout created");
@@ -60,5 +65,13 @@ public class Workout {
     public void addDay(WorkoutDay day) {
         days.add(day);
         day.setWorkout(this);
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
     }
 }
