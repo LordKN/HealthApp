@@ -39,6 +39,9 @@ public class Client extends Person {
 	
 	@Enumerated(EnumType.STRING)
 	private Level stressLevel;
+
+    @OneToMany(mappedBy = "client")
+    private List<Workout> workouts = new ArrayList<>();
 	
 	private boolean waiverAccepted;
 	
@@ -142,7 +145,15 @@ public class Client extends Person {
 		this.waiverAccepted = waiverAccepted;
 	}
 
-	@Override
+    public List<Workout> getWorkouts() {
+        return workouts;
+    }
+
+    public void setWorkouts(List<Workout> workouts) {
+        this.workouts = workouts;
+    }
+
+    @Override
 	public String toString() {
 		return "Client [med=" + med + ", activityLevel=" + activityLevel + ", workoutPreference=" + workoutPreference
 				+ ", barriers=" + barriers + ", fitnessGoal=" + fitnessGoal + ", height=" + height + ", weight="

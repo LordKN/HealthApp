@@ -3,8 +3,10 @@ package com.HealthApp.controller;
 import com.HealthApp.dto.CreateWorkoutRequestDto;
 import com.HealthApp.model.Workout;
 import com.HealthApp.service.WorkoutService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,14 +18,15 @@ public class WorkoutController {
     private WorkoutService service;
 
     @GetMapping("/api/workouts")
-    public ResponseEntity<List<Workout>> getAllWorkouts() {
-
-        return ResponseEntity.ok(service.getAllWorkout());
+    public ResponseEntity<List<Workout>> getWorkouts(Authentication authentication) {
+        String email = authentication.getName();
+        return ResponseEntity.ok(service.getWorkouts(email));
     }
 
     @GetMapping("/api/workouts/{workoutID}")
-    public Workout getWorkout(@PathVariable("workoutID") Long id) {
-        return service.getWorkoutById(id);
+    public Workout getWorkout(@PathVariable("workoutID") Long id, Authentication authentication) {
+        String email = authentication.getName();
+        return service.getWorkoutById(id, email);
     }
 
     @GetMapping("/api/workouts/count")
@@ -32,19 +35,21 @@ public class WorkoutController {
     }
 
     @PostMapping("/api/workouts")
-    public void saveWorkout(@RequestBody CreateWorkoutRequestDto workout) {
-        service.saveWorkout(workout);
+    public void saveWorkout(@Valid @RequestBody CreateWorkoutRequestDto workout, Authentication authentication) {
+        String email = authentication.getName();
+        service.saveWorkout(workout, email);
     }
 
     @DeleteMapping("/api/workouts/{workoutID}")
-    public String deleteWorkout(@PathVariable("workoutID") Long id) {
-        service.deleteWorkout(id);
-        return "Workout deleted";
+    public ResponseEntity<String> deleteWorkout(@PathVariable("workoutID") Long id, Authentication authentication) {
+        String email = authentication.getName();
+        service.deleteWorkout(id, email);
+        return ResponseEntity.ok("Workout deleted");
     }
 
-    @DeleteMapping("/api/workouts")
-    public String deleteAllWorkout() {
-        service.deleteAllWorkout();
-        return "All workouts deleted";
-    }
+//    @DeleteMapping("/api/workouts")
+//    public String deleteAllWorkout() {
+//        service.deleteAllWorkout();
+//        return "All workouts deleted";
+//    }
 }

@@ -2,15 +2,21 @@ package com.HealthApp.service;
 
 import com.HealthApp.dto.CreateWorkoutRequestDto;
 import com.HealthApp.dto.WorkoutDayRequestDto;
+import com.HealthApp.exception.ExerciseNotFoundException;
+import com.HealthApp.model.Client;
 import com.HealthApp.model.Exercise;
 import com.HealthApp.model.Workout;
 import com.HealthApp.model.WorkoutDay;
+import com.HealthApp.repo.ClientRepository;
 import com.HealthApp.repo.ExerciseRepository;
 import com.HealthApp.repo.WorkoutRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class WorkoutService {
@@ -21,19 +27,39 @@ public class WorkoutService {
     @Autowired
     private ExerciseRepository exerciseRepo;
 
-    public List<Workout> getAllWorkout() {
-        return repo.findAll();
+    @Autowired
+    private ClientRepository clientRepo;
+
+    public List<Workout> getWorkouts(String email) {
+
+        Client client = clientRepo.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("Username not found"));
+        return client.getWorkouts();
     }
 
-    public Workout getWorkoutById(Long id) {
-        return repo.findById(id)
-                .orElseThrow(() -> new RuntimeException("Cannot find workout"));
+    public Workout getWorkoutById(Long id, String email) {
+        Client client = clientRepo.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("Username not found"));
+        Workout res = new Workout();
+        for (Workout workout : client.getWorkouts()) {
+            if (Objects.equals(workout.getId(), id)) {
+                res = workout;
+                break;
+            }
+        }
+        return res;
     }
 
-    public void saveWorkout (CreateWorkoutRequestDto workoutRequestDto) {
+    //If an exception is thrown, no workout is saved
+    @Transactional
+    public void saveWorkout (CreateWorkoutRequestDto workoutRequestDto, String userEmail) {
 
         //validateWorkout(workout);
         Workout workout = new Workout();
+
+        Client client = clientRepo.findByEmail(userEmail)
+                        .orElseThrow(() ->new UsernameNotFoundException("User not found"));
+        workout.setClient(client);
 
         workout.setName(workoutRequestDto.name());
         workout.setDescription(workoutRequestDto.description());
@@ -53,35 +79,43 @@ public class WorkoutService {
 
             for (Long id : exerciseIds) {
                 Exercise exercise = exerciseRepo.findById(id)
-                                .orElseThrow(() -> new RuntimeException("Exercise not found"));
+                                .orElseThrow(() -> new ExerciseNotFoundException(id));
                 exercises.add(exercise);
             }
 
             workoutDays.add(workoutDay);
 
         }
+        client.getWorkouts().add(workout);
         repo.save(workout);
     }
 
-    public void deleteWorkout(Long id) {
+    @Transactional
+    public void deleteWorkout(Long id, String email) {
+        Client client = clientRepo.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("Username not found"));
 
-        if (!repo.existsById(id)) {
-            throw new RuntimeException("No workout found to be deleted");
-        }
-        repo.deleteById(id);
+        Workout workoutToDelete = client.getWorkouts()
+                .stream()
+                .filter(workout -> workout.getId().equals(id))
+                .findFirst()
+                .orElseThrow(() ->
+                        new RuntimeException("Workout not found"));
+        client.getWorkouts().remove(workoutToDelete);
+        repo.delete(workoutToDelete);
     }
 
     public long countWorkout() {
         return repo.count();
     }
 
-    public void deleteAllWorkout() {
-
-        if (countWorkout() == 0) {
-            throw new RuntimeException("No workout to be deleted");
-        }
-        repo.deleteAll();
-    }
+//    public void deleteAllWorkout() {
+//
+//        if (countWorkout() == 0) {
+//            throw new RuntimeException("No workout to be deleted");
+//        }
+//        repo.deleteAll();
+//    }
 
     /*
     private void validateWorkout(Workout workout) {
