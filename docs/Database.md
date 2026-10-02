@@ -110,44 +110,70 @@ Stores professional certifications earned by coaches
 
 ## IV. Exercise
 
-### Description
-Stores exercises that can be used in workout plans.
+### 1. Description
+Stores exercises that can be added to workout days.
 
-| Column | Java Type          | MySQL Type | Description |
-|----------|--------------------|------------|-------------|
-| id | Long               | BIGINT | Primary Key |
-| name | String             | VARCHAR(255) | Exercise name |
-| description | String             | VARCHAR(2000) | Exercise instructions | 
-| muscle_group | MuscleGroup (ENUM) | VARCHAR (255) | Target muscle group |
+Exercises are imported from Wger through API calling, with `wger_id` storing the corresponding external exercise
+identifier. Exercises can also be associated with a category, equipment, primary muscles, and secondary muscles.
 
+| Column             | Java type          | MySQL Type   | Description                                   |
+|--------------------|--------------------|--------------|-----------------------------------------------|
+| id                 | Long               | BIGINT       | Primary Key                                   | 
+| description        | String             | LONGTEXT     | Exercise description/instructions             |
+| muscle_group       | MuscleGroup (ENUM) | ENUM         | General muscle group                          |
+| exercise_image_url | String             | VARCHAR(255) | Exercise image URL                            |
+| video_url          | String             | VARCHAR(255) | Exercise video URL                            |
+| wger_id            | Integer            | INT          | External Wger exercise ID                     |
+| category_id        | Category           | BIGINT       | Foreign key referencing the exercise category |
+
+### 2. Relationships
+- Exercise → Category: Many-to-One
+- Exercise ↔ Equipment: Many-to-Many through `exercise_equipment`
+- Exercise ↔ Muscle: Many-to-Many through `exercise_muscle`
+- Exercise ↔ Secondary Muscle: Many-to-Many through `exercise_secondary_muscle`
+- Exercise ↔ WorkoutDay: Many-to-Many through `workout_day_exercise`
 ---
 
 ## V. Workout
 
-### Description
-Stores workout templates that group multiple exercises into a structured training session.
-A workout represents the overall routine (e.g., Leg Day, Push Day, Full Body, HIIT,...) while the individual exercises are stored separately in the `Exercise` table. 
-The relationship between workouts and exercises is implemented through the `workout_exercise` junction table, allowing a workout to contain multiple exercises, and an exercise can be reused through multiple workouts.
+### 1. Description
+Stores workout plans created by clients.
 
-| Column | Java Type | MySQL Type | Description |
-|----------|-----------|------------|-------------|
-| id | Long | BIGINT | Primary key |
-| name | String | VARCHAR(255) | Workout name |
-| description | String | VARCHAR(2000) | Workout description |
+Each workout belongs to one client and contains multiple workout days. Exercises are assigned to individual workout days
+rather than directly to the overall workout
 
-### Example Records
-| Name | Description |
-|------|-------------|
-| Leg Day | Lower body strength workout focusing on the quadriceps, hamstrings, glutes, and calves. |
-| Push Day | Upper body workout targeting the chest, shoulders, and triceps. |
-| Pull Day | Back and biceps workout. |
-| Full Body | Workout targeting all major muscle groups in a single session. |
-| HIIT | High-intensity interval training designed to improve cardiovascular fitness. |
-| Home Workout | Equipment-free workout suitable for training at home. |
+| Column      | Java type | MySQL Type    | Description                                             |
+|-------------|-----------|---------------|---------------------------------------------------------|
+| id          | Long      | BIGINT        | Primary Key                                             | 
+| name        | String    | VARCHAR (255) | Workout name                                            |
+| description | String    | VARCHAR (255) | Workout description                                     |
+| client_id   | Long      | BIGINT        | Foreign key referencing the client who owns the workout |
 
+### 2. Relationship
+- Client → Workout: One-to-Many
+- Workout → WorkoutDay: One-to-Many
 ---
 
-## VI. Medical history
+## VI. WorkoutDay
+
+### 1. Description
+Represent one day within a workout plan.
+
+Each workout day belongs to one workout and can contain multiple exercises.
+A workout day with no exercise will be considered a rest day.
+
+| Column     | Java type | MySQL Type    | Description                                                  |
+|------------|-----------|---------------|--------------------------------------------------------------|
+| id         | Long      | BIGINT        | Primary Key                                                  | 
+| day_number | Integer   | Int           | Day number within the workout plan                           |
+| name       | String    | VARCHAR (255) | Workout day name (Push, Pull, Leg, etc                       |
+| workout_id | Long      | BIGINT        | Foreign key referencing the workout who owns the workout day |
+
+### 2. Relationships
+- WorkoutDay → Workout : Many-to-One
+- WorkoutDay ↔ Exercise: Many-to-Many through `workout_day_exercise`
+
+## VII. Medical history
 
 ### 1. Description
 Stores medical conditions reported by a client that may affect workout planning, exercise selection, or coaching recommendations.
