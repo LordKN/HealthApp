@@ -1,5 +1,6 @@
 package com.HealthApp.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.Set;
@@ -21,6 +22,7 @@ public class Category {
     @Column(nullable = false)
     private String name;
 
+    @JsonIgnore     // Do not reverse display the exercises belong to this category in the returned json
     @OneToMany(mappedBy = "category")
     private Set<Exercise> exercises;
 

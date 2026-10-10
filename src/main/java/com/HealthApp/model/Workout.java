@@ -3,6 +3,8 @@ package com.HealthApp.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 @Entity
@@ -17,7 +19,8 @@ public class Workout {
 	
 	@Column(length = 2000)
 	private String description; //AVOID PUTTING desc BECAUSE IT IS SQL KEYWORD
-	
+
+    @JsonManagedReference("workout-days") // Display days in the returned json
 	@OneToMany(
             mappedBy = "workout",
             cascade = CascadeType.ALL,
@@ -28,6 +31,7 @@ public class Workout {
     //Workout must be owned by a client
     @ManyToOne
     @JoinColumn(name = "client_id", nullable = false)
+    @JsonBackReference("client-workout")    // Do not display client inside the returned json
     private Client client;
 	
 	public Workout() {

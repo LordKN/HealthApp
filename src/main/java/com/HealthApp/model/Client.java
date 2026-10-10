@@ -2,6 +2,7 @@ package com.HealthApp.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import org.hibernate.jdbc.Work;
 
@@ -40,6 +41,7 @@ public class Client extends Person {
 	@Enumerated(EnumType.STRING)
 	private Level stressLevel;
 
+    @JsonManagedReference("client-workout") // Display workout in the returned json
     @OneToMany(mappedBy = "client")
     private List<Workout> workouts = new ArrayList<>();
 	

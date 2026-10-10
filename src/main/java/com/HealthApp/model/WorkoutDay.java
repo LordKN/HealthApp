@@ -1,6 +1,7 @@
 package com.HealthApp.model;
 
 import com.HealthApp.controller.WorkoutController;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ public class WorkoutDay {
     )
     private List<Exercise> exercises = new ArrayList<>();
 
+    @JsonBackReference("workout-days") // Do not display workout inside the returned json
     @ManyToOne
     @JoinColumn (name = "workout_id")
     private Workout workout;    //Many workout days can belong to one workout:

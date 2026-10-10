@@ -1,5 +1,6 @@
 package com.HealthApp.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.Set;
@@ -23,6 +24,7 @@ public class Muscle {
     @Column
     private boolean is_front;
 
+    @JsonIgnore                  // Do not reverse display the exercises belong to this muscle in returned json
     @ManyToMany(mappedBy = "primaryMuscles")
     private Set<Exercise> exercises;
 

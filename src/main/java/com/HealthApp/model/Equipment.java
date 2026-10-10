@@ -1,5 +1,6 @@
 package com.HealthApp.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.Set;
@@ -16,6 +17,7 @@ public class Equipment {
     @Column (nullable = false)
     private String name;
 
+    @JsonIgnore                  //Do not reverse display the exercises belong to this equipment in the returned json
     @ManyToMany(mappedBy = "equipment")
     private Set<Exercise> exercises;
 
