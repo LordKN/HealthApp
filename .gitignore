@@ -35,3 +35,6 @@ build/
 # Ignore runtime config
 /src/main/resources/application.properties
 /src/main/resources/application.yml
+
+### Environment Variables
+.env
