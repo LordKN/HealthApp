@@ -37,6 +37,9 @@ public class AdminInitializer implements CommandLineRunner {
         Admin admin = repo.findByEmail(adminEmail).orElseGet(
                 () -> {
                     Admin newAdmin = new Admin();
+                    newAdmin.setName("Nguyen");
+                    newAdmin.setSex("Male");
+
                     newAdmin.setEmail(adminEmail);
                     newAdmin.setPassword(passwordEncoder.encode(adminPassword));
                     newAdmin.setRole(Role.ADMIN);
@@ -46,7 +49,7 @@ public class AdminInitializer implements CommandLineRunner {
                     return newAdmin;
                 }
         );
-        if (admin.isOwner() || admin.getRole() != Role.ADMIN) {
+        if (!admin.isOwner() || admin.getRole() != Role.ADMIN) {
             if (!admin.isOwner()) {
                 logger.warn("Bootstrap admin account is not marked as owner");
             }
