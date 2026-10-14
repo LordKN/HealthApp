@@ -4,6 +4,8 @@ package com.HealthApp.repo;
 import com.HealthApp.model.Category;
 import com.HealthApp.model.Equipment;
 import com.HealthApp.model.Muscle;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import com.HealthApp.model.Exercise;
 
@@ -18,4 +20,5 @@ public interface ExerciseRepository extends JpaRepository<Exercise, Long> {
     List<Exercise> findByCategory (Category category);
     List<Exercise> findByPrimaryMusclesContaining (Muscle muscle);
     List<Exercise> findByEquipmentContaining(Equipment equipment);
+    Page<Exercise> findByNameContainingIgnoreCase(String name, Pageable pageable);
 }

@@ -4,6 +4,8 @@ export default function ExercisePicker({
   totalPages,
   onPageChange,
   onAddExercise,
+  nameSearch,
+  onNameSearchChange,
 }) {
   return (
     <section className="exercise-picker">
@@ -13,6 +15,8 @@ export default function ExercisePicker({
         className="exercise-search"
         type="text"
         placeholder="Search exercises by name..."
+        value={nameSearch}
+        onChange={(e) => onNameSearchChange(e.target.value)}
       />
 
       <div className="exercise-picker-pagination">

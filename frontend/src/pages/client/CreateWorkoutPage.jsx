@@ -5,10 +5,15 @@ import { useState, useEffect } from "react";
 import "../../assets/css/CreateWorkout.css";
 import { useAuth } from "../../context/AuthContext.jsx";
 import ExercisePicker from "../../components/workout/ExercisePicker.jsx";
-import { createWorkout, getAllExercises } from "../../services/exerciseApi.js";
+import {
+  createWorkout,
+  getAllExercises,
+  getExerciseByName,
+} from "../../services/exerciseApi.js";
 import SideBar from "./Sidebar.jsx";
 
 export default function CreateWorkoutPage() {
+  const [exerciseName, setExerciseName] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [exercises, setExercises] = useState([]);
@@ -31,7 +36,16 @@ export default function CreateWorkoutPage() {
   useEffect(() => {
     async function loadExercises() {
       try {
-        const data = await getAllExercises(accessToken, exercisePage, 4);
+        let data;
+        if (exerciseName.trim()) {
+          data = await getExerciseByName(
+            accessToken,
+            exercisePage,
+            exerciseName,
+          );
+        } else {
+          data = await getAllExercises(accessToken, exercisePage, 4);
+        }
         setExercises(data.content);
         setTotalExercisePages(data.totalPages);
         console.log("Exercise response:", data);
@@ -40,7 +54,12 @@ export default function CreateWorkoutPage() {
       }
     }
     loadExercises();
-  }, [accessToken, exercisePage]);
+  }, [accessToken, exercisePage, exerciseName]);
+
+  function handleSearch(searchName) {
+    setExerciseName(searchName);
+    setExercisePage(0); // Reset to first page on new search
+  }
 
   function handleExpandDay(dayNumber) {
     setExpandedDay(expandedDay === dayNumber ? null : dayNumber);
@@ -131,6 +150,8 @@ export default function CreateWorkoutPage() {
             expandedDay={expandedDay}
           />
           <ExercisePicker
+            onNameSearchChange={handleSearch}
+            nameSearch={exerciseName}
             exercises={exercises}
             totalPages={totalExercisePages}
             onPageChange={setExercisePage}

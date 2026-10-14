@@ -19,7 +19,7 @@ public class ExerciseController {
     private ExerciseService service;
 
     @GetMapping("/api/exercises")
-    public ResponseEntity<Page<ExerciseDto>> getAllExercise(@PageableDefault(size = 20) Pageable pageable) {
+    public ResponseEntity<Page<ExerciseDto>> getAllExercise(@PageableDefault(size = 4) Pageable pageable) {
 
         return ResponseEntity.ok(service.getAllExercises(pageable));
     }
@@ -29,6 +29,12 @@ public class ExerciseController {
         ExerciseDto exercise = service.getExerciseById(id);
 
         return ResponseEntity.ok(service.getExerciseById(id));
+    }
+
+    @GetMapping("/api/exercises/search")
+    public ResponseEntity<Page<ExerciseDto>> searchExerciseByName(@RequestParam String name,
+                                                                  @PageableDefault(size = 4) Pageable pageable) {
+        return ResponseEntity.ok(service.getExerciseByNameContaining(name, pageable));
     }
 
     @GetMapping("/api/exercises/count")

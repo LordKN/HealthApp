@@ -29,6 +29,10 @@ public class ExerciseService {
         return exercises.map(this::convertToDto);
     }
 
+    public Page<ExerciseDto> getExerciseByNameContaining (String name, Pageable pageable) {
+        return repo.findByNameContainingIgnoreCase(name, pageable).map(this::convertToDto);
+    }
+
     public ExerciseDto getExerciseById (Long id) {
         Exercise exercise = repo.findById(id)
                 .orElseThrow(() -> new RuntimeException("Exercise not found"));

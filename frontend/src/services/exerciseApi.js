@@ -17,6 +17,23 @@ export async function getAllExercises(accessToken, page, size) {
   return response.json();
 }
 
+export async function getExerciseByName(accessToken, page, name) {
+  const response = await fetch(
+    `${API_BASE_URL}/exercises/search?page=${page}&name=${encodeURIComponent(name)}`,
+    {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    },
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch exercises by name");
+  }
+
+  return response.json();
+}
+
 export async function createWorkout(accessToken, workout) {
   const response = await fetch(`${API_BASE_URL}/workouts`, {
     method: "POST",
