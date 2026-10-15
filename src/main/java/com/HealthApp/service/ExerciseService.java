@@ -10,9 +10,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -29,8 +26,8 @@ public class ExerciseService {
         return exercises.map(this::convertToDto);
     }
 
-    public Page<ExerciseDto> getExerciseByNameContaining (String name, Pageable pageable) {
-        return repo.findByNameContainingIgnoreCase(name, pageable).map(this::convertToDto);
+    public Page<ExerciseDto> getExercise (String name, Long categoryId, Long muscleId, Long equipmentId, Pageable pageable) {
+        return repo.find(name, categoryId, muscleId, equipmentId, pageable).map(this::convertToDto);
     }
 
     public ExerciseDto getExerciseById (Long id) {

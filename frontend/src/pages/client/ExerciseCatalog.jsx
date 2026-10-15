@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
-import { getAllExercises } from "../../services/exerciseApi.js";
+import { getExercises } from "../../services/exerciseApi.js";
 import Sidebar from "./Sidebar.jsx";
 import ExerciseCard from "../../components/ExerciseCard.jsx";
 import "../../assets/css/ExerciseCatalog.css";
@@ -14,7 +14,7 @@ export default function ExerciseCatalog() {
   useEffect(() => {
     async function loadExercises() {
       try {
-        const data = await getAllExercises(accessToken, page, 30);
+        const data = await getExercises(accessToken, page, "", "", "", "");
 
         setTotalPages(data.totalPages);
         setExercises(data.content);

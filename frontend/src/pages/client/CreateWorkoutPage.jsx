@@ -5,14 +5,13 @@ import { useState, useEffect } from "react";
 import "../../assets/css/CreateWorkout.css";
 import { useAuth } from "../../context/AuthContext.jsx";
 import ExercisePicker from "../../components/workout/ExercisePicker.jsx";
-import {
-  createWorkout,
-  getAllExercises,
-  getExerciseByName,
-} from "../../services/exerciseApi.js";
+import { createWorkout, getExercises } from "../../services/exerciseApi.js";
 import SideBar from "./Sidebar.jsx";
 
 export default function CreateWorkoutPage() {
+  const [muscleId, setMuscleId] = useState("");
+  const [categoryId, setCategoryId] = useState("");
+  const [equipmentId, setEquipmentId] = useState("");
   const [exerciseName, setExerciseName] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -36,16 +35,15 @@ export default function CreateWorkoutPage() {
   useEffect(() => {
     async function loadExercises() {
       try {
-        let data;
-        if (exerciseName.trim()) {
-          data = await getExerciseByName(
-            accessToken,
-            exercisePage,
-            exerciseName,
-          );
-        } else {
-          data = await getAllExercises(accessToken, exercisePage, 4);
-        }
+        const data = await getExercises(
+          accessToken,
+          exercisePage,
+          exerciseName,
+          categoryId,
+          muscleId,
+          equipmentId,
+        );
+
         setExercises(data.content);
         setTotalExercisePages(data.totalPages);
         console.log("Exercise response:", data);
@@ -54,11 +52,33 @@ export default function CreateWorkoutPage() {
       }
     }
     loadExercises();
-  }, [accessToken, exercisePage, exerciseName]);
+  }, [
+    accessToken,
+    exercisePage,
+    exerciseName,
+    categoryId,
+    muscleId,
+    equipmentId,
+  ]);
 
   function handleSearch(searchName) {
     setExerciseName(searchName);
     setExercisePage(0); // Reset to first page on new search
+  }
+
+  function handleCategoryChange(newCategoryId) {
+    setCategoryId(newCategoryId);
+    setExercisePage(0); // Reset to first page on new category selection
+  }
+
+  function handleMuscleChange(newMuscleId) {
+    setMuscleId(newMuscleId);
+    setExercisePage(0); // Reset to first page on new muscle selection
+  }
+
+  function handleEquipmentChange(newEquipmentId) {
+    setEquipmentId(newEquipmentId);
+    setExercisePage(0); // Reset to first page on new equipment selection
   }
 
   function handleExpandDay(dayNumber) {
@@ -150,13 +170,19 @@ export default function CreateWorkoutPage() {
             expandedDay={expandedDay}
           />
           <ExercisePicker
-            onNameSearchChange={handleSearch}
-            nameSearch={exerciseName}
             exercises={exercises}
+            page={exercisePage}
             totalPages={totalExercisePages}
             onPageChange={setExercisePage}
             onAddExercise={handleAddExercise}
-            page={exercisePage}
+            nameSearch={exerciseName}
+            categoryId={categoryId}
+            muscleId={muscleId}
+            equipmentId={equipmentId}
+            onSearchChange={handleSearch}
+            onCategoryChange={handleCategoryChange}
+            onMuscleChange={handleMuscleChange}
+            onEquipmentChange={handleEquipmentChange}
           />
         </div>
       </main>

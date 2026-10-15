@@ -32,9 +32,12 @@ public class ExerciseController {
     }
 
     @GetMapping("/api/exercises/search")
-    public ResponseEntity<Page<ExerciseDto>> searchExerciseByName(@RequestParam String name,
+    public ResponseEntity<Page<ExerciseDto>> searchExerciseByName(@RequestParam (required = false) String name,
+                                                                  @RequestParam (required = false) Long categoryId,
+                                                                  @RequestParam (required = false) Long muscleId,
+                                                                  @RequestParam (required = false) Long equipmentId,
                                                                   @PageableDefault(size = 4) Pageable pageable) {
-        return ResponseEntity.ok(service.getExerciseByNameContaining(name, pageable));
+        return ResponseEntity.ok(service.getExercise(name, categoryId, muscleId, equipmentId, pageable));
     }
 
     @GetMapping("/api/exercises/count")

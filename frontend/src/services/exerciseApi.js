@@ -1,31 +1,38 @@
 const API_BASE_URL = "http://localhost:8080/api";
 
-export async function getAllExercises(accessToken, page, size) {
-  const response = await fetch(
-    `${API_BASE_URL}/exercises?page=${page}&size=${size}`,
-    {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    },
-  );
+export async function getExercises(
+  accessToken,
+  page,
+  name,
+  categoryId,
+  muscleId,
+  equipmentId,
+) {
+  const params = new URLSearchParams({
+    page,
+  });
 
-  if (!response.ok) {
-    throw new Error("Failed to fetch exercises");
+  if (name.trim()) {
+    params.set("name", name.trim());
   }
 
-  return response.json();
-}
+  if (categoryId !== "") {
+    params.set("categoryId", categoryId);
+  }
 
-export async function getExerciseByName(accessToken, page, name) {
-  const response = await fetch(
-    `${API_BASE_URL}/exercises/search?page=${page}&name=${encodeURIComponent(name)}`,
-    {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
+  if (muscleId !== "") {
+    params.set("muscleId", muscleId);
+  }
+
+  if (equipmentId !== "") {
+    params.set("equipmentId", equipmentId);
+  }
+
+  const response = await fetch(`${API_BASE_URL}/exercises/search?${params}`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
     },
-  );
+  });
 
   if (!response.ok) {
     throw new Error("Failed to fetch exercises by name");
