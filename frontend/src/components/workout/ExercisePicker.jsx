@@ -25,58 +25,63 @@ export default function ExercisePicker({
         onChange={(e) => onSearchChange(e.target.value)}
       />
 
-      <select
-        value={categoryId}
-        onChange={(e) => onCategoryChange(e.target.value)}
-      >
-        <option value="">All Categories</option>
-        <option value="1">Abs</option>
-        <option value="2">Arms</option>
-        <option value="3">Back</option>
-        <option value="4">Calves</option>
-        <option value="5">Cardio</option>
-        <option value="6">Chest</option>
-        <option value="7">Legs</option>
-        <option value="8">Shoulders</option>
-      </select>
+      <div className="exercise-filters">
+        <select
+          value={categoryId}
+          onChange={(e) => onCategoryChange(e.target.value)}
+        >
+          <option value="">All Categories</option>
+          <option value="1">Abs</option>
+          <option value="2">Arms</option>
+          <option value="3">Back</option>
+          <option value="4">Calves</option>
+          <option value="5">Cardio</option>
+          <option value="6">Chest</option>
+          <option value="7">Legs</option>
+          <option value="8">Shoulders</option>
+        </select>
 
-      <select value={muscleId} onChange={(e) => onMuscleChange(e.target.value)}>
-        <option value="">All Muscles</option>
-        <option value="1">Front shoulder</option>
-        <option value="2">Biceps</option>
-        <option value="3">Hamstrings</option>
-        <option value="4">Upper arm</option>
-        <option value="5">Calf muscle</option>
-        <option value="6">Glutes</option>
-        <option value="7">Lats</option>
-        <option value="8">Side abs</option>
-        <option value="9">Chest</option>
-        <option value="10">Quads</option>
-        <option value="11">Abs</option>
-        <option value="12">Side ribs</option>
-        <option value="13">Deep calf</option>
-        <option value="14">Traps</option>
-        <option value="15">Triceps</option>
-      </select>
+        <select
+          value={muscleId}
+          onChange={(e) => onMuscleChange(e.target.value)}
+        >
+          <option value="">All Muscles</option>
+          <option value="1">Front shoulder</option>
+          <option value="2">Biceps</option>
+          <option value="3">Hamstrings</option>
+          <option value="4">Upper arm</option>
+          <option value="5">Calf muscle</option>
+          <option value="6">Glutes</option>
+          <option value="7">Lats</option>
+          <option value="8">Side abs</option>
+          <option value="9">Chest</option>
+          <option value="10">Quads</option>
+          <option value="11">Abs</option>
+          <option value="12">Side ribs</option>
+          <option value="13">Deep calf</option>
+          <option value="14">Traps</option>
+          <option value="15">Triceps</option>
+        </select>
 
-      <select
-        value={equipmentId}
-        onChange={(e) => onEquipmentChange(e.target.value)}
-      >
-        <option value="">All Equipments</option>
-        <option value="1">Barbell</option>
-        <option value="2">Bench</option>
-        <option value="3">Cable machine</option>
-        <option value="4">Dumbell</option>
-        <option value="5">Gym mat</option>
-        <option value="6">Incline bench</option>
-        <option value="7">Kettlebell</option>
-        <option value="8">Pull-up bar</option>
-        <option value="9">Resistance band</option>
-        <option value="10">SZ-Bar</option>
-        <option value="11">Swiss Ball</option>
-        <option value="12">Body weight</option>
-      </select>
+        <select
+          value={equipmentId}
+          onChange={(e) => onEquipmentChange(e.target.value)}
+        >
+          <option value="">All Equipments</option>
+          <option value="1">Barbell</option>
+          <option value="2">Bench</option>
+          <option value="3">Cable machine</option>
+          <option value="4">Dumbell</option>
+          <option value="5">Gym mat</option>
+          <option value="6">Incline bench</option>
+          <option value="7">Kettlebell</option>
+          <option value="8">Pull-up bar</option>
+          <option value="9">Resistance band</option>
+          <option value="10">SZ-Bar</option>
+          <option value="11">Swiss Ball</option>
+          <option value="12">Body weight</option>
+        </select>
+      </div>
 
       <div className="exercise-picker-pagination">
         <button
