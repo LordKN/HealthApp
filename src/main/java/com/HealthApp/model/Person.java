@@ -147,4 +147,8 @@ public class Person {
 				+ ", emergencyContactName=" + emergencyContactName + ", emergencyContactPhone=" + emergencyContactPhone
 				+ ", emergencyContactRelationship=" + emergencyContactRelationship + "]";
 	}
+
+    public void setId(long l) {
+        this.id = l;
+    }
 }
