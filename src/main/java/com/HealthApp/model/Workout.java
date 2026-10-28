@@ -78,4 +78,8 @@ public class Workout {
     public void setClient(Client client) {
         this.client = client;
     }
+
+    public void setId(long l) {
+        this.id = l;
+    }
 }
