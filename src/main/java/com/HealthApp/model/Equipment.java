@@ -48,4 +48,8 @@ public class Equipment {
     public void setExercises(Set<Exercise> exercises) {
         this.exercises = exercises;
     }
+
+    public void setId(long l) {
+        this.id = l;
+    }
 }
