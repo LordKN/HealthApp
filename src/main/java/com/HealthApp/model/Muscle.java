@@ -90,4 +90,8 @@ public class Muscle {
     public void setIs_front(boolean is_front) {
         this.is_front = is_front;
     }
+
+    public void setId(long l) {
+        this.id = l;
+    }
 }
