@@ -53,4 +53,8 @@ public class Category {
     public void setWgerId(Integer wgerId) {
         this.wgerId = wgerId;
     }
+
+    public void setId(long l) {
+        this.id = l;
+    }
 }
