@@ -6,9 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class HealthAppApplication {
 
-	public static void main(String[] args) {
-
-        SpringApplication.run(HealthAppApplication.class, args);
+	void main() {
+        SpringApplication.run(HealthAppApplication.class);
         System.out.println("Hello world");
 	}
 
