@@ -16,7 +16,7 @@ public class CoachService {
 
     @Autowired
     private CoachRepository repo;
-    private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
+    private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
     public List<Coach> findAllCoaches() {
         return repo.findAll();
