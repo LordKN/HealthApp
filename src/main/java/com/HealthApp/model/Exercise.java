@@ -129,4 +129,8 @@ public class Exercise {
     public void setSecondaryMuscles(Set<Muscle> secondaryMuscles) {
         this.secondaryMuscles = secondaryMuscles;
     }
+
+    public void setId(long l) {
+        this.id = l;
+    }
 }
