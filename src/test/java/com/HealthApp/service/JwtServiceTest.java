@@ -1,6 +1,7 @@
 package com.HealthApp.service;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -32,6 +33,7 @@ class JwtServiceTest {
     }
 
     @Test
+    @DisplayName("test generate token")
     void testGenerateToken_whenUsernameProvided_returnAStringToken() {
         // Arrange
         String username = "admin@example.com";
@@ -44,6 +46,7 @@ class JwtServiceTest {
     }
 
     @Test
+    @DisplayName("test generate refresh token")
     void testGenerateRefreshToken_whenSessionIdTokenIdExpirationProvided_returnRefreshTokenString() {
         // Arrange
         UUID sessionId = UUID.randomUUID();
