@@ -1,6 +1,7 @@
 package com.HealthApp.service;
 
 import com.HealthApp.model.Client;
+import com.HealthApp.model.Role;
 import com.HealthApp.repo.ClientRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,7 +13,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.endsWith;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -60,5 +61,71 @@ class ClientServiceTest {
         assertEquals("client@example.com", c.getEmail());
 
         verify(repo).findByEmail(email);
+    }
+
+    @Test
+    @DisplayName("Test save client")
+    void testSaveClient_whenClientObjectIsProvided_returnSavedClientObject() {
+        // Arrange
+        when(repo.save(any(Client.class)))
+                .thenAnswer(invocation -> invocation.getArgument(0));
+
+        Client client = new Client();
+        client.setName("Nguyn");
+        client.setWeight(70.0);
+        client.setHeight(172.0);
+        client.setRole(Role.CLIENT);
+
+        // Act
+        Client c = service.saveClient(client);
+
+
+        // Assert
+        assertEquals("Nguyn", client.getName());
+        assertEquals(70.0, client.getWeight());
+        assertEquals(172.0, client.getHeight());
+    }
+
+    @Test
+    @DisplayName("Test delete client")
+    void testDeleteClient_whenClientIdIsProvided_deleteThatClient() {
+        // Arrange
+        Long id = 1L;
+        when(repo.existsById(id)).thenReturn(true);
+
+        // Act
+        service.deleteClient(id);
+
+        // Assert
+        verify(repo).existsById(id);
+        verify(repo).deleteById(id);
+    }
+
+    @Test
+    @DisplayName("Test count client")
+    void testCountClient() {
+        // Arrange
+        when(repo.count()).thenReturn(5L);
+
+        // Act
+        Long result = service.countClient();
+
+        // Assert
+        assertEquals(5L, result);
+        verify(repo).count();
+    }
+
+    @Test
+    @DisplayName("Test delete all clients")
+    void testDeleteAllClients() {
+        // Arrange
+        when(repo.count()).thenReturn(5L);
+
+        // Act
+        service.deleteAllClients();
+
+        // Assert
+        verify(repo).count();
+        verify(repo).deleteAll();
     }
 }
