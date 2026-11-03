@@ -131,6 +131,50 @@ class ExerciseServiceTest {
 
     }
 
+    @Test
+    @DisplayName("Test delete exercise")
+    void testDeleteExercise_whenExerciseIdProvided_deleteExercise() {
+        // Arrange
+        Long id = 5L;
+        when(repo.existsById(id)).thenReturn(true);
+
+        // Act
+        service.deleteExercise(id);
+
+        // Assert
+        verify(repo).existsById(id);
+        verify(repo).deleteById(id);
+    }
+
+    @Test
+    @DisplayName("Test delete all exercises")
+    void testDeleteAllExercises() {
+        // Arrange
+        when(repo.count()).thenReturn(5L);
+
+        // Act
+        service.deleteAllExercises();
+
+        // Assert
+        verify(repo).count();
+        verify(repo).deleteAll();
+    }
+
+    @Test
+    @DisplayName("Test count exercises")
+    void testCountExercises_returnExercisesCounts() {
+        // Arrange
+        when(repo.count()).thenReturn(5L);
+
+        // Act
+        Long count = service.countExercises();
+
+        // Assert
+        assertEquals(5L, count);
+        verify(repo).count();
+    }
+
+
     private Exercise createExercise(Long id, String name) {
         Exercise exercise = new Exercise();
         exercise.setId(id);
