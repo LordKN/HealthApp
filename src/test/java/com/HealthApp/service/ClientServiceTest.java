@@ -9,7 +9,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.List;
@@ -409,5 +408,34 @@ class ClientServiceTest {
 
         // Assert
         assertEquals("Role must be assigned", exception.getMessage());
+    }
+
+    @Test
+    @DisplayName("Test update client")
+    void testUpdateClient_whenClientIdAndUpdatedClientProvided_returnUpdatedClientObject() {
+        // Arrange
+        Client existingClient = new Client();
+        existingClient.setId(1L);
+        existingClient.setRole(Role.CLIENT);
+
+        when(repo.findById(1L)).thenReturn(Optional.of(existingClient));
+
+        Client updatedClient = new Client();
+        updatedClient.setName("Man");
+        updatedClient.setWeight(37.0);
+        updatedClient.setHeight(170.0);
+
+        when(repo.save(existingClient)).thenAnswer(invocation -> invocation.getArgument(0));
+
+        // Act
+        Client client = service.updateClient(1L, updatedClient);
+
+        // Assert
+        assertEquals("Man", client.getName());
+        assertEquals(37.0, client.getWeight());
+        assertEquals(170.0, client.getHeight());
+
+        verify(repo).findById(1L);
+        verify(repo).save(existingClient);
     }
 }
