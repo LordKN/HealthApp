@@ -22,8 +22,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class WorkoutServiceTest {
@@ -181,6 +180,31 @@ class WorkoutServiceTest {
 
         verify(clientRepo).findByEmail(email);
         verify(workoutRepo).delete(workout);
+    }
+
+    @Test
+    @DisplayName("Test delete workout on invalid id")
+    void testDeleteWorkout_whenInvalidIdAndEmailProvided_throwRuntimeException() {
+        // Arrange
+        long id = 1L;
+        String email = "client@example.com";
+
+        Client c = new Client();
+        c.setEmail(email);
+        when(clientRepo.findByEmail(email)).thenReturn(Optional.of(c));
+
+        Workout w = new Workout();
+        w.setId(2L);
+        c.setWorkouts(new ArrayList<>(List.of(w)));
+
+        // Act
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> service.deleteWorkout(id, email));
+
+        // Assert
+        assertEquals("Workout not found", exception.getMessage());
+
+        verify(clientRepo).findByEmail(email);
+        verify(workoutRepo, never()).delete(any(Workout.class));
     }
 
     @Test
