@@ -22,7 +22,7 @@ public class ClientService {
 
     public Client getClientById(Long id) {
         return repo.findById(id)
-                .orElseThrow(() -> new RuntimeException("Client not found"));
+                .orElseThrow(() -> new UsernameNotFoundException("Client not found"));
     }
 
     public Client getClientByEmail (String email) {
@@ -40,7 +40,7 @@ public class ClientService {
     public void deleteClient(Long id) {
 
         if (!repo.existsById(id)) {
-            throw new RuntimeException("Client not found");
+            throw new UsernameNotFoundException("Client not found");
         }
 
         repo.deleteById(id);
