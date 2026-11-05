@@ -48,7 +48,7 @@ public class CoachService {
     public void deleteCoach(Long id) {
 
         if (!repo.existsById(id)) {
-            throw new RuntimeException("Coach doesn't exist for deletion");
+            throw new UsernameNotFoundException("Coach doesn't exist for deletion");
         }
 
         repo.deleteById(id);
@@ -68,9 +68,9 @@ public class CoachService {
     }
 
     private void validateCoach(Coach coach) {
-        if (coach == null) {
-            throw new RuntimeException("Coach cannot be null");
-        }
+//        if (coach == null) {
+//            throw new RuntimeException("Coach cannot be null");
+//        }
 
         if (coach.getName() == null || coach.getName().isBlank()) {
             throw new RuntimeException("Coach name is required");
@@ -112,6 +112,8 @@ public class CoachService {
     public Coach updateCoach(Long id, Coach updatedCoach) {
         Coach existingCoach = repo.findById(id).orElseThrow(() -> new RuntimeException("No Coach found"));
 
+        existingCoach.setName(updatedCoach.getName());
+        existingCoach.setEmail(updatedCoach.getEmail());
         existingCoach.setSpecialty(updatedCoach.getSpecialty());
         existingCoach.setYearsOfExperience(updatedCoach.getYearsOfExperience());
         existingCoach.setOpenForNewClient(updatedCoach.isOpenForNewClient());
