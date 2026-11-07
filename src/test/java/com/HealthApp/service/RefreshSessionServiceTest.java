@@ -1,5 +1,6 @@
 package com.HealthApp.service;
 
+import com.HealthApp.exception.InvalidRefreshTokenException;
 import com.HealthApp.model.RefreshSession;
 import com.HealthApp.model.RevocationReason;
 import com.HealthApp.model.Role;
@@ -18,8 +19,7 @@ import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class RefreshSessionServiceTest {
@@ -150,5 +150,105 @@ class RefreshSessionServiceTest {
         assertFalse(session.getRevokedAt().isBefore(before));
         assertFalse(session.getRevokedAt().isAfter(after));
         assertEquals(RevocationReason.LOGOUT, session.getRevocationReason());
+    }
+
+    @Test
+    @DisplayName("Test refresh session on revoked session")
+    void testRefreshSession_whenRevokedSessionProvided_throwInvalidRefreshTokenException() {
+
+        // Arrange
+        RefreshSession session = generateValidRefreshSession();
+        session.setRevoked(true);
+
+        UUID sessionId = session.getSessionId();
+        UUID tokenId = session.getCurrentTokenId();
+
+        when(repo.findBySessionId(sessionId)).thenReturn(Optional.of(session));
+
+        // Act
+        InvalidRefreshTokenException exception = assertThrows(InvalidRefreshTokenException.class, () -> service.refreshSession(sessionId, tokenId));
+
+        // Assert
+        assertEquals("Invalid refresh token", exception.getMessage());
+
+        verify(repo, never()).save(any(RefreshSession.class));
+    }
+
+    @Test
+    @DisplayName("Test refresh session on expired session")
+    void testRefreshSession_whenExpiredSessionProvided_throwInvalidRefreshTokenException() {
+
+        // Arrange
+        RefreshSession session = generateValidRefreshSession();
+        session.setRevoked(false);
+        session.setExpiresAt(Instant.now());
+
+        UUID sessionId = session.getSessionId();
+        UUID tokenId = session.getCurrentTokenId();
+
+        when(repo.findBySessionId(sessionId)).thenReturn(Optional.of(session));
+
+        // Act
+        InvalidRefreshTokenException exception = assertThrows(InvalidRefreshTokenException.class, () -> service.refreshSession(sessionId, tokenId));
+
+        // Assert
+        assertEquals("Invalid refresh token", exception.getMessage());
+
+        verify(repo, never()).save(any(RefreshSession.class));
+    }
+
+    @Test
+    @DisplayName("Test refresh session on invalid token id")
+    void testRefreshSession_whenInvalidTokenIdProvided_throwInvalidRefreshTokenException() {
+        // Arrange
+        RefreshSession session = generateValidRefreshSession();
+        session.setRevoked(false);
+        session.setExpiresAt(Instant.now().plus(7, ChronoUnit.DAYS));
+
+        UUID sessionId = session.getSessionId();
+
+        when(repo.findBySessionId(sessionId)).thenReturn(Optional.of(session));
+
+        // Act
+        InvalidRefreshTokenException exception = assertThrows(InvalidRefreshTokenException.class, () -> service.refreshSession(sessionId, UUID.randomUUID()));
+
+        // Assert
+        assertEquals("Invalid refresh token", exception.getMessage());
+
+        verify(repo, never()).save(any(RefreshSession.class));
+    }
+
+    @Test
+    @DisplayName("Test revoke session on invalid token id")
+    void testRevokeSession_whenInvalidTokenIdProvided_throwInvalidRefreshTokenException() {
+        // Arrange
+        RefreshSession session = generateValidRefreshSession();
+        session.setRevoked(false);
+        session.setExpiresAt(Instant.now().plus(7, ChronoUnit.DAYS));
+
+        UUID sessionId = session.getSessionId();
+
+        when(repo.findBySessionId(sessionId)).thenReturn(Optional.of(session));
+
+        // Act
+        InvalidRefreshTokenException exception = assertThrows(InvalidRefreshTokenException.class, () -> service.revokeSession(sessionId, UUID.randomUUID()));
+
+        // Assert
+        assertEquals("Invalid refresh token", exception.getMessage());
+
+        verify(repo, never()).save(any(RefreshSession.class));
+    }
+
+
+    private RefreshSession generateValidRefreshSession() {
+        RefreshSession session = new RefreshSession();
+
+        UUID sessionId = UUID.randomUUID();
+        UUID tokenId = UUID.randomUUID();
+
+        session.setSessionId(sessionId);
+        session.setCurrentTokenId(tokenId);
+
+        return session;
     }
 }
