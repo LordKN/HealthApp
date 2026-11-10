@@ -47,6 +47,7 @@ public class CoachControllerTest {
         // Arrange
         Coach c = new Coach();
 
+        c.setId(1L);
         c.setName("Nguyen");
         c.setEmail("coach@example.com");
         c.setSpecialty(Specialty.STRENGTH_TRAINING);
@@ -70,7 +71,7 @@ public class CoachControllerTest {
                 .andReturn();
 
         String responseBodyAsString = mvcResult.getResponse().getContentAsString();
-        Coach coach = objectMapper.convertValue(responseBodyAsString, Coach.class);
+        Coach coach = objectMapper.readValue(responseBodyAsString, Coach.class);
 
         // Assert
         assertEquals(c.getName(), coach.getName());
