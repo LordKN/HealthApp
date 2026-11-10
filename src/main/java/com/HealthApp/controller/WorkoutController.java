@@ -5,6 +5,8 @@ import com.HealthApp.model.Workout;
 import com.HealthApp.service.WorkoutService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -35,9 +37,11 @@ public class WorkoutController {
     }
 
     @PostMapping("/api/workouts")
-    public void saveWorkout(@Valid @RequestBody CreateWorkoutRequestDto workout, Authentication authentication) {
+    public ResponseEntity<Workout> saveWorkout(@Valid @RequestBody CreateWorkoutRequestDto workout, Authentication authentication) {
         String email = authentication.getName();
-        service.saveWorkout(workout, email);
+        Workout savedWorkout = service.saveWorkout(workout, email);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedWorkout);
+
     }
 
     @DeleteMapping("/api/workouts/{workoutID}")

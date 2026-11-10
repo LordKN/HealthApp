@@ -49,7 +49,7 @@ public class WorkoutService {
 
     //If an exception is thrown, no workout is saved
     @Transactional
-    public void saveWorkout (CreateWorkoutRequestDto workoutRequestDto, String userEmail) {
+    public Workout saveWorkout (CreateWorkoutRequestDto workoutRequestDto, String userEmail) {
 
         //validateWorkout(workout);
         Workout workout = new Workout();
@@ -84,7 +84,7 @@ public class WorkoutService {
 
         }
         client.getWorkouts().add(workout);
-        repo.save(workout);
+        return repo.save(workout);
     }
 
     @Transactional
