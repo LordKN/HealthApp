@@ -83,7 +83,7 @@ public class WorkoutControllerTest {
 
         // Act
         MvcResult result = mockMvc.perform(requestBuilder)
-                .andDo(print())
+                .andExpect(status().isCreated())
                 .andReturn();
 
         String responseBodyAsString = result.getResponse().getContentAsString();
