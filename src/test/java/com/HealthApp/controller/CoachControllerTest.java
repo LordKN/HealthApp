@@ -12,6 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -19,8 +22,11 @@ import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import tools.jackson.databind.ObjectMapper;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -83,5 +89,58 @@ public class CoachControllerTest {
         assertEquals(c.getDesc(), coach.getDesc());
         assertEquals(c.getRole(), coach.getRole());
 
+    }
+
+    @Test
+    @DisplayName("Test get current coach")
+    void testGetCurrentCode_returnLoggedInCoach() throws Exception {
+
+        // Arrange
+        Coach c = new Coach();
+        String email = "coach@example.com";
+
+        c.setId(1L);
+        c.setName("Nguyen");
+        c.setEmail("coach@example.com");
+        c.setSpecialty(Specialty.STRENGTH_TRAINING);
+        c.setYearsOfExperience(5);
+        c.setClientCount(10);
+        c.setWorkPlace("GrindHub");
+        c.setDesc("Certified fitness coach");
+        c.setRole(Role.COACH);
+
+        Authentication authentication = new UsernamePasswordAuthenticationToken(
+                email,
+                null,
+                List.of(new SimpleGrantedAuthority("ROLE_COACH"))
+        );
+
+        RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .get("/api/coaches/me")
+                .principal(authentication);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        when(service.findCoachByEmail(email)).thenReturn(c);
+
+        // Act
+        MvcResult mvcResult = mockMvc.perform(requestBuilder)
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String responseBodyAsString = mvcResult.getResponse().getContentAsString();
+        Coach returnedCoach = objectMapper.readValue(responseBodyAsString, Coach.class);
+
+        // Assert
+        assertEquals(c.getName(), returnedCoach.getName());
+        assertEquals(c.getEmail(), returnedCoach.getEmail());
+        assertEquals(c.getSpecialty(), returnedCoach.getSpecialty());
+        assertEquals(c.getYearsOfExperience(), returnedCoach.getYearsOfExperience());
+        assertEquals(c.getClientCount(), returnedCoach.getClientCount());
+        assertEquals(c.getWorkPlace(), returnedCoach.getWorkPlace());
+        assertEquals(c.getDesc(), returnedCoach.getDesc());
+        assertEquals(c.getRole(), returnedCoach.getRole());
+
+        verify(service).findCoachByEmail(email);
     }
 }

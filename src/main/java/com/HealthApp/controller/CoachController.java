@@ -8,6 +8,7 @@ import com.HealthApp.service.CoachService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,6 +33,14 @@ public class CoachController {
     @GetMapping("/api/coaches/{coachEmail}")
     public ResponseEntity<Coach> getCoachByEmail(@PathVariable("coachEmail") String email) {
         return ResponseEntity.ok(service.findCoachByEmail(email));
+    }
+
+    @GetMapping("/api/coaches/me")
+    public ResponseEntity<Coach> getCurrentCoach(Authentication authentication) {
+        String email = authentication.getName();
+
+        Coach coach = service.findCoachByEmail(email);
+        return ResponseEntity.ok(coach);
     }
 
     @GetMapping("/api/coaches/count")
