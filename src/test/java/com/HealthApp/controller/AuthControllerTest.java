@@ -1,9 +1,6 @@
 package com.HealthApp.controller;
 
-import com.HealthApp.model.Client;
-import com.HealthApp.model.RefreshSession;
-import com.HealthApp.model.Role;
-import com.HealthApp.model.UserPrincipal;
+import com.HealthApp.model.*;
 import com.HealthApp.repo.AdminRepository;
 import com.HealthApp.repo.ClientRepository;
 import com.HealthApp.repo.CoachRepository;
@@ -165,8 +162,8 @@ public class AuthControllerTest {
     }
 
     @Test
-    @DisplayName("Test refresh return 200")
-    void testRefresh_whenValidRefreshTokenProvided_returnResponseEntityOk() throws Exception {
+    @DisplayName("Test refresh client return 200")
+    void testRefresh_whenValidClientRefreshTokenProvided_returnResponseEntityOk() throws Exception {
         // Arrange
         String refreshToken = "mock-refresh-token";
         String email = "someone@example.com";
@@ -213,6 +210,108 @@ public class AuthControllerTest {
                 .andExpect(jsonPath("$.role").value("CLIENT"));
 
         verify(clientRepo).findById(1L);
+    }
+
+    @Test
+    @DisplayName("Test refresh return 200")
+    void testRefresh_whenValidCoachRefreshTokenProvided_returnResponseEntityOk() throws Exception {
+        // Arrange
+        String refreshToken = "mock-refresh-token";
+        String email = "someone@example.com";
+
+        Coach coach = new Coach();
+        coach.setEmail(email);
+
+        when(coachRepo.findById(1L)).thenReturn(Optional.of(coach));
+
+
+        String newRefreshToken = "mock-new-refresh-token";
+        String newAccessToken = "mock-new-accessToken";
+
+        UUID sessionId = UUID.randomUUID();
+        UUID tokenId = UUID.randomUUID();
+
+        when(jwtService.extractSessionId(refreshToken)).thenReturn(sessionId);
+        when(jwtService.extractTokenId(refreshToken)).thenReturn(tokenId);
+
+        // Create a real RefreshSession object for easier set up
+        RefreshSession session = new RefreshSession();
+
+        session.setSessionId(sessionId);
+        session.setCurrentTokenId(tokenId);
+
+        session.setUserId(1L);
+        session.setRole(Role.COACH);
+        session.setCreatedAt(Instant.now());
+        session.setExpiresAt(Instant.now().plus(7, ChronoUnit.DAYS));
+        session.setRevoked(false);
+
+
+        when(refreshSessionService.refreshSession(sessionId, tokenId)).thenReturn(session);
+        when(jwtService.generateRefreshToken(session.getSessionId(), session.getCurrentTokenId(), session.getExpiresAt()))
+                .thenReturn(newRefreshToken);
+        when(jwtService.generateToken(email)).thenReturn(newAccessToken);
+
+        // Act and Assert
+        mockMvc.perform(MockMvcRequestBuilders
+                        .post("/api/auth/refresh")
+                        .cookie(new Cookie("refreshToken", refreshToken)))  // Send cookie with request
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.token").value(newAccessToken))
+                .andExpect(jsonPath("$.role").value("COACH"));
+
+        verify(coachRepo).findById(1L);
+    }
+
+    @Test
+    @DisplayName("Test refresh return 200")
+    void testRefresh_whenValidAdminRefreshTokenProvided_returnResponseEntityOk() throws Exception {
+        // Arrange
+        String refreshToken = "mock-refresh-token";
+        String email = "someone@example.com";
+
+        Admin admin = new Admin();
+        admin.setEmail(email);
+
+        when(adminRepo.findById(1L)).thenReturn(Optional.of(admin));
+
+
+        String newRefreshToken = "mock-new-refresh-token";
+        String newAccessToken = "mock-new-accessToken";
+
+        UUID sessionId = UUID.randomUUID();
+        UUID tokenId = UUID.randomUUID();
+
+        when(jwtService.extractSessionId(refreshToken)).thenReturn(sessionId);
+        when(jwtService.extractTokenId(refreshToken)).thenReturn(tokenId);
+
+        // Create a real RefreshSession object for easier set up
+        RefreshSession session = new RefreshSession();
+
+        session.setSessionId(sessionId);
+        session.setCurrentTokenId(tokenId);
+
+        session.setUserId(1L);
+        session.setRole(Role.ADMIN);
+        session.setCreatedAt(Instant.now());
+        session.setExpiresAt(Instant.now().plus(7, ChronoUnit.DAYS));
+        session.setRevoked(false);
+
+
+        when(refreshSessionService.refreshSession(sessionId, tokenId)).thenReturn(session);
+        when(jwtService.generateRefreshToken(session.getSessionId(), session.getCurrentTokenId(), session.getExpiresAt()))
+                .thenReturn(newRefreshToken);
+        when(jwtService.generateToken(email)).thenReturn(newAccessToken);
+
+        // Act and Assert
+        mockMvc.perform(MockMvcRequestBuilders
+                        .post("/api/auth/refresh")
+                        .cookie(new Cookie("refreshToken", refreshToken)))  // Send cookie with request
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.token").value(newAccessToken))
+                .andExpect(jsonPath("$.role").value("ADMIN"));
+
+        verify(adminRepo).findById(1L);
     }
 
     @Test
