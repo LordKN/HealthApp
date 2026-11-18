@@ -20,9 +20,9 @@ import java.util.Optional;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class ExerciseServiceTest {
@@ -144,6 +144,26 @@ class ExerciseServiceTest {
         // Assert
         verify(repo).existsById(id);
         verify(repo).deleteById(id);
+    }
+
+    @Test
+    @DisplayName("Test delete exercise")
+    void testDeleteExercise_whenInvalidIdProvided_deleteExercise() {
+        // Arrange
+        Long id = 5L;
+        when(repo.existsById(id)).thenReturn(false);
+
+        // Act
+        RuntimeException exception = assertThrows(
+                RuntimeException.class,
+                () -> service.deleteExercise(id)
+        );
+
+        // Assert
+        verify(repo).existsById(id);
+        verify(repo, never()).deleteById(id);
+        assertEquals("Exercise not found to be deleted", exception.getMessage());
+
     }
 
     @Test
